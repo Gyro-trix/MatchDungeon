@@ -6,7 +6,7 @@ Match Dungeon is a pattern recognition game that requires the player to move a c
 The desired pattern is displayed somewhere on the "level" in the form of a visual hint.
 Hints can be also obtained from a button on screen, producing a text hint.
 
-## Controlling the Game
+![](https://github.com/Gyro-trix/MatchDungeon/blob/main/matchDungeonDiagramDraft.jpg)
 
 
 
