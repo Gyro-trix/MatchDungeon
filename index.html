@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<html>
+    <body>
+        <div class = "container">
+            <span><h1>Word Game
+            <button class = "hb" onclick="">Info</button>
+            <button class = "hb" onclick="restart();">Restart</button>
+            </h1></span> 
+           
+            
+            <br>
+            <div class ="words" >Words</div>
+            
+            Score:
+            <div class ="score" id = "score"></div>
+            
+            Timer:
+            <div class ="time" id = "timer"></div>
+            <br>
+            <button id = "play" onclick="timer();">Start</button>
+            <br>
+            <br>
+            <button onclick="scoreUp();">Score+</button>
+            
+            <div class = "spacer"></div>
+            <div class = "keyboard">Keyboard</div> 
+        </div>
+    </body>
+    <script src="wordgame.js"></script>
+</html>
