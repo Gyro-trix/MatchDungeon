@@ -26,10 +26,26 @@ body{
     height: 150px;
 }
 .screen{
-    background-color: rgb(49, 78, 49);
+    background-color: rgb(79, 138, 79);
+    display: flex;
     margin-left: 25px;
     width: 600px;
     height: 400px;
+}
+.playarea{
+    background: transparent;
+}
+.level{
+    background-color: rgb(6, 77, 0);
+    margin-left: 25px;
+    height: 20px;
+    width: 60px;
+}
+.score{
+    background-color: rgb(6, 77, 0);
+    margin-left: 25px;
+    height: 20px;
+    width: 60px;
 }
 .buttons{
     background-color: rgb(48, 48, 48);

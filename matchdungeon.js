@@ -1,0 +1,2 @@
+let score;
+let level;
