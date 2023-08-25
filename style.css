@@ -1,5 +1,10 @@
 h1{
     text-align: center;
+    
+    float:left;
+    right: 300px;
+    color:white;
+
 }
 body{
     background-color: black;
@@ -8,14 +13,17 @@ body{
 }
 .title{
     background-color: rgb(99, 99, 99);
+    display:block;
     width: 1000px;
     height: 40px;
 }
 .info{
-
+    position: relative;
+    
 }
 .retsart{
-
+    position: relative;
+    
 }
 .container{
     background-color: rgb(129, 129, 129);
