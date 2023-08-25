@@ -54,6 +54,66 @@ body{
     width: 150px;
     height: 200px;
 }
+.upArrow{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+
+    &::after {
+          content:"^";
+          position: absolute;
+          top: 0; right: 0; bottom: 0; left: 0;
+          transform: perspective(40px) rotateX(10deg);
+          transform-origin: bottom;
+          background: #313131;
+    }
+}
+.leftArrow{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+
+    &::after {
+          content:"";
+          position: absolute;
+          top: 0; right: 0; bottom: 0; left: 0;
+          transform: perspective(40px) rotateX(10deg);
+          transform-origin: left;
+          background: #313131;
+    }
+}
+.rightArrow{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+
+    &::after {
+          content:"";
+          position: absolute;
+          top: 0; right: 0; bottom: 0; left: 0;
+          transform: perspective(40px) rotateX(10deg);
+          transform-origin: right;
+          background: #313131;
+    }
+}
+.downArrow{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+
+    &::after {
+          content:"";
+          position: absolute;
+          top: 0; right: 0; bottom: 0; left: 0;
+          transform: perspective(80px) rotateX(-10deg);
+          transform-origin: top;
+          background: #313131;
+    }
+}
 .footer{
     background-color: rgb(129, 129, 129);
     margin-left: 200px;
