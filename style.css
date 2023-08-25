@@ -19,11 +19,23 @@ body{
     height: 450px;
 }
 .arrows{
+    align-content: center;
     background-color: rgb(48, 48, 48);
     margin-left: 25px;
     margin-top: 50px;
     width: 150px;
     height: 150px;
+
+    clip-path: polygon(
+        50px 0,
+        calc(100% - 50px) 0,
+        100% 50px,
+        100% calc(100% - 50px),
+        calc(100% - 50px) 100%,
+        50px 100%,
+        0 calc(100% - 50px),
+        0 50px
+    );
 }
 .screen{
     background-color: rgb(79, 138, 79);
@@ -56,9 +68,12 @@ body{
 }
 .upArrow{
     position: relative;
+    top:0%;
     width: 50px;
     height: 50px;
     font-size: 50px;
+    border:none;
+    background-color: transparent;
 
     &::after {
           content:"^";
@@ -66,52 +81,67 @@ body{
           top: 0; right: 0; bottom: 0; left: 0;
           transform: perspective(40px) rotateX(10deg);
           transform-origin: bottom;
-          background: #313131;
+          background: #1d1d1d;
     }
 }
 .leftArrow{
     position: relative;
+    float: left;
+    top:33%;
     width: 50px;
     height: 50px;
     font-size: 50px;
+    transform: rotate(270deg);
+    border:none;
+    background-color: transparent;
 
     &::after {
-          content:"";
+          content:"^";
           position: absolute;
           top: 0; right: 0; bottom: 0; left: 0;
           transform: perspective(40px) rotateX(10deg);
-          transform-origin: left;
-          background: #313131;
+          transform-origin: bottom;
+          background: #1d1d1d;
     }
 }
 .rightArrow{
     position: relative;
+    float: right;
+    top:33%;
     width: 50px;
     height: 50px;
     font-size: 50px;
+    transform: rotate(90deg);
+    border:none;
+    background-color: transparent;
 
     &::after {
-          content:"";
+          content:"^";
           position: absolute;
           top: 0; right: 0; bottom: 0; left: 0;
           transform: perspective(40px) rotateX(10deg);
-          transform-origin: right;
-          background: #313131;
+          transform-origin: bottom;
+          background: #1d1d1d;
     }
 }
 .downArrow{
-    position: relative;
+    position: relative;  
+    bottom:-33%;
+    left:33%;
     width: 50px;
     height: 50px;
     font-size: 50px;
+    transform: rotate(180deg);
+    border:none;
+    background-color: transparent;
 
     &::after {
-          content:"";
+          content:"^";
           position: absolute;
           top: 0; right: 0; bottom: 0; left: 0;
-          transform: perspective(80px) rotateX(-10deg);
-          transform-origin: top;
-          background: #313131;
+          transform: perspective(40px) rotateX(10deg);
+          transform-origin: bottom;
+          background: #1d1d1d;
     }
 }
 .footer{
