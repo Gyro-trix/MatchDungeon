@@ -1,6 +1,48 @@
 h1{
     text-align: center;
 }
-
+body{
+    background-color: black;
+    max-width: max-content;
+    margin: auto;
+}
+.title{
+    background-color: rgb(99, 99, 99);
+    width: 1000px;
+    height: 40px;
+}
+.container{
+    background-color: rgb(129, 129, 129);
+    display: flex;
+    
+    width: 1000px;
+    height: 450px;
+}
+.arrows{
+    background-color: rgb(48, 48, 48);
+    margin-left: 25px;
+    margin-top: 50px;
+    width: 150px;
+    height: 150px;
+}
+.screen{
+    background-color: rgb(49, 78, 49);
+    margin-left: 25px;
+    width: 600px;
+    height: 400px;
+}
+.buttons{
+    background-color: rgb(48, 48, 48);
+    margin-left: 25px;
+    margin-top: 50px;
+    width: 150px;
+    height: 200px;
+}
+.footer{
+    background-color: rgb(129, 129, 129);
+    margin-left: 200px;
+    width: 600px;
+    height: 50px;
+}
 
 
