@@ -1,7 +1,5 @@
 h1{
     text-align: center;
-    
-    float:left;
     right: 300px;
     color:white;
 
@@ -98,6 +96,10 @@ body{
           background: #1d1d1d;
     }
 }
+.upArrow:active{
+    transform:scale(0.90);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
 .leftArrow{
     position: relative;
     float: left;
@@ -117,6 +119,10 @@ body{
           transform-origin: bottom;
           background: #1d1d1d;
     }
+}
+.leftArrow:active{
+    transform: scale(0.90) rotate(270deg);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
 }
 .rightArrow{
     position: relative;
@@ -138,6 +144,10 @@ body{
           background: #1d1d1d;
     }
 }
+.rightArrow:active{
+    transform: scale(0.90) rotate(90deg);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
 .downArrow{
     position: relative;  
     bottom:-33%;
@@ -158,11 +168,16 @@ body{
           background: #1d1d1d;
     }
 }
+.downArrow:active{
+    transform: scale(0.90) rotate(180deg);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
 .footer{
     background-color: rgb(129, 129, 129);
     margin-left: 200px;
     width: 600px;
     height: 50px;
 }
+
 
 
