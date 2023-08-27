@@ -1,3 +1,23 @@
+:root{
+    --pixel-size: 2px;
+    --grid-cell: calc(var(--pixel-size) * 16);
+    --bg: #9fa7e4;
+}
+.map{
+    width: calc(var(--pixel-size)*160);
+    height: calc(var(--pixel-size)*144);
+    overflow: hidden;
+    background:rgb(9, 102, 1);
+    position:relative;
+    
+}
+.player{
+    width: calc(var(--grid-cell)*2);
+    height: calc(var(--grid-cell)*2);
+    position: absolute;
+    overflow: hidden;
+}
+
 h1{
     text-align: center;
     right: 300px;
