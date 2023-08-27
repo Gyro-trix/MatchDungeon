@@ -16,6 +16,7 @@
     height: calc(var(--grid-cell)*2);
     position: absolute;
     overflow: hidden;
+    background-color: black;
 }
 
 h1{
