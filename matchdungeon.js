@@ -1,6 +1,10 @@
 let score = 0;
 let level = 1;
 let pause = 0;
+let player;
+let map;
+let speed;
+
 
 function init(){
     let up = document.getElementById("upArrow");
