@@ -49,6 +49,7 @@ function init(){
     let left = document.getElementById("leftArrow");
     let down = document.getElementById("downArrow");
 
+    step();
     /*up.addEventListener("click", );
     right.addEventListener("click", );
     left.addEventListener("click", );
@@ -62,15 +63,24 @@ const step = () => {
        step();
     })
  }
- step();
 
 document.addEventListener("keydown", (e) =>{
-let dir = keys[e.key];
-console.log(e.key);
-console.log(keys[e.key]);
-console.log(dir);
-console.log(directions.indexOf(dir));
-if (dir && directions.indexOf(dir) === -1) {directions.unshift(dir)}
+    let dir = keys[e.key];
+    /*console.log(e.key);
+    console.log(keys[e.key]);
+    console.log(dir);
+    console.log(directions.indexOf(dir));*/
+    if (dir && directions.indexOf(dir) === -1) {
+        directions.unshift(dir)
+    }
+})
+
+document.addEventListener("keyup", (e) => {
+    let dir = keys[e.key];
+    let index = directions.indexOf(dir);
+    if (index > -1){
+        directions.splice(index, 1)
+    }
 })
 
 window.addEventListener("DOMContentLoaded", init());
