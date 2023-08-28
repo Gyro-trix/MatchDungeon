@@ -5,8 +5,8 @@ let pause = 0;
 let player = document.querySelector(".player");
 let map = document.querySelector(".map");
 
-let x = 90;
-let y = 34;
+let x = 100;
+let y = 50;
 let directions = [];
 let speed = 1;
 
@@ -40,6 +40,7 @@ const placePlayer = () =>{
 
     player.setAttribute("walking", direction ? "true" : "false");
 
+    player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
 function init(){
@@ -55,10 +56,20 @@ function init(){
     */
 }
 
+const step = () => {
+    placePlayer();
+    window.requestAnimationFrame(() => {
+       step();
+    })
+ }
+ step();
+
 document.addEventListener("keydown", (e) =>{
 let dir = keys[e.key];
 console.log(e.key);
 console.log(keys[e.key]);
+console.log(dir);
+console.log(directions.indexOf(dir));
 if (dir && directions.indexOf(dir) === -1) {directions.unshift(dir)}
 })
 
