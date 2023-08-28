@@ -40,6 +40,16 @@ const placePlayer = () =>{
 
     player.setAttribute("walking", direction ? "true" : "false");
 
+    let lLimit = 0;
+    let rLimit = 200;
+    let tLimit = 0;
+    let bLimit = 200;
+
+    if (x < lLimit) {x = lLimit;}
+    if (x > rLimit) {x = rLimit;}
+    if (y < tLimit) {y = tLimit;}
+    if (y > bLimit) {y = bLimit;}
+
     player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
