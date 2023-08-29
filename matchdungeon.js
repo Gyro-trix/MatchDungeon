@@ -51,7 +51,17 @@ const placePlayer = () =>{
     if (x > rLimit) {x = rLimit;}
     if (y < tLimit) {y = tLimit;}
     if (y > bLimit) {y = bLimit;}
+/*
+    let boxLeft = 100;
+    let boxRight = 132;
+    let boxTop = 100;
+    let boxBottom = 132;
 
+    if (x > boxLeft) {x = boxLeft;}
+    if (x < boxRight) {x = boxRight;}
+    if (y > boxTop) {y = boxTop;}
+    if (y < boxBottom) {y = boxBottom;}
+*/
     player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
