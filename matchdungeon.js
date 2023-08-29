@@ -2,6 +2,8 @@ let score = 0;
 let level = 1;
 let pause = 0;
 
+let ps;
+
 let player = document.querySelector(".player");
 let map = document.querySelector(".map");
 
@@ -27,7 +29,7 @@ const keys = {
 const placePlayer = () =>{
 
     let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
-
+    ps = pixelSize;
     const direction = directions[0];
 
     if(direction){
@@ -41,9 +43,9 @@ const placePlayer = () =>{
     player.setAttribute("walking", direction ? "true" : "false");
 
     let lLimit = 0;
-    let rLimit = 200;
+    let rLimit = 200 - 32;
     let tLimit = 0;
-    let bLimit = 200;
+    let bLimit = 200 - 32;
 
     if (x < lLimit) {x = lLimit;}
     if (x > rLimit) {x = rLimit;}
@@ -53,6 +55,18 @@ const placePlayer = () =>{
     player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
+function createBox(x,y){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+
+    box.setAttribute("class","box");
+    box.setAttribute("id","box");
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${x*ps}px, ${y*ps}px, 0 )`;
+
+}
+
 function init(){
     let up = document.getElementById("upArrow");
     let right = document.getElementById("rightArrow");
@@ -60,6 +74,12 @@ function init(){
     let down = document.getElementById("downArrow");
 
     step();
+
+    createBox(16,16);
+
+    createBox(100,100);
+
+    
     /*up.addEventListener("click", );
     right.addEventListener("click", );
     left.addEventListener("click", );

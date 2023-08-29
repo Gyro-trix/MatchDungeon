@@ -18,6 +18,13 @@
     overflow: hidden;
     background-color: black;
 }
+.box{
+    width: calc(var(--grid-cell)*2);
+    height: calc(var(--grid-cell)*2);
+    position: absolute;
+    overflow: hidden;
+    background-color: black;
+}
 
 h1{
     text-align: center;

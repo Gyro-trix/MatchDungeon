@@ -8,5 +8,8 @@ Hints can be also obtained from a button on screen, producing a text hint.
 
 ![](https://github.com/Gyro-trix/MatchDungeon/blob/main/matchDungeonDiagramDraft.jpg)
 
+## Mechanics
 
+Create a player character that is controlled by buttons or using the arrows on the keyboard.
 
+Multiple Levels
