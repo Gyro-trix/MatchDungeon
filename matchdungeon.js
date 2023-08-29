@@ -51,17 +51,20 @@ const placePlayer = () =>{
     if (x > rLimit) {x = rLimit;}
     if (y < tLimit) {y = tLimit;}
     if (y > bLimit) {y = bLimit;}
-/*
+
     let boxLeft = 100;
     let boxRight = 132;
     let boxTop = 100;
     let boxBottom = 132;
 
-    if (x > boxLeft) {x = boxLeft;}
+if (collisionDet(x,100,y,100,16,16)){
+console.log("collide");
+}
+    /*if (x > boxLeft && x < boxRight) {x = boxLeft;}
     if (x < boxRight) {x = boxRight;}
-    if (y > boxTop) {y = boxTop;}
-    if (y < boxBottom) {y = boxBottom;}
-*/
+    if (y > boxTop && y < boxBottom) {y = boxTop;}
+    if (y < boxBottom) {y = boxBottom;}*/
+
     player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
@@ -76,13 +79,15 @@ function createBox(x,y){
     box.style.transform = `translate3d( ${x*ps}px, ${y*ps}px, 0 )`;
 
 }
-/*
-function collisionDet(ply,bx ){
-let obj1 = ply.getBoundingClientRect();
-let obj2 = bx.getBoundingClientRect();
+
+function collisionDet(x1,x2,y1,y2,w1,w2){
+let xd = x1 - x2;
+let yd = y1 - y2; 
+let wd = w1 - w2;
+return(xd*xd + yd*yd <= wd * wd); 
 
 }
-*/
+
 
 function init(){
     let up = document.getElementById("upArrow");
