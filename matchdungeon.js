@@ -66,6 +66,13 @@ function createBox(x,y){
     box.style.transform = `translate3d( ${x*ps}px, ${y*ps}px, 0 )`;
 
 }
+/*
+function collisionDet(ply,bx ){
+let obj1 = ply.getBoundingClientRect();
+let obj2 = bx.getBoundingClientRect();
+
+}
+*/
 
 function init(){
     let up = document.getElementById("upArrow");
