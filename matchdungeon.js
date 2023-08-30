@@ -9,8 +9,9 @@ let map = document.querySelector(".map");
 
 let x = 100;
 let y = 50;
+let w = 32;
 let directions = [];
-let speed = 1;
+let speed = 0.5;
 
 const playerDirections = {
     up: "up",
@@ -52,18 +53,25 @@ const placePlayer = () =>{
     if (y < tLimit) {y = tLimit;}
     if (y > bLimit) {y = bLimit;}
 
-    let boxLeft = 100;
-    let boxRight = 132;
-    let boxTop = 100;
-    let boxBottom = 132;
+    let boxX = 100;
+    let boxY = 100;
+    let boxW = 32;
+   
 
 if (collisionDet(x,100,y,100,16,16)){
 console.log("collide");
 }
-    /*if (x > boxLeft && x < boxRight) {x = boxLeft;}
-    if (x < boxRight) {x = boxRight;}
-    if (y > boxTop && y < boxBottom) {y = boxTop;}
-    if (y < boxBottom) {y = boxBottom;}*/
+    if (x < boxX + boxW && 
+        x + w > boxX &&
+        y < boxY + boxW &&
+        y + w > boxY   )
+        {
+            x = x - 1;
+            y = y - 1;
+        } 
+        else {
+            speed = 0.5;
+        }
 
     player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
