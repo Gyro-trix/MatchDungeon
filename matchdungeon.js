@@ -33,12 +33,14 @@ const placePlayer = () =>{
     ps = pixelSize;
     const direction = directions[0];
 
-    if(direction){
+    if(direction && collideCheck() === false){
         if(direction === playerDirections.right) {x += speed;}
         if(direction === playerDirections.left){x-= speed;}
         if(direction === playerDirections.down){y += speed;}
         if(direction === playerDirections.up){y -= speed;}
         player.setAttribute("facing", direction);
+    } else {
+        
     }
 
     player.setAttribute("walking", direction ? "true" : "false");
@@ -53,27 +55,26 @@ const placePlayer = () =>{
     if (y < tLimit) {y = tLimit;}
     if (y > bLimit) {y = bLimit;}
 
+    player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;  
+  
+    
+}
+
+function collideCheck(){
     let boxX = 100;
     let boxY = 100;
     let boxW = 32;
    
-
-if (collisionDet(x,100,y,100,16,16)){
-console.log("collide");
-}
     if (x < boxX + boxW && 
         x + w > boxX &&
         y < boxY + boxW &&
         y + w > boxY   )
         {
-            x = x - 1;
-            y = y - 1;
+            return true;
         } 
         else {
-            speed = 0.5;
+            return false;
         }
-
-    player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
 function createBox(x,y){
@@ -87,14 +88,14 @@ function createBox(x,y){
     box.style.transform = `translate3d( ${x*ps}px, ${y*ps}px, 0 )`;
 
 }
-
+/*
 function collisionDet(x1,x2,y1,y2,w1,w2){
 let xd = x1 - x2;
 let yd = y1 - y2; 
 let wd = w1 - w2;
 return(xd*xd + yd*yd <= wd * wd); 
 
-}
+}*/
 
 
 function init(){
