@@ -91,11 +91,19 @@ body{
     background-color: rgb(31, 31, 31);
     
 }
-.lngBtnText{
+.pauseText{
+    margin-left: 23px;
     color:black;
-    font-size: 11px;
+    font-size: 12px;
     text-transform: uppercase;
-    margin-bottom: 15px;
+    vertical-align: bottom;
+}
+.hintText{
+    margin-left: 35px;
+    color:black;
+    font-size: 12px;
+    text-transform: uppercase;
+    vertical-align: bottom;
 }
 
 .container{
