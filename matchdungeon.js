@@ -44,9 +44,9 @@ const placePlayer = () =>{
     player.setAttribute("walking", direction ? "true" : "false");
 
     let lLimit = 0;
-    let rLimit = 200 - 32;
+    let rLimit = 600 - 32;
     let tLimit = 0;
-    let bLimit = 200 - 32;
+    let bLimit = 350 - 32;
 
     if (x < lLimit) {x = lLimit;}
     if (x > rLimit) {x = rLimit;}

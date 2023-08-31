@@ -4,12 +4,13 @@
     --bg: #9fa7e4;
 }
 .map{
-    width: calc(var(--pixel-size)*200);
-    height: calc(var(--pixel-size)*200);
+    width: calc(var(--pixel-size)*600);
+    height: calc(var(--pixel-size)*350);
     overflow: hidden;
     background:rgb(9, 102, 1);
-    position:relative;
-    
+    position:absolute;
+    float: left;
+    top: 75px;
 }
 .player{
     width: calc(var(--grid-cell)*2);
@@ -25,7 +26,6 @@
     overflow: hidden;
     background-color: black;
 }
-
 h1{
     text-align: center;
     right: 300px;
@@ -41,15 +41,30 @@ body{
     background-color: rgb(99, 99, 99);
     display:block;
     width: 1000px;
+    text-align: right;
     height: 40px;
 }
-.info{
+.name{
+    float: left;
     position: relative;
-    
+    bottom: 20px;
+    left: 400px;
+    height: 40px;
 }
-.retsart{
-    position: relative;
-    
+.reset, .info{
+    float: right;
+    display:flex;
+    background-color: rgb(99, 99, 99);        
+    border-width: 4px;
+    width: 105px;
+    height: 35px;
+}
+.inbtntext , .rstbtntext{
+    font-size: 18px;
+    text-transform: uppercase;
+    position:relative;
+    margin:auto;
+    color:black;
 }
 .container{
     background-color: rgb(129, 129, 129);
@@ -87,15 +102,10 @@ body{
 .playarea{
     background: transparent;
 }
-.level{
+.level, .score, .health{
     background-color: rgb(6, 77, 0);
     margin-left: 25px;
-    height: 20px;
-    width: 60px;
-}
-.score{
-    background-color: rgb(6, 77, 0);
-    margin-left: 25px;
+    margin-right: 10px;
     height: 20px;
     width: 60px;
 }
