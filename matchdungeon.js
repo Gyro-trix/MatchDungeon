@@ -40,7 +40,10 @@ const placePlayer = () =>{
         if(direction === playerDirections.up){y -= speed;}
         player.setAttribute("facing", direction);
     } else {
-        
+        if(direction === playerDirections.right) {x -= 3;}
+        if(direction === playerDirections.left){x+= 3;}
+        if(direction === playerDirections.down){y -= 3;}
+        if(direction === playerDirections.up){y += 3;} 
     }
 
     player.setAttribute("walking", direction ? "true" : "false");
