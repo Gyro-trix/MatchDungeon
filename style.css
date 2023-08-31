@@ -66,6 +66,38 @@ body{
     margin:auto;
     color:black;
 }
+.A {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: green;
+    font-size: 25px;
+    margin-left: 25px;
+}
+.B {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: red;
+    margin-left: 75px;
+    margin-top: 25px;
+    font-size: 25px;
+}
+.Pause, .Hint{
+    margin-left: 15px;
+    height: 10px;
+    width: 50px;
+    border-radius: 25%;
+    background-color: rgb(31, 31, 31);
+    
+}
+.lngBtnText{
+    color:black;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
 .container{
     background-color: rgb(129, 129, 129);
     display: flex;
