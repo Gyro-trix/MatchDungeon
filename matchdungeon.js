@@ -91,15 +91,6 @@ function createBox(x,y){
     box.style.transform = `translate3d( ${x*ps}px, ${y*ps}px, 0 )`;
 
 }
-/*
-function collisionDet(x1,x2,y1,y2,w1,w2){
-let xd = x1 - x2;
-let yd = y1 - y2; 
-let wd = w1 - w2;
-return(xd*xd + yd*yd <= wd * wd); 
-
-}*/
-
 
 function init(){
     let up = document.getElementById("upArrow");
@@ -113,12 +104,6 @@ function init(){
 
     createBox(100,100);
 
-    
-    /*up.addEventListener("click", );
-    right.addEventListener("click", );
-    left.addEventListener("click", );
-    down.addEventListener("click", );
-    */
 }
 
 const step = () => {
@@ -130,10 +115,7 @@ const step = () => {
 
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
-    /*console.log(e.key);
-    console.log(keys[e.key]);
-    console.log(dir);
-    console.log(directions.indexOf(dir));*/
+    
     if (dir && directions.indexOf(dir) === -1) {
         directions.unshift(dir)
     }
