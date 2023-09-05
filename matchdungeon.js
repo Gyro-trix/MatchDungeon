@@ -2,22 +2,66 @@ let score = 0;
 let pause = 0;
 let level = 1;
 
+let directions = [];
+
+let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
+
 let levelWalls = [];
 let levelObstacles = [];
 let levelEnemies = [];
 
 const player = {
-    x,
-    y,
-    w,
-    h,
-    health,
-    facing,
+    x:0,
+    y:0,
+    w:16,
+    h:16,
+    health:3,
+    facing:"down",
+}
+
+const playerDirections = {
+    up: "up",
+    down: "down",
+    left: "left",
+    right: "right",
+}
+
+const keys = {
+    ArrowUp: playerDirections.up,
+    ArrowLeft: playerDirections.left,
+    ArrowRight: playerDirections.right,
+    ArrowDown: playerDirections.down,
 }
 
 function levelPopulate(){
-    
+    switch (level){
+        case "1":
+            console.log(level);
+        break;
+        case "2":
+            console.log(level);
+        break;
+        case "3":
+            console.log(level);
+        break;
+    }
 }
+
+document.addEventListener("keydown", (e) =>{
+    let dir = keys[e.key];
+    
+    if (dir && directions.indexOf(dir) === -1) {
+        directions.unshift(dir)
+    }
+})
+
+document.addEventListener("keyup", (e) => {
+    let dir = keys[e.key];
+    let index = directions.indexOf(dir);
+    if (index > -1){
+        directions.splice(index, 1)
+    }
+})
 
 
 
