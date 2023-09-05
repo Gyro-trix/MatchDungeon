@@ -1,7 +1,28 @@
 let score = 0;
-let level = 1;
 let pause = 0;
+let level = 1;
 
+let levelWalls = [];
+let levelObstacles = [];
+let levelEnemies = [];
+
+const player = {
+    x,
+    y,
+    w,
+    h,
+    health,
+    facing,
+}
+
+function levelPopulate(){
+    
+}
+
+
+
+
+/*---------------------------------------------------------
 let ps;
 
 let player = document.querySelector(".player");
@@ -130,3 +151,4 @@ document.addEventListener("keyup", (e) => {
 })
 
 window.addEventListener("DOMContentLoaded", init());
+--------------------------------------*/
