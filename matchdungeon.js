@@ -52,6 +52,7 @@ function levelPopulate(){
         case 1:
             console.log(level);
             displayPlayer();
+            createWall(50,50);
         
         break;
         case 2:
@@ -62,7 +63,26 @@ function levelPopulate(){
         break;
     }
 }
-/* looping trough functions that need constant checking*/
+
+function createWall(x,y){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+
+    box.setAttribute("class","wall");
+    box.setAttribute("id","wall");
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+}
+
+function createEnemy(x,y,h,w){
+
+}
+
+function createObstacle(x,y,h,w){
+
+}
+
 function playerMovement(){
     ps = pixelSize;
     const direction = directions[0];
