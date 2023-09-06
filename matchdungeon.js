@@ -1,6 +1,7 @@
 let score = 0;
 let pause = 0;
 let level = 1;
+let speed = .005;
 
 let directions = [];
 
@@ -35,23 +36,69 @@ const keys = {
 
 function levelPopulate(){
     switch (level){
-        case "1":
+        case 1:
+            console.log(level);
+            
+            let box = document.createElement('div');
+            let target = document.getElementById("map");
+
+            box.setAttribute("class","player");
+            box.setAttribute("id","player");
+            box.setAttribute("facing","down");
+            box.setAttribute("walking","false");
+            target.appendChild(box);
+
+            box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
+        
+        break;
+        case 2:
             console.log(level);
         break;
-        case "2":
-            console.log(level);
-        break;
-        case "3":
+        case 3:
             console.log(level);
         break;
     }
 }
+/* looping trough functions that need constant checking*/
+function playerMovement(){
+    ps = pixelSize;
+    const direction = directions[0];
+    let plyr = document.getElementById("player");
+
+    if(direction != false){
+        if(direction === playerDirections.right) {player.x += speed;}
+        if(direction === playerDirections.left){player.x-= speed;}
+        if(direction === playerDirections.down){player.y += speed;}
+        if(direction === playerDirections.up){player.y -= speed;}
+        plyr.setAttribute("facing", direction);
+    }
+
+    plyr.setAttribute("walking", direction ? "true" : "false");
+
+    let lLimit = 0;
+    let rLimit = 600 - 32;
+    let tLimit = 0;
+    let bLimit = 350 - 32;
+
+    if (player.x < lLimit) {player.x = lLimit;}
+    if (player.x > rLimit) {player.x = rLimit;}
+    if (player.y < tLimit) {player.y = tLimit;}
+    if (player.y > bLimit) {player.y = bLimit;}
+
+    plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
+}
+
+function gameLoop(){
+    playerMovement();
+    let t = setInterval(gameLoop,250)
+}
 
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
-    
+    console.log(e.key);
     if (dir && directions.indexOf(dir) === -1) {
-        directions.unshift(dir)
+        console.log(dir);
+        directions.unshift(dir);
     }
 })
 
@@ -63,8 +110,8 @@ document.addEventListener("keyup", (e) => {
     }
 })
 
-
-
+window.addEventListener("DOMContentLoaded", levelPopulate());
+window.addEventListener("DOMContentLoaded", gameLoop());
 
 /*---------------------------------------------------------
 let ps;
