@@ -34,21 +34,24 @@ const keys = {
     ArrowDown: playerDirections.down,
 }
 
+function displayPlayer(){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+
+    box.setAttribute("class","player");
+    box.setAttribute("id","player");
+    box.setAttribute("facing","down");
+    box.setAttribute("walking","false");
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
+}
+
 function levelPopulate(){
     switch (level){
         case 1:
             console.log(level);
-            
-            let box = document.createElement('div');
-            let target = document.getElementById("map");
-
-            box.setAttribute("class","player");
-            box.setAttribute("id","player");
-            box.setAttribute("facing","down");
-            box.setAttribute("walking","false");
-            target.appendChild(box);
-
-            box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
+            displayPlayer();
         
         break;
         case 2:
@@ -87,10 +90,10 @@ function playerMovement(){
 
     plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
 }
-
+/* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
     playerMovement();
-    let t = setInterval(gameLoop,250)
+    let t = setInterval(gameLoop,200)
 }
 
 document.addEventListener("keydown", (e) =>{

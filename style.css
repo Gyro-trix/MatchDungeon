@@ -19,6 +19,9 @@
     overflow: hidden;
     background-color: black;
 }
+.player[facing = down]{
+    background-color: rgb(175, 36, 36);
+}
 .box{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);
