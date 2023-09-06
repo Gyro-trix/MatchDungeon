@@ -19,7 +19,16 @@
     overflow: hidden;
     background-color: black;
 }
+.player[facing = up]{
+    background-color: rgb(175, 36, 36);
+}
 .player[facing = down]{
+    background-color: rgb(175, 36, 36);
+}
+.player[facing = left]{
+    background-color: rgb(175, 36, 36);
+}
+.player[facing = right]{
     background-color: rgb(175, 36, 36);
 }
 .box{
