@@ -2,6 +2,7 @@ let score = 0;
 let pause = 0;
 let level = 1;
 let speed = 1;
+let solidCol = false;
 
 let directions = [];
 
@@ -54,8 +55,6 @@ function levelPopulate(){
             displayPlayer();
             createWall(50,50);
             createWall(100,120)
-            console.log(levelWalls[1].x);
-            console.log(levelWalls[1].y);
         break;
         case 2:
             console.log(level);
@@ -109,12 +108,17 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
 
-    if(direction != false){
+    if(direction && solidCol === false){
         if(direction === playerDirections.right) {player.x += speed;}
         if(direction === playerDirections.left){player.x-= speed;}
         if(direction === playerDirections.down){player.y += speed;}
         if(direction === playerDirections.up){player.y -= speed;}
         plyr.setAttribute("facing", direction);
+    } else {
+        if(direction === playerDirections.right) {player.x -= 5;}
+        if(direction === playerDirections.left){player.x+= 5;}
+        if(direction === playerDirections.down){player.y -= 5;}
+        if(direction === playerDirections.up){player.y += 5;} 
     }
 
     plyr.setAttribute("walking", direction ? "true" : "false");
@@ -131,6 +135,7 @@ function playerMovement(){
 
     plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
 }
+
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
     playerMovement();
@@ -153,10 +158,14 @@ function collisionCheck(obj){
         player.y < obj.y + obj.w &&
         player.y + player.w > obj.y)
         {
-            player.x = 0;
+            console.log(obj.x);
+            console.log(solidCol);
+            solidCol = true;
+            console.log(solidCol);
         } 
         else {
             
+            solidCol = false;
         }
 }
 
