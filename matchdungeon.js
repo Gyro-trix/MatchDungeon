@@ -1,12 +1,13 @@
 let score = 0;
 let pause = 0;
 let level = 1;
-let speed = .005;
+let speed = 1;
 
 let directions = [];
 
 let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
 
+const Wall = {};
 let levelWalls = [];
 let levelObstacles = [];
 let levelEnemies = [];
@@ -15,7 +16,6 @@ const player = {
     x:0,
     y:0,
     w:16,
-    h:16,
     health:3,
     facing:"down",
 }
@@ -53,7 +53,9 @@ function levelPopulate(){
             console.log(level);
             displayPlayer();
             createWall(50,50);
-        
+            createWall(100,120)
+            console.log(levelWalls[1].x);
+            console.log(levelWalls[1].y);
         break;
         case 2:
             console.log(level);
@@ -73,14 +75,33 @@ function createWall(x,y){
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    let wall = new Object();
+    wall.x=x;
+    wall.y=y;
+    wall.w=16;
+    levelWalls.push(wall);
 }
 
-function createEnemy(x,y,h,w){
+function createEnemy(x,y){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
 
+    box.setAttribute("class","enemy");
+    box.setAttribute("id","enemy");
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 }
 
-function createObstacle(x,y,h,w){
+function createObstacle(x,y){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
 
+    box.setAttribute("class","obstacle");
+    box.setAttribute("id","obstacle");
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 }
 
 function playerMovement(){
@@ -113,7 +134,30 @@ function playerMovement(){
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
     playerMovement();
-    let t = setInterval(gameLoop,200)
+    collideWalls();
+    window.requestAnimationFrame(() => {
+        gameLoop();
+     })
+}
+
+function collideWalls(){
+
+       levelWalls.forEach(collisionCheck);
+
+   
+}
+
+function collisionCheck(obj){
+    if (player.x < obj.x + obj.w && 
+        player.x + player.w > obj.x &&
+        player.y < obj.y + obj.w &&
+        player.y + player.w > obj.y)
+        {
+            player.x = 0;
+        } 
+        else {
+            
+        }
 }
 
 document.addEventListener("keydown", (e) =>{
