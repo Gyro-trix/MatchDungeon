@@ -54,7 +54,7 @@ function levelPopulate(){
             console.log(level);
             displayPlayer();
             createWall(50,50);
-            createWall(100,120)
+            createWall(120,100);
         break;
         case 2:
             console.log(level);
@@ -147,7 +147,8 @@ function gameLoop(){
 
 function collideWalls(){
 
-       levelWalls.forEach(collisionCheck);
+    collisionCheck(levelWalls[0]);
+    
 
    
 }
