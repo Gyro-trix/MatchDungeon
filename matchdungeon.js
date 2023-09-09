@@ -21,7 +21,7 @@ function Wall(x,y,w){
 const player = {
     x:0,
     y:0,
-    w:16,
+    w:32,
     health:3,
     facing:"down",
 }
@@ -59,7 +59,8 @@ function levelPopulate(){
             console.log(level);
             displayPlayer();
             createWall(50,50,16);
-            createWall(100,120,16)
+            createWall(100,120,32);
+            createWall(200,200,16);
         break;
         case 2:
             console.log(level);
@@ -78,7 +79,7 @@ function createWall(x,y,w){
     box.setAttribute("id","wall");
     target.appendChild(box);
 
-    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    box.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px , 0 )`;
     let wl = new Wall(x,y,w);
     levelWalls.push(wl);
 }
@@ -110,7 +111,7 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
 
-    if(direction != false){
+    if(direction && collider() === false){
         if(direction === playerDirections.right) {player.x += speed;}
         if(direction === playerDirections.left){player.x-= speed;}
         if(direction === playerDirections.down){player.y += speed;}
@@ -146,7 +147,21 @@ function gameLoop(){
      })
 }
 
+function collider(){
+console.log(levelWalls.every(collideCheck));   
+return levelWalls.every(collideCheck);
 
+}
+
+
+function collideCheck(obj){
+    console.log(obj.x);   
+    return player.x <= obj.x + obj.w && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y+ obj.w &&
+        player.y + player.w >= obj.y;
+       
+}
 
 
 
