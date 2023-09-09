@@ -8,10 +8,15 @@ let directions = [];
 
 let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
 
-const Wall = {};
 let levelWalls = [];
 let levelObstacles = [];
 let levelEnemies = [];
+
+function Wall(x,y,w){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+}
 
 const player = {
     x:0,
@@ -53,8 +58,8 @@ function levelPopulate(){
         case 1:
             console.log(level);
             displayPlayer();
-            createWall(50,50);
-            createWall(100,120)
+            createWall(50,50,16);
+            createWall(100,120,16)
         break;
         case 2:
             console.log(level);
@@ -65,7 +70,7 @@ function levelPopulate(){
     }
 }
 
-function createWall(x,y){
+function createWall(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
 
@@ -74,11 +79,8 @@ function createWall(x,y){
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-    let wall = new Object();
-    wall.x=x;
-    wall.y=y;
-    wall.w=16;
-    levelWalls.push(wall);
+    let wl = new Wall(x,y,w);
+    levelWalls.push(wl);
 }
 
 function createEnemy(x,y){
@@ -158,10 +160,7 @@ function collisionCheck(obj){
         player.y < obj.y + obj.w &&
         player.y + player.w > obj.y)
         {
-            console.log(obj.x);
-            console.log(solidCol);
-            solidCol = true;
-            console.log(solidCol);
+            solidCol = true;   
         } 
         else {
             
