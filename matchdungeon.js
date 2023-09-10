@@ -118,10 +118,10 @@ function playerMovement(){
         if(direction === playerDirections.up){player.y -= speed;}
         plyr.setAttribute("facing", direction);
     } else {
-        if(direction === playerDirections.right) {player.x -= 5;}
-        if(direction === playerDirections.left){player.x+= 5;}
-        if(direction === playerDirections.down){player.y -= 5;}
-        if(direction === playerDirections.up){player.y += 5;} 
+        if(direction === playerDirections.right) {player.x -= 10;}
+        if(direction === playerDirections.left){player.x+= 10;}
+        if(direction === playerDirections.down){player.y -= 10;}
+        if(direction === playerDirections.up){player.y += 10;} 
     }
 
     plyr.setAttribute("walking", direction ? "true" : "false");
