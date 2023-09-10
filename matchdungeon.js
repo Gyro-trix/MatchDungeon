@@ -58,9 +58,9 @@ function levelPopulate(){
         case 1:
             console.log(level);
             displayPlayer();
-            createWall(50,50,16);
+            createWall(50,50,32);
             createWall(100,120,32);
-            createWall(200,200,16);
+            createWall(200,200,32);
         break;
         case 2:
             console.log(level);
@@ -111,7 +111,7 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
 
-    if(direction && collider() === false){
+    if(direction && collider() != false){
         if(direction === playerDirections.right) {player.x += speed;}
         if(direction === playerDirections.left){player.x-= speed;}
         if(direction === playerDirections.down){player.y += speed;}
@@ -156,10 +156,10 @@ return levelWalls.every(collideCheck);
 
 function collideCheck(obj){
     console.log(obj.x);   
-    return player.x <= obj.x + obj.w && 
+    return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
-        player.y + player.w >= obj.y;
+        player.y + player.w >= obj.y);
        
 }
 
