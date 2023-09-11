@@ -10,10 +10,17 @@ let directions = [];
 let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
 
 let levelWalls = [];
+let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
 
 function Wall(x,y,w){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+}
+
+function Symbol(x,y,w){
     this.x = x;
     this.y = y;
     this.w = w;
@@ -62,7 +69,11 @@ function levelPopulate(){
             healthUp();
             healthUp();
             healthUp();
-            healthDown();
+
+            createSymbol(100,200,32);
+            createSymbol(300,200,32);
+            
+
             displayPlayer();
             createWall(50,50,32);
             createWall(100,120,32);
@@ -90,7 +101,7 @@ function createWall(x,y,w){
     levelWalls.push(wl);
 }
 
-function createEnemy(x,y){
+function createEnemy(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
 
@@ -101,7 +112,20 @@ function createEnemy(x,y){
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 }
 
-function createObstacle(x,y){
+function createSymbol(x,y,w){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+
+    box.setAttribute("class","symbol");
+    box.setAttribute("id","symbol");
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    let sym = new Symbol(x,y,w);
+    levelSymbols.push(sym);
+}
+
+function createObstacle(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
 
@@ -117,7 +141,7 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
 
-    if(direction && collider() != false){
+    if(direction && collideWall() != false){
         if(direction === playerDirections.right) {player.x += speed;}
         if(direction === playerDirections.left){player.x-= speed;}
         if(direction === playerDirections.down){player.y += speed;}
@@ -129,6 +153,9 @@ function playerMovement(){
         if(direction === playerDirections.down){player.y -= 10;}
         if(direction === playerDirections.up){player.y += 10;} 
     }
+
+    collideSymbol();
+        
 
     plyr.setAttribute("walking", direction ? "true" : "false");
 
@@ -156,11 +183,7 @@ function gameLoop(){
     }, 1000 / fps)
 }
 
-function collider(){
-    console.log(levelWalls.every(collideCheck));   
-    return levelWalls.every(collideCheck);
 
-}
 
 function scoreChange(num){
     score = score + num;
@@ -187,15 +210,35 @@ function healthDown(){
     con.removeChild(con.children[0]);
 }
 
+function collideWall(){  
+    return levelWalls.every(collideCheck);
+}
 
-function collideCheck(obj){
-    console.log(obj.x);   
+function collideSymbol(){
+    levelSymbols.every(collideCheckRemove);
+}
+
+function collideCheck(obj){   
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
 }
 
+function collideCheckRemove(obj, index){   
+    if (player.x <= obj.x + obj.w && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y+ obj.w &&
+        player.y + player.w >= obj.y) {
+            scoreChange(100);
+            levelSymbols.splice(index, 1);
+            let con = document.getElementById("map");
+            con.removeChild(con.children[index]);
+            return false;
+        }
+    
+    
+}
 
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
@@ -215,134 +258,3 @@ document.addEventListener("keyup", (e) => {
 
 window.addEventListener("DOMContentLoaded", levelPopulate());
 window.addEventListener("DOMContentLoaded", gameLoop());
-
-/*---------------------------------------------------------
-let ps;
-
-let player = document.querySelector(".player");
-let map = document.querySelector(".map");
-
-let x = 100;
-let y = 50;
-let w = 32;
-let directions = [];
-let speed = 0.5;
-
-const playerDirections = {
-    up: "up",
-    down: "down",
-    left: "left",
-    right: "right",
-}
-
-const keys = {
-    ArrowUp: playerDirections.up,
-    ArrowLeft: playerDirections.left,
-    ArrowRight: playerDirections.right,
-    ArrowDown: playerDirections.down,
-}
-
-const placePlayer = () =>{
-
-    let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
-    ps = pixelSize;
-    const direction = directions[0];
-
-    if(direction && collideCheck() === false){
-        if(direction === playerDirections.right) {x += speed;}
-        if(direction === playerDirections.left){x-= speed;}
-        if(direction === playerDirections.down){y += speed;}
-        if(direction === playerDirections.up){y -= speed;}
-        player.setAttribute("facing", direction);
-    } else {
-        if(direction === playerDirections.right) {x -= 5;}
-        if(direction === playerDirections.left){x+= 5;}
-        if(direction === playerDirections.down){y -= 5;}
-        if(direction === playerDirections.up){y += 5;} 
-    }
-
-    player.setAttribute("walking", direction ? "true" : "false");
-
-    let lLimit = 0;
-    let rLimit = 600 - 32;
-    let tLimit = 0;
-    let bLimit = 350 - 32;
-
-    if (x < lLimit) {x = lLimit;}
-    if (x > rLimit) {x = rLimit;}
-    if (y < tLimit) {y = tLimit;}
-    if (y > bLimit) {y = bLimit;}
-
-    player.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;  
-  
-    
-}
-
-function collideCheck(){
-    let boxX = 100;
-    let boxY = 100;
-    let boxW = 32;
-   
-    if (x < boxX + boxW && 
-        x + w > boxX &&
-        y < boxY + boxW &&
-        y + w > boxY   )
-        {
-            return true;
-        } 
-        else {
-            return false;
-        }
-}
-
-function createBox(x,y){
-    let box = document.createElement('div');
-    let target = document.getElementById("map");
-
-    box.setAttribute("class","box");
-    box.setAttribute("id","box");
-    target.appendChild(box);
-
-    box.style.transform = `translate3d( ${x*ps}px, ${y*ps}px, 0 )`;
-
-}
-
-function init(){
-    let up = document.getElementById("upArrow");
-    let right = document.getElementById("rightArrow");
-    let left = document.getElementById("leftArrow");
-    let down = document.getElementById("downArrow");
-
-    step();
-
-    createBox(16,16);
-
-    createBox(100,100);
-
-}
-
-const step = () => {
-    placePlayer();
-    window.requestAnimationFrame(() => {
-       step();
-    })
- }
-
-document.addEventListener("keydown", (e) =>{
-    let dir = keys[e.key];
-    
-    if (dir && directions.indexOf(dir) === -1) {
-        directions.unshift(dir)
-    }
-})
-
-document.addEventListener("keyup", (e) => {
-    let dir = keys[e.key];
-    let index = directions.indexOf(dir);
-    if (index > -1){
-        directions.splice(index, 1)
-    }
-})
-
-window.addEventListener("DOMContentLoaded", init());
---------------------------------------*/
