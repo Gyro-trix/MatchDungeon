@@ -62,6 +62,7 @@ function levelPopulate(){
             healthUp();
             healthUp();
             healthUp();
+            healthDown();
             displayPlayer();
             createWall(50,50,32);
             createWall(100,120,32);
@@ -167,6 +168,12 @@ function scoreChange(num){
     document.getElementById("score").innerHTML = score;
 }
 
+function levelChange(num){
+    level = level + num;
+    document.getElementById("level").innerHTML = "";
+    document.getElementById("level").innerHTML = score;
+}
+
 function healthUp(){
     let con = document.getElementById("health");
     let div = document.createElement('div');
@@ -174,13 +181,19 @@ function healthUp(){
     con.appendChild(div);
 }
 
+function healthDown(){
+    let con = document.getElementById("health");
+    player.health -= 1;
+    con.removeChild(con.children[0]);
+}
+
+
 function collideCheck(obj){
     console.log(obj.x);   
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
-       
 }
 
 
