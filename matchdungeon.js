@@ -56,7 +56,7 @@ function displayPlayer(){
 
 function levelPopulate(){
     switch (level){
-        case 1:
+        case 1:     
             document.getElementById("score").innerHTML = level;
             document.getElementById("level").innerHTML = level;
             healthUp();
@@ -183,11 +183,11 @@ function collideCheck(obj){
        
 }
 
+
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
     console.log(e.key);
     if (dir && directions.indexOf(dir) === -1) {
-        console.log(dir);
         directions.unshift(dir);
     }
 })
