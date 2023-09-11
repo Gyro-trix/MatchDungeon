@@ -2,6 +2,7 @@ let score = 0;
 let pause = 0;
 let level = 1;
 let speed = 1;
+
 let solidCol = false;
 
 let directions = [];
@@ -141,18 +142,20 @@ function playerMovement(){
 
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
+    let fps = 60;
     playerMovement();
+    setTimeout(() => {
     window.requestAnimationFrame(() => {
         gameLoop();
      })
+    }, 1000 / fps)
 }
 
 function collider(){
-console.log(levelWalls.every(collideCheck));   
-return levelWalls.every(collideCheck);
+    console.log(levelWalls.every(collideCheck));   
+    return levelWalls.every(collideCheck);
 
 }
-
 
 function collideCheck(obj){
     console.log(obj.x);   
@@ -162,8 +165,6 @@ function collideCheck(obj){
         player.y + player.w >= obj.y);
        
 }
-
-
 
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
