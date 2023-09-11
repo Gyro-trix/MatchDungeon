@@ -20,16 +20,16 @@
     background-color: rgb(0, 87, 7);
 }
 .player[facing = up]{
-    background-color: rgb(175, 36, 36);
+    background-color: rgb(66, 36, 175);
 }
 .player[facing = down]{
     background-color: rgb(175, 36, 36);
 }
 .player[facing = left]{
-    background-color: rgb(175, 36, 36);
+    background-color: rgb(36, 175, 36);
 }
 .player[facing = right]{
-    background-color: rgb(175, 36, 36);
+    background-color: rgb(149, 175, 36);
 }
 .wall{
     width: calc(var(--grid-cell)*2);
@@ -155,11 +155,14 @@ body{
     background: transparent;
 }
 .level, .score, .health{
+    text-indent: 10px;
+    color: beige;
+    display:flex;
     background-color: rgb(6, 77, 0);
     margin-left: 25px;
     margin-right: 10px;
-    height: 20px;
-    width: 60px;
+    height: 30px;
+    width: 100px;
 }
 .buttons{
     background-color: rgb(48, 48, 48);
@@ -269,5 +272,33 @@ body{
     height: 50px;
 }
 
-
+#heart {
+    position: relative;
+    width: 25px;
+    height: 22px;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  
+#heart::before, #heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 13px;
+    height: 20px;
+    border-radius: 50px 50px 0 0;
+    background: red;
+  }
+  
+ #heart::before {
+    left: 12.5px;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+  }
+  
+ #heart::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+  }
 

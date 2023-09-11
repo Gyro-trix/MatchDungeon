@@ -57,7 +57,11 @@ function displayPlayer(){
 function levelPopulate(){
     switch (level){
         case 1:
-            console.log(level);
+            document.getElementById("score").innerHTML = level;
+            document.getElementById("level").innerHTML = level;
+            healthUp();
+            healthUp();
+            healthUp();
             displayPlayer();
             createWall(50,50,32);
             createWall(100,120,32);
@@ -155,6 +159,19 @@ function collider(){
     console.log(levelWalls.every(collideCheck));   
     return levelWalls.every(collideCheck);
 
+}
+
+function scoreChange(num){
+    score = score + num;
+    document.getElementById("score").innerHTML = "";
+    document.getElementById("score").innerHTML = score;
+}
+
+function healthUp(){
+    let con = document.getElementById("health");
+    let div = document.createElement('div');
+    div.setAttribute('id','heart');
+    con.appendChild(div);
 }
 
 function collideCheck(obj){
