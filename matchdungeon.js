@@ -268,7 +268,7 @@ document.addEventListener("keyup", (e) => {
     }
 })
 function initControls(){
-   document.getElementById("upArrow").addEventListener("click", function(){scoreChange(100);}); 
+   document.getElementById("upArrow").addEventListener("mousedown", function(){scoreChange(100);}); 
 }
 
 window.addEventListener("DOMContentLoaded", levelPopulate());
