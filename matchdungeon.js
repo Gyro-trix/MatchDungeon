@@ -1,7 +1,7 @@
 let score = 0;
 let pause = 0;
 let level = 1;
-let speed = 1;
+let speed = 2;
 
 let solidCol = false;
 
@@ -24,6 +24,14 @@ function Symbol(x,y,w){
     this.x = x;
     this.y = y;
     this.w = w;
+}
+
+function Enemy(x,y,w,pstart,pend){
+this.x = x;
+this.y = y;
+this.w = w;
+this.pstart = pstart;
+this.pend = pend;
 }
 
 const player = {
@@ -101,7 +109,7 @@ function createWall(x,y,w){
     levelWalls.push(wl);
 }
 
-function createEnemy(x,y,w){
+function createEnemy(x,y,w,ps,pe){
     let box = document.createElement('div');
     let target = document.getElementById("map");
 
@@ -110,6 +118,9 @@ function createEnemy(x,y,w){
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+
+    let temp = new Enemy(x,y,w,ps,pe);
+    levelEnemy.push(temp);
 }
 
 function createSymbol(x,y,w){
@@ -239,6 +250,8 @@ function collideCheckRemove(obj, index){
     
     
 }
+
+
 
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
