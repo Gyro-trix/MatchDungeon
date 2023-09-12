@@ -1,7 +1,7 @@
 let score = 0;
 let pause = 0;
 let level = 1;
-let speed = 2;
+let speed = 4;
 
 let solidCol = false;
 
@@ -59,7 +59,6 @@ const keys = {
 function displayPlayer(){
     let box = document.createElement('div');
     let target = document.getElementById("map");
-
     box.setAttribute("class","player");
     box.setAttribute("id","player");
     box.setAttribute("facing","down");
@@ -72,6 +71,8 @@ function displayPlayer(){
 function levelPopulate(){
     switch (level){
         case 1:     
+            displayPlayer();
+        
             document.getElementById("score").innerHTML = level;
             document.getElementById("level").innerHTML = level;
             healthUp();
@@ -82,7 +83,7 @@ function levelPopulate(){
             createSymbol(300,200,32);
             
 
-            displayPlayer();
+            
             createWall(50,50,32);
             createWall(100,120,32);
             createWall(200,200,32);
@@ -132,10 +133,10 @@ function createSymbol(x,y,w){
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-    let sym = new Symbol(x,y,w);
-    levelSymbols.push(sym);
+    let temp = new Symbol(x,y,w);
+    levelSymbols.push(temp);
 }
-
+/*
 function createObstacle(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
@@ -146,7 +147,7 @@ function createObstacle(x,y,w){
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 }
-
+*/
 function playerMovement(){
     ps = pixelSize;
     const direction = directions[0];
@@ -185,7 +186,7 @@ function playerMovement(){
 
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
-    let fps = 60;
+    let fps = 30;
     playerMovement();
     setTimeout(() => {
     window.requestAnimationFrame(() => {
@@ -251,8 +252,6 @@ function collideCheckRemove(obj, index){
     
 }
 
-
-
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
     console.log(e.key);
@@ -268,6 +267,10 @@ document.addEventListener("keyup", (e) => {
         directions.splice(index, 1)
     }
 })
+function initControls(){
+   document.getElementsByClassName("A").addEventListener("click", function(){scoreChange(100);}); 
+}
 
 window.addEventListener("DOMContentLoaded", levelPopulate());
 window.addEventListener("DOMContentLoaded", gameLoop());
+window.addEventListener("DOMContentLoaded", initControls());
