@@ -26,12 +26,12 @@ function Symbol(x,y,w){
     this.w = w;
 }
 
-function Enemy(x,y,w,pstart,pend){
-this.x = x;
-this.y = y;
-this.w = w;
-this.pstart = pstart;
-this.pend = pend;
+function Enemy(x,y,w,px,py){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.px = px;
+    this.py = py;
 }
 
 const player = {
@@ -110,7 +110,7 @@ function createWall(x,y,w){
     levelWalls.push(wl);
 }
 
-function createEnemy(x,y,w,ps,pe){
+function createEnemy(x,y,w,px,py){
     let box = document.createElement('div');
     let target = document.getElementById("map");
 
@@ -120,7 +120,7 @@ function createEnemy(x,y,w,ps,pe){
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 
-    let temp = new Enemy(x,y,w,ps,pe);
+    let temp = new Enemy(x,y,w,px,py);
     levelEnemy.push(temp);
 }
 
@@ -182,6 +182,13 @@ function playerMovement(){
     if (player.y > bLimit) {player.y = bLimit;}
 
     plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
+}
+
+function enemyMovement(obj){
+    let tempx = obj.x;
+    while (obj.x < obj.px){
+    obj.x += speed;
+}
 }
 
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
