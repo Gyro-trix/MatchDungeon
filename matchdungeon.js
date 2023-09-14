@@ -180,6 +180,7 @@ function playerMovement(){
     }
 */
     collideSymbol();
+    collideEnemy();
 
     plyr.setAttribute("walking", direction ? "true" : "false");
 
@@ -285,10 +286,15 @@ function collideEnemy(){
 }
 
 function collideEnemyCheck(obj){   
-    return !(player.x <= obj.x + obj.w && 
+    if(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
-        player.y + player.w >= obj.y);
+        player.y + player.w >= obj.y){
+            player.x = 0;
+            player.y = 0;
+            healthDown();
+
+        }
 }
 
 function collideSymbol(){
