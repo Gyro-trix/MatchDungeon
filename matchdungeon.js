@@ -81,11 +81,12 @@ function levelPopulate(){
 
             createSymbol(100,200,32);
             createSymbol(300,200,32);
+            createSymbol(300,100,32);
             displayPlayer();
 
             
             createWall(50,50,32);
-            createWall(100,120,32);
+            createWall(50,82,32);
             createWall(200,200,32);
         break;
         case 2:
@@ -259,6 +260,8 @@ function collideCheckRemove(obj, index){
     
 }
 
+/* Player controls and inputs*/
+
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
     console.log(e.key);
@@ -274,10 +277,52 @@ document.addEventListener("keyup", (e) => {
         directions.splice(index, 1)
     }
 })
-function initControls(){
-   document.getElementById("upArrow").addEventListener("mousedown", function(){scoreChange(100);}); 
+
+/* D-pad functionality*/
+
+let isPressed = false;
+const removePressedAll = () => {
+   document.querySelectorAll("arrow").forEach(d => {
+      d.classList.remove("pressed")
+   })
 }
+document.body.addEventListener("mousedown", () => {
+   console.log('mouse  down')
+   isPressed = true;
+})
+document.body.addEventListener("mouseup", () => {
+   console.log('mouse  up')
+   isPressed = false;
+   directions = [];
+   removePressedAll();
+})
+const handleDpadPress = (direction, click) => {   
+   if (click) {
+      isPressed = true;
+   }
+   directions = (isPressed) ? [direction] : []
+   
+   if (isPressed) {
+      removePressedAll();
+      console.log(direction);
+      document.querySelector("."+direction+"Arrow").classList.add("pressed");
+   }
+}
+
+document.querySelector(".leftArrow").addEventListener("touchstart", (e) => handleDpadPress(playerDirections.left, true));
+document.querySelector(".upArrow").addEventListener("touchstart", (e) => handleDpadPress(playerDirections.up, true));
+document.querySelector(".rightArrow").addEventListener("touchstart", (e) => handleDpadPress(playerDirections.right, true));
+document.querySelector(".downArrow").addEventListener("touchstart", (e) => handleDpadPress(playerDirections.down, true));
+
+document.querySelector(".leftArrow").addEventListener("mousedown", (e) => handleDpadPress(playerDirections.left, true));
+document.querySelector(".upArrow").addEventListener("mousedown", (e) => handleDpadPress(playerDirections.up, true));
+document.querySelector(".rightArrow").addEventListener("mousedown", (e) => handleDpadPress(playerDirections.right, true));
+document.querySelector(".downArrow").addEventListener("mousedown", (e) => handleDpadPress(playerDirections.down, true));
+
+document.querySelector(".leftArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.left));
+document.querySelector(".upArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.up));
+document.querySelector(".rightArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.right));
+document.querySelector(".downArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.down));
 
 window.addEventListener("DOMContentLoaded", levelPopulate());
 window.addEventListener("DOMContentLoaded", gameLoop());
-window.addEventListener("DOMContentLoaded", initControls());
