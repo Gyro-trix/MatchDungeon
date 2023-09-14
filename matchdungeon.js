@@ -26,12 +26,14 @@ function Symbol(x,y,w){
     this.w = w;
 }
 
-function Enemy(x,y,w,px,py){
+function Enemy(x,y,w,strt,dest,axis){
     this.x = x;
     this.y = y;
     this.w = w;
-    this.px = px;
-    this.py = py;
+    this.strt = strt;
+    this.dest = dest;
+    this.axis = axis;
+
 }
 
 const player = {
@@ -82,8 +84,10 @@ function levelPopulate(){
             createSymbol(100,200,32);
             createSymbol(300,200,32);
             createSymbol(300,100,32);
-            displayPlayer();
 
+            createEnemy(400,100,32,400,332,"x");
+
+            displayPlayer();
             
             createWall(50,50,32);
             createWall(50,82,32);
@@ -111,7 +115,7 @@ function createWall(x,y,w){
     levelWalls.push(wl);
 }
 
-function createEnemy(x,y,w,px,py){
+function createEnemy(x,y,w,strt,dest,axis){
     let box = document.createElement('div');
     let target = document.getElementById("map");
 
@@ -121,8 +125,8 @@ function createEnemy(x,y,w,px,py){
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 
-    let temp = new Enemy(x,y,w,px,py);
-    levelEnemy.push(temp);
+    let temp = new Enemy(x,y,w,strt,dest,axis);
+    levelEnemies.push(temp);
 }
 
 function createSymbol(x,y,w){
@@ -168,7 +172,6 @@ function playerMovement(){
     }
 
     collideSymbol();
-        
 
     plyr.setAttribute("walking", direction ? "true" : "false");
 
@@ -185,17 +188,45 @@ function playerMovement(){
     plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
 }
 
-function enemyMovement(obj){
-    let tempx = obj.x;
-    while (obj.x < obj.px){
-    obj.x += speed;
+function enemyMovement(){
+
+    levelEnemies.forEach(moveEnemy);
+
 }
+
+function moveEnemy(obj){
+    let x = obj.x;
+    let y = obj.y;
+    let strt = obj.strt;
+    let dest = obj.dest;
+    let enmy = document.getElementById("enemy");;
+
+    if(obj.axis === "x" && obj.x < obj.dest){
+        obj.x += speed/2;
+    }
+    else if(obj.axis === "x" && obj.x > obj.dest){
+        obj.x -= speed/2;
+    }
+    else if(obj.axis === "y" && obj.y < obj.dest){
+        obj.y += speed/2;
+    } 
+    else if((obj.axis === "y" && obj.y > obj.dest)){
+        obj.y -= speed/2;
+    }
+
+    if (obj.x === obj.dest){
+        obj.x = dest;
+        obj.dest = strt;
+        obj.strt = dest;
+    }
+    enmy.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
     let fps = 30;
     playerMovement();
+    enemyMovement();
     setTimeout(() => {
     window.requestAnimationFrame(() => {
         gameLoop();
@@ -231,21 +262,21 @@ function healthDown(){
 }
 
 function collideWall(){  
-    return levelWalls.every(collideCheck);
+    return levelWalls.every(collideWallCheck);
 }
 
-function collideSymbol(){
-    levelSymbols.every(collideCheckRemove);
-}
-
-function collideCheck(obj){   
+function collideWallCheck(obj){   
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
 }
 
-function collideCheckRemove(obj, index){   
+function collideSymbol(){
+    levelSymbols.every(collideSymbolCheck);
+}
+
+function collideSymbolCheck(obj, index){   
     if (player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
@@ -256,7 +287,6 @@ function collideCheckRemove(obj, index){
             con.removeChild(con.children[index]);
             return false;
         }
-    
     
 }
 
