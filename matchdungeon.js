@@ -7,6 +7,8 @@ let solidCol = false;
 
 let directions = [];
 
+let isPressed = false;
+
 let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
 
 let levelWalls = [];
@@ -86,6 +88,7 @@ function levelPopulate(){
             createSymbol(300,100,32);
 
             createEnemy(400,100,32,400,332,"x");
+            createEnemy(200,300,32,300,220,"y");
 
             displayPlayer();
             
@@ -120,7 +123,7 @@ function createEnemy(x,y,w,strt,dest,axis){
     let target = document.getElementById("map");
 
     box.setAttribute("class","enemy");
-    box.setAttribute("id","enemy");
+    box.setAttribute("id","enemy "+ levelEnemies.length);
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
@@ -180,7 +183,11 @@ function playerMovement(){
     }
 */
     collideSymbol();
-    collideEnemy();
+    if(collideEnemy() === false){
+        player.x = 0;
+        player.y = 0;
+        healthDown();
+    }
 
     plyr.setAttribute("walking", direction ? "true" : "false");
 
@@ -203,12 +210,12 @@ function enemyMovement(){
 
 }
 
-function moveEnemy(obj){
+function moveEnemy(obj,index){
     let x = obj.x;
     let y = obj.y;
     let strt = obj.strt;
     let dest = obj.dest;
-    let enmy = document.getElementById("enemy");;
+    let enmy = document.getElementById("enemy "+ index);;
 
     if(obj.axis === "x" && obj.x < obj.dest){
         obj.x += speed/2;
@@ -223,8 +230,12 @@ function moveEnemy(obj){
         obj.y -= speed/2;
     }
 
-    if (obj.x === obj.dest){
+    if (obj.axis === "x" && obj.x === obj.dest){
         obj.x = dest;
+        obj.dest = strt;
+        obj.strt = dest;
+    } else if(obj.axis === "y" && obj.y === obj.dest) {
+        obj.y = dest;
         obj.dest = strt;
         obj.strt = dest;
     }
@@ -286,15 +297,12 @@ function collideEnemy(){
 }
 
 function collideEnemyCheck(obj){   
-    if(player.x <= obj.x + obj.w && 
+    return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
-        player.y + player.w >= obj.y){
-            player.x = 0;
-            player.y = 0;
-            healthDown();
-
-        }
+        player.y + player.w >= obj.y)
+           
+        
 }
 
 function collideSymbol(){
@@ -319,10 +327,10 @@ function collideSymbolCheck(obj, index){
 
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
-    console.log(e.key);
     if (dir && directions.indexOf(dir) === -1) {
         directions.unshift(dir);
     }
+    
 })
 
 document.addEventListener("keyup", (e) => {
@@ -335,7 +343,6 @@ document.addEventListener("keyup", (e) => {
 
 /* D-pad functionality*/
 
-let isPressed = false;
 const removePressedAll = () => {
    document.querySelectorAll("arrow").forEach(d => {
       d.classList.remove("pressed")
