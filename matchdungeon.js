@@ -71,7 +71,7 @@ function displayPlayer(){
 function levelPopulate(){
     switch (level){
         case 1:     
-            displayPlayer();
+            
         
             document.getElementById("score").innerHTML = level;
             document.getElementById("level").innerHTML = level;
@@ -81,7 +81,7 @@ function levelPopulate(){
 
             createSymbol(100,200,32);
             createSymbol(300,200,32);
-            
+            displayPlayer();
 
             
             createWall(50,50,32);
