@@ -158,19 +158,27 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
 
-    if(direction && collideWall() != false){
+    if(direction && collideWall() != false /*|| direction && collideEnemy() != false */){
         if(direction === playerDirections.right) {player.x += speed;}
         if(direction === playerDirections.left){player.x-= speed;}
         if(direction === playerDirections.down){player.y += speed;}
         if(direction === playerDirections.up){player.y -= speed;}
         plyr.setAttribute("facing", direction);
-    } else {
-        if(direction === playerDirections.right) {player.x -= 10;}
+    } else /*if(collideEnemy() === true)*/{
+        if(direction === playerDirections.right){player.x -= 10;}
         if(direction === playerDirections.left){player.x+= 10;}
         if(direction === playerDirections.down){player.y -= 10;}
         if(direction === playerDirections.up){player.y += 10;} 
+    } 
+    /*
+    else if(collideWall() === true){
+        if(direction === playerDirections.right){player.x -= 10;}
+        if(direction === playerDirections.left){player.x+= 10;}
+        if(direction === playerDirections.down){player.y -= 10;}
+        if(direction === playerDirections.up){player.y += 10;} 
+        healthDown();
     }
-
+*/
     collideSymbol();
 
     plyr.setAttribute("walking", direction ? "true" : "false");
@@ -266,6 +274,17 @@ function collideWall(){
 }
 
 function collideWallCheck(obj){   
+    return !(player.x <= obj.x + obj.w && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y+ obj.w &&
+        player.y + player.w >= obj.y);
+}
+
+function collideEnemy(){  
+    return levelEnemies.every(collideEnemyCheck);
+}
+
+function collideEnemyCheck(obj){   
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
