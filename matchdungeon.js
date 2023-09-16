@@ -29,6 +29,14 @@ function Symbol(x,y,w){
     this.w = w;
 }
 
+function Attack(x,y,w){
+    this.x=x;
+    this.y=y;
+    this.w=w;
+}
+
+let attack = new Attack(-32,-32,32);
+
 function Enemy(x,y,w,strt,dest,axis){
     this.x = x;
     this.y = y;
@@ -69,6 +77,7 @@ function displayPlayer(){
     box.setAttribute("facing","down");
     box.setAttribute("walking","false");
     target.appendChild(box);
+
 
     box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
 }
@@ -215,18 +224,24 @@ function playerAttack(){
     target.appendChild(box);
 
     if(dir === "down"){
-        box.style.transform = `translate3d( ${player.x}px, ${player.y+32}px , 0 )`;
+        attack.x = player.x;
+        attack.y = player.y+32;
     }else if(dir === "up"){
-        box.style.transform = `translate3d( ${player.x}px, ${player.y-32}px , 0 )`;
+        attack.x = player.x;
+        attack.y = player.y-32;
     }else if(dir === "left"){
-        box.style.transform = `translate3d( ${player.x-32}px, ${player.y}px , 0 )`;
+        attack.x = player.x-32;
+        attack.y = player.y;
     }else if(dir=== "right"){
-        box.style.transform = `translate3d( ${player.x+32}px, ${player.y}px , 0 )`;
+        attack.x = player.x+32;
+        attack.y = player.y;
     }
+    box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
+
 
     setTimeout(function(){
         box.remove();
-move = true;
+        move = true;
    },500);
     
 }
