@@ -2,6 +2,7 @@ let score = 0;
 let pause = 0;
 let level = 1;
 let speed = 4;
+let move = true;
 
 let solidCol = false;
 
@@ -161,28 +162,20 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
 
-    if(direction && collideWall() != false /*|| direction && collideEnemy() != false */){
+    if(direction && collideWall() && move != false){
         if(direction === playerDirections.right) {player.x += speed;}
         if(direction === playerDirections.left){player.x-= speed;}
         if(direction === playerDirections.down){player.y += speed;}
         if(direction === playerDirections.up){player.y -= speed;}
         plyr.setAttribute("facing", direction);
+        player.facing = direction;
         console.log(direction);
-    } else /*if(collideEnemy() === true)*/{
+    } else if (move === true){
         if(direction === playerDirections.right){player.x -= 7;}
         if(direction === playerDirections.left){player.x+= 7;}
         if(direction === playerDirections.down){player.y -= 7;}
         if(direction === playerDirections.up){player.y += 7;} 
     } 
-    /*
-    else if(collideWall() === true){
-        if(direction === playerDirections.right){player.x -= 10;}
-        if(direction === playerDirections.left){player.x+= 10;}
-        if(direction === playerDirections.down){player.y -= 10;}
-        if(direction === playerDirections.up){player.y += 10;} 
-        healthDown();
-    }
-*/
 
     let a = document.getElementById("A");
 
@@ -213,22 +206,28 @@ function playerMovement(){
 function playerAttack(){
     let box = document.createElement('div');
     let target = document.getElementById("map");
+    let dir = player.facing;
 
-    console.log("attack");
-
+    console.log(dir);
+    move = false;
     box.setAttribute("class","attack");
     box.setAttribute("id","attack");
     target.appendChild(box);
 
-    if(player.facing === "up"){
+    if(dir === "down"){
         box.style.transform = `translate3d( ${player.x}px, ${player.y+32}px , 0 )`;
-    }else if(player.facing === "down"){
+    }else if(dir === "up"){
         box.style.transform = `translate3d( ${player.x}px, ${player.y-32}px , 0 )`;
-    }else if(player.facing === "left"){
+    }else if(dir === "left"){
         box.style.transform = `translate3d( ${player.x-32}px, ${player.y}px , 0 )`;
-    }else if(player.facing === "right"){
+    }else if(dir=== "right"){
         box.style.transform = `translate3d( ${player.x+32}px, ${player.y}px , 0 )`;
     }
+
+    setTimeout(function(){
+        box.remove();
+move = true;
+   },500);
     
 }
 
@@ -279,8 +278,6 @@ function gameLoop(){
      })
     }, 1000 / fps)
 }
-
-
 
 function scoreChange(num){
     score = score + num;
@@ -368,7 +365,6 @@ document.addEventListener("keyup", (e) => {
 })
 
 document.addEventListener("keyup", (e) => {
-    console.log(e.key);
     if (e.key === " "){
         playerAttack()
     }
