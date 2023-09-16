@@ -31,6 +31,14 @@
 .player[facing = right]{
     background-color: rgb(149, 175, 36);
 }
+.attack{
+    width: calc(var(--grid-cell)*2);
+    height: calc(var(--grid-cell)*2);
+    position: absolute;
+    overflow: hidden;
+    background-color: rgb(135, 218, 142);
+}
+
 .wall{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);

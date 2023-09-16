@@ -167,6 +167,7 @@ function playerMovement(){
         if(direction === playerDirections.down){player.y += speed;}
         if(direction === playerDirections.up){player.y -= speed;}
         plyr.setAttribute("facing", direction);
+        console.log(direction);
     } else /*if(collideEnemy() === true)*/{
         if(direction === playerDirections.right){player.x -= 7;}
         if(direction === playerDirections.left){player.x+= 7;}
@@ -182,6 +183,11 @@ function playerMovement(){
         healthDown();
     }
 */
+
+    let a = document.getElementById("A");
+
+    a.addEventListener("click", playerAttack);
+
     collideSymbol();
     if(collideEnemy() === false){
         player.x = 0;
@@ -204,10 +210,30 @@ function playerMovement(){
     plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
 }
 
+function playerAttack(){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+
+    console.log("attack");
+
+    box.setAttribute("class","attack");
+    box.setAttribute("id","attack");
+    target.appendChild(box);
+
+    if(player.facing === "up"){
+        box.style.transform = `translate3d( ${player.x}px, ${player.y+32}px , 0 )`;
+    }else if(player.facing === "down"){
+        box.style.transform = `translate3d( ${player.x}px, ${player.y-32}px , 0 )`;
+    }else if(player.facing === "left"){
+        box.style.transform = `translate3d( ${player.x-32}px, ${player.y}px , 0 )`;
+    }else if(player.facing === "right"){
+        box.style.transform = `translate3d( ${player.x+32}px, ${player.y}px , 0 )`;
+    }
+    
+}
+
 function enemyMovement(){
-
     levelEnemies.forEach(moveEnemy);
-
 }
 
 function moveEnemy(obj,index){
@@ -301,8 +327,6 @@ function collideEnemyCheck(obj){
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y)
-           
-        
 }
 
 function collideSymbol(){
@@ -323,6 +347,8 @@ function collideSymbolCheck(obj, index){
     
 }
 
+
+
 /* Player controls and inputs*/
 
 document.addEventListener("keydown", (e) =>{
@@ -338,6 +364,13 @@ document.addEventListener("keyup", (e) => {
     let index = directions.indexOf(dir);
     if (index > -1){
         directions.splice(index, 1)
+    }
+})
+
+document.addEventListener("keyup", (e) => {
+    console.log(e.key);
+    if (e.key === " "){
+        playerAttack()
     }
 })
 
