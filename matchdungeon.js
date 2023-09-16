@@ -1,7 +1,7 @@
 let score = 0;
 let pause = 0;
 let level = 1;
-let speed = 4;
+let speed = 5;
 let move = true;
 
 let solidCol = false;
@@ -72,23 +72,23 @@ const keys = {
 function displayPlayer(){
     let box = document.createElement('div');
     let target = document.getElementById("map");
+   
     box.setAttribute("class","player");
     box.setAttribute("id","player");
     box.setAttribute("facing","down");
     box.setAttribute("walking","false");
     target.appendChild(box);
 
-
     box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
 }
 
 function levelPopulate(){
+    document.getElementById("score").innerHTML = level;
+    document.getElementById("level").innerHTML = level;
+    
     switch (level){
         case 1:     
             
-        
-            document.getElementById("score").innerHTML = level;
-            document.getElementById("level").innerHTML = level;
             healthUp();
             healthUp();
             healthUp();
@@ -178,12 +178,15 @@ function playerMovement(){
         if(direction === playerDirections.up){player.y -= speed;}
         plyr.setAttribute("facing", direction);
         player.facing = direction;
-        console.log(direction);
     } else if (move === true){
-        if(direction === playerDirections.right){player.x -= 7;}
-        if(direction === playerDirections.left){player.x+= 7;}
-        if(direction === playerDirections.down){player.y -= 7;}
-        if(direction === playerDirections.up){player.y += 7;} 
+        /*move = false;*/
+        if(direction === playerDirections.right){player.x -= 10;}
+        if(direction === playerDirections.left){player.x+= 10;}
+        if(direction === playerDirections.down){player.y -= 10;}
+        if(direction === playerDirections.up){player.y += 10;} 
+        /* setTimeout(function(){
+            move = true;
+        },100);*/
     } 
 
     let a = document.getElementById("A");
@@ -238,6 +241,7 @@ function playerAttack(){
     }
     box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
 
+    levelEnemies.forEach(attackEnemyCheck);
 
     setTimeout(function(){
         box.remove();
@@ -258,16 +262,16 @@ function moveEnemy(obj,index){
     let enmy = document.getElementById("enemy "+ index);;
 
     if(obj.axis === "x" && obj.x < obj.dest){
-        obj.x += speed/2;
+        obj.x += 2;
     }
     else if(obj.axis === "x" && obj.x > obj.dest){
-        obj.x -= speed/2;
+        obj.x -= 2;
     }
     else if(obj.axis === "y" && obj.y < obj.dest){
-        obj.y += speed/2;
+        obj.y += 2;
     } 
     else if((obj.axis === "y" && obj.y > obj.dest)){
-        obj.y -= speed/2;
+        obj.y -= 2;
     }
 
     if (obj.axis === "x" && obj.x === obj.dest){
@@ -341,8 +345,26 @@ function collideEnemyCheck(obj){
         player.y + player.w >= obj.y)
 }
 
+function  attackEnemy(){  
+    return levelEnemies.every(attackEnemyCheck);
+}
+
+function attackEnemyCheck(obj,index){   
+    if(attack.x <= obj.x + obj.w && 
+        attack.x + attack.w >= obj.x &&
+        attack.y <= obj.y+ obj.w &&
+        attack.y + attack.w >= obj.y){
+            scoreChange(100);
+            levelEnemies.splice(index, 1);
+            console.log(index);
+            let box = document.getElementById("enemy "+ index);
+            box.remove();
+            
+        }
+}
+
 function collideSymbol(){
-    levelSymbols.every(collideSymbolCheck);
+    levelSymbols.forEach(collideSymbolCheck);
 }
 
 function collideSymbolCheck(obj, index){   

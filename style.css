@@ -5,7 +5,7 @@
 }
 .map{
     width: calc(var(--pixel-size)*600);
-    height: calc(var(--pixel-size)*350);
+    height: calc(var(--pixel-size)*352);
     overflow: hidden;
     background:rgb(9, 102, 1);
     position:absolute;
