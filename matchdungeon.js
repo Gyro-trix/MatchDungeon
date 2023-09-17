@@ -97,22 +97,26 @@ function toPause(){
     }
 }
 
-function levelPopulate(){
+function init(){
     document.getElementById("score").innerHTML = level;
     document.getElementById("level").innerHTML = level;
     
     let pbtn = document.getElementById("Pause");
-
-    pbtn = addEventListener("click", toPause);
+    pbtn.addEventListener("click", toPause);
 
     let scrn = document.getElementById("screen");
     let pscrn = document.createElement('div');
-
     pscrn.setAttribute("class","screen pause");
     pscrn.setAttribute("id","screen pause");
     scrn.appendChild(pscrn);
-
     pscrn.style.visibility = "hidden";
+
+    let a = document.getElementById("A");
+    a.addEventListener("click", playerAttack);
+}
+
+function levelPopulate(){
+    
     
     switch (level){
         case 1:     
@@ -217,9 +221,7 @@ function playerMovement(){
         },100);*/
     } 
 
-    let a = document.getElementById("A");
-
-    a.addEventListener("click", playerAttack);
+    
 
     collideSymbol();
     if(collideEnemy() === false){
@@ -438,6 +440,9 @@ document.addEventListener("keyup", (e) => {
     if (e.key === " "){
         playerAttack()
     }
+    if (e.key === "Enter"){
+        toPause();
+    }
 })
 
 /* D-pad functionality*/
@@ -485,7 +490,6 @@ document.querySelector(".upArrow").addEventListener("mouseover", (e) => handleDp
 document.querySelector(".rightArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.right));
 document.querySelector(".downArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.down));
 
-
-
+window.addEventListener("DOMContentLoaded", init());
 window.addEventListener("DOMContentLoaded", levelPopulate());
 window.addEventListener("DOMContentLoaded", gameLoop());
