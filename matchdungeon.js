@@ -435,7 +435,7 @@ document.addEventListener("keyup", (e) => {
     }
 })
 
-document.addEventListener("keyup", (e) => {
+document.addEventListener("keydown", (e) => {
     console.log(e.key);
     if (e.key === " "){
         playerAttack()
