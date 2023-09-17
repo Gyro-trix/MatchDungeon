@@ -27,3 +27,24 @@ Multiple Levels with different puzzles to solve
 A score system that is tied to how fast a level is completed
 
 A progress display on the puzzle completion
+
+## Left to Add
+
+Add a timer that can be paused, and means game over when at zero (A timer with mins and secs)
+
+Create level completion requirements
+
+Level End and cleanup before starting new level.
+
+Create sprites and graphics
+
+Maybe sounds (will be pretty simple)
+
+## For later
+
+Make a boss
+
+Arrow trap obstacle
+
+refine code to use only on object instead of multiple that use x, y, and width
+
