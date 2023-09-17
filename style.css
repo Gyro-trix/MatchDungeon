@@ -169,9 +169,18 @@ body{
 .screen{
     background-color: rgb(79, 138, 79);
     display: flex;
+    position: relative;
     margin-left: 25px;
     width: 600px;
     height: 400px;
+}
+.screen.pause{
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
 }
 .playarea{
     background: transparent;

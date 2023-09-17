@@ -1,8 +1,9 @@
 let score = 0;
-let pause = 0;
+let pause = false;
 let level = 1;
 let speed = 5;
 let move = true;
+let time = 90;
 
 let solidCol = false;
 
@@ -16,6 +17,8 @@ let levelWalls = [];
 let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
+
+
 
 function Wall(x,y,w){
     this.x = x;
@@ -82,9 +85,34 @@ function displayPlayer(){
     box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
 }
 
+function toPause(){
+    let pscrn = document.getElementById("screen pause");
+
+    if(pause === true){
+        pscrn.style.visibility = "hidden";
+        pause = false;
+    } else if (pause === false){
+        pscrn.style.visibility = "visible";
+        pause = true;
+    }
+}
+
 function levelPopulate(){
     document.getElementById("score").innerHTML = level;
     document.getElementById("level").innerHTML = level;
+    
+    let pbtn = document.getElementById("Pause");
+
+    pbtn = addEventListener("click", toPause);
+
+    let scrn = document.getElementById("screen");
+    let pscrn = document.createElement('div');
+
+    pscrn.setAttribute("class","screen pause");
+    pscrn.setAttribute("id","screen pause");
+    scrn.appendChild(pscrn);
+
+    pscrn.style.visibility = "hidden";
     
     switch (level){
         case 1:     
@@ -289,8 +317,11 @@ function moveEnemy(obj,index){
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
     let fps = 30;
-    playerMovement();
-    enemyMovement();
+   
+    if (pause === false){
+        playerMovement();
+        enemyMovement();
+    }
     setTimeout(() => {
     window.requestAnimationFrame(() => {
         gameLoop();
@@ -403,6 +434,7 @@ document.addEventListener("keyup", (e) => {
 })
 
 document.addEventListener("keyup", (e) => {
+    console.log(e.key);
     if (e.key === " "){
         playerAttack()
     }
@@ -452,6 +484,8 @@ document.querySelector(".leftArrow").addEventListener("mouseover", (e) => handle
 document.querySelector(".upArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.up));
 document.querySelector(".rightArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.right));
 document.querySelector(".downArrow").addEventListener("mouseover", (e) => handleDpadPress(playerDirections.down));
+
+
 
 window.addEventListener("DOMContentLoaded", levelPopulate());
 window.addEventListener("DOMContentLoaded", gameLoop());
