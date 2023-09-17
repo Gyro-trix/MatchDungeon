@@ -355,10 +355,11 @@ function attackEnemyCheck(obj,index){
         attack.y <= obj.y+ obj.w &&
         attack.y + attack.w >= obj.y){
             scoreChange(100);
-            levelEnemies.splice(index, 1);
+            /*levelEnemies.splice(index, 1)*/;
+            levelEnemies[index] = " ";
             console.log(index);
             let box = document.getElementById("enemy "+ index);
-            box.remove();
+            box.style.visibility = "hidden";
             
         }
 }
