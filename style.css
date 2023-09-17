@@ -171,15 +171,14 @@ body{
     display: flex;
     position: relative;
     margin-left: 25px;
+    margin-bottom: 25px;;
     width: 600px;
     height: 400px;
 }
 .screen.pause{
     position: absolute;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    margin-left: 0px;
+    margin-bottom:0px;
     z-index: 5;
 }
 .playarea{
