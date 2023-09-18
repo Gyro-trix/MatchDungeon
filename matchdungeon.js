@@ -3,7 +3,8 @@ let pause = false;
 let level = 1;
 let speed = 5;
 let move = true;
-let time = 90;
+let sec = 90;
+let time;
 
 let solidCol = false;
 
@@ -314,6 +315,26 @@ function moveEnemy(obj,index){
         obj.strt = dest;
     }
     enmy.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
+}
+
+function timer(){
+    if (pause === false){
+        time = setInterval(function(){
+        /*document.getElementById('timer').innerHTML=sec-1;*/
+        sec--;
+        if (sec <= 0) {
+            clearInterval(time);
+            /* Game Over */
+            }
+        }, 1000);
+    
+        
+    } else if(pause === true){
+    
+    
+    clearInterval(time);
+    
+}
 }
 
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
