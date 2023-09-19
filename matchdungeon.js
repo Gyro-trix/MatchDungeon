@@ -5,6 +5,7 @@ let speed = 5;
 let move = true;
 let sec = 90;
 let time;
+let cursym = 0;
 
 let solidCol = false;
 
@@ -19,7 +20,7 @@ let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
 
-
+let attack = new Attack(-32,-32,32);
 
 function Wall(x,y,w){
     this.x = x;
@@ -38,8 +39,6 @@ function Attack(x,y,w){
     this.y=y;
     this.w=w;
 }
-
-let attack = new Attack(-32,-32,32);
 
 function Enemy(x,y,w,strt,dest,axis){
     this.x = x;
@@ -180,7 +179,8 @@ function createSymbol(x,y,w){
     let target = document.getElementById("map");
 
     box.setAttribute("class","symbol");
-    box.setAttribute("id","symbol");
+    box.setAttribute("id","symbol " + levelSymbols.length);
+    box.innerHTML = levelSymbols.length;
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
@@ -225,6 +225,8 @@ function playerMovement(){
     
 
     collideSymbol();
+
+
     if(collideEnemy() === false){
         player.x = 0;
         player.y = 0;
@@ -334,7 +336,16 @@ function timer(){
     
     clearInterval(time);
     
+    }
 }
+
+function symbolShuffle(array){
+    for(let i = array.length -1; i>0;i--){
+        let j = Math.floor(Math.random()*(i+1));
+        let t = array[i];
+        array[i] = array[j];
+        array[j] = t;
+    }
 }
 
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
@@ -423,14 +434,15 @@ function collideSymbol(){
 }
 
 function collideSymbolCheck(obj, index){   
-    if (player.x <= obj.x + obj.w && 
+    if ((cursym === index)&&(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
-        player.y + player.w >= obj.y) {
+        player.y + player.w >= obj.y)) {
             scoreChange(100);
             levelSymbols.splice(index, 1);
             let con = document.getElementById("map");
             con.removeChild(con.children[index]);
+            cursym = cursym + 1;
             return false;
         }
     
