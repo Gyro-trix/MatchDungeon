@@ -129,6 +129,8 @@ function levelPopulate(){
             createSymbol(300,200,32);
             createSymbol(300,100,32);
 
+            symbolShuffle(levelSymbols);
+
             createEnemy(400,100,32,400,332,"x");
             createEnemy(200,300,32,300,220,"y");
 
@@ -178,15 +180,32 @@ function createSymbol(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
 
-    box.setAttribute("class","symbol");
-    box.setAttribute("id","symbol " + levelSymbols.length);
-    box.innerHTML = levelSymbols.length;
-    target.appendChild(box);
+    
 
-    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    
     let temp = new Symbol(x,y,w);
     levelSymbols.push(temp);
 }
+
+function symbolShuffle(array){
+    for(let i = array.length -1; i>0;i--){
+        let j = Math.floor(Math.random()*(i+1));
+        let t = array[i];
+        array[i] = array[j];
+        array[j] = t;
+    }
+    for(let r = array.length - 1; r > 0; r--){
+        let box = document.createElement('div');
+        let target = document.getElementById("map");
+        let obj = array[r];
+        box.setAttribute("class","symbol");
+        box.setAttribute("id","symbol " + levelSymbols.length);
+        box.innerHTML = levelSymbols.length;
+        target.appendChild(box);
+        box.style.transform = `translate3d( ${obj.x}px, ${obj.y}px , 0 )`;
+    }
+}
+
 /*
 function createObstacle(x,y,w){
     let box = document.createElement('div');
@@ -339,14 +358,7 @@ function timer(){
     }
 }
 
-function symbolShuffle(array){
-    for(let i = array.length -1; i>0;i--){
-        let j = Math.floor(Math.random()*(i+1));
-        let t = array[i];
-        array[i] = array[j];
-        array[j] = t;
-    }
-}
+
 
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
@@ -439,9 +451,11 @@ function collideSymbolCheck(obj, index){
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y)) {
             scoreChange(100);
-            levelSymbols.splice(index, 1);
+            /* levelSymbols.splice(index, 1);*/
+            levelSymbols[index] = " ";
+            let temp = document.getElementById("symbol " + index)
             let con = document.getElementById("map");
-            con.removeChild(con.children[index]);
+            con.removeChild(temp);
             cursym = cursym + 1;
             return false;
         }
