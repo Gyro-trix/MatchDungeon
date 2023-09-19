@@ -179,14 +179,12 @@ function createEnemy(x,y,w,strt,dest,axis){
 function createSymbol(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
-
-    
-
-    
+  
     let temp = new Symbol(x,y,w);
     levelSymbols.push(temp);
 }
 
+/* Shuffles and visually creates symbols*/
 function symbolShuffle(array){
     for(let i = array.length -1; i>0;i--){
         let j = Math.floor(Math.random()*(i+1));
@@ -244,6 +242,11 @@ function playerMovement(){
     
 
     collideSymbol();
+    if (cursym === levelSymbols.length){
+        /* Spawn exit door */
+        console.log("Next Level");
+        cursym = 0;
+    }
 
 
     if(collideEnemy() === false){
