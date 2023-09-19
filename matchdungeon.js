@@ -194,13 +194,13 @@ function symbolShuffle(array){
         array[i] = array[j];
         array[j] = t;
     }
-    for(let r = array.length - 1; r > 0; r--){
+    for(let r = array.length -1; r >= 0; r--){
         let box = document.createElement('div');
         let target = document.getElementById("map");
         let obj = array[r];
         box.setAttribute("class","symbol");
-        box.setAttribute("id","symbol " + levelSymbols.length);
-        box.innerHTML = levelSymbols.length;
+        box.setAttribute("id","symbol " + r);
+        box.innerHTML = r;
         target.appendChild(box);
         box.style.transform = `translate3d( ${obj.x}px, ${obj.y}px , 0 )`;
     }
