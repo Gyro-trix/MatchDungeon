@@ -53,8 +53,8 @@ function Enemy(x,y,w,strt,dest,axis){
 }
 
 const player = {
-    x:0,
-    y:0,
+    x:284,
+    y:300,
     w:32,
     health:3,
     facing:"down",
@@ -136,7 +136,7 @@ function levelPopulate(){
             createEnemy(400,100,32,400,332,"x");
             createEnemy(200,300,32,300,220,"y");
 
-            createExit(346,0,32,108);
+            createExit(246,0,32,108);
 
             displayPlayer();
             
@@ -146,6 +146,17 @@ function levelPopulate(){
         break;
         case 2:
             console.log(level);
+
+            createSymbol(100,100,32);
+            createSymbol(200,200,32);
+            createSymbol(400,100,32);
+
+            symbolShuffle(levelSymbols);
+
+            createExit(246,0,32,108);
+
+            displayPlayer();
+
         break;
         case 3:
             console.log(level);
@@ -266,6 +277,7 @@ function playerMovement(){
 
     collideSymbol();
     collideExit();
+
     if (cursym === levelSymbols.length){
         exit.state = "open";
         console.log("exit open")
@@ -459,7 +471,6 @@ function attackEnemyCheck(obj,index){
         attack.y <= obj.y+ obj.w &&
         attack.y + attack.w >= obj.y){
             scoreChange(100);
-            /*levelEnemies.splice(index, 1)*/;
             levelEnemies[index] = " ";
             console.log(index);
             let box = document.getElementById("enemy "+ index);
@@ -500,10 +511,29 @@ function collideExit(){
             console.log("Next Level " +level);
             exit.x = -1000;
             exit.y = -1000;
-            
+            levelComplete();
             
             
         }
+}
+
+function levelComplete(){
+    let pltemp = document.getElementById("player");
+    /*let attemp = document.getElementById("attack");*/
+    let storage = document.createElement('div');
+    let maptemp = document.getElementById("map");
+    storage.appendChild(pltemp);
+    /*storage.appendChild(attemp);*/
+    levelWalls = [];
+    levelEnemies = [];
+    levelSymbols = [];
+    levelObstacles = [];
+    maptemp.innerHTML = "";
+
+    levelPopulate();
+    /* Move Player and attack out of map div
+    Then empty map div. Call populate level with level incremented
+    */ 
 }
 
 /* Player controls and inputs*/
