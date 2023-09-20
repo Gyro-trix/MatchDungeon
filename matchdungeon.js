@@ -49,7 +49,6 @@ function Enemy(x,y,w,strt,dest,axis){
     this.strt = strt;
     this.dest = dest;
     this.axis = axis;
-
 }
 
 const player = {
@@ -165,6 +164,7 @@ function levelPopulate(){
             player.x = 284;
             player.y = 300;
             displayPlayer();
+            
         break;
     }
 }
