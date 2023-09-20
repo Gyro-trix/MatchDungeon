@@ -3,7 +3,7 @@ let pause = false;
 let level = 1;
 let speed = 5;
 let move = true;
-let sec = 90;
+let sec = 91;
 let time;
 let cursym = 0;
 
@@ -164,7 +164,7 @@ function levelPopulate(){
             player.x = 284;
             player.y = 300;
             displayPlayer();
-            
+
         break;
     }
 }
@@ -387,7 +387,7 @@ function moveEnemy(obj,index){
 function timer(){
     if (pause === false){
         time = setInterval(function(){
-        /*document.getElementById('timer').innerHTML=sec-1;*/
+        document.getElementById('timer').innerHTML=sec-1;
         sec--;
         if (sec <= 0) {
             clearInterval(time);
