@@ -92,9 +92,11 @@ function toPause(){
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;
+        timer();
     } else if (pause === false){
         pscrn.style.visibility = "visible";
         pause = true;
+        timer();
     }
 }
 
@@ -112,8 +114,20 @@ function init(){
     scrn.appendChild(pscrn);
     pscrn.style.visibility = "hidden";
 
+    let iscrn = document.createElement('div');
+    iscrn.setAttribute("class","screen info");
+    iscrn.setAttribute("id","screen info");
+    scrn.appendChild(iscrn);
+    iscrn.style.visibility = "hidden";
+
     let a = document.getElementById("A");
     a.addEventListener("click", playerAttack);
+    let b = document.getElementById("B");
+    b.addEventListener("click", playerAttack);
+    let res = document.getElementById("reset");
+    res.addEventListener("click", restart);
+    let info = document.getElementById("info");
+    info.addEventListener("click", infoPanel);
 }
 
 function levelPopulate(){
@@ -136,7 +150,7 @@ function levelPopulate(){
             createEnemy(400,100,32,400,332,"x");
             createEnemy(200,300,32,300,220,"y");
 
-            createExit(246,0,32,108);
+            createExit(250,0,32,108);
 
             displayPlayer();
             
@@ -269,14 +283,10 @@ function playerMovement(){
         plyr.setAttribute("facing", direction);
         player.facing = direction;
     } else if (move === true){
-        /*move = false;*/
         if(direction === playerDirections.right){player.x -= 10;}
         if(direction === playerDirections.left){player.x+= 10;}
         if(direction === playerDirections.down){player.y -= 10;}
         if(direction === playerDirections.up){player.y += 10;} 
-        /* setTimeout(function(){
-            move = true;
-        },100);*/
     } 
 
     
@@ -294,8 +304,8 @@ function playerMovement(){
 
 
     if(collideEnemy() === false){
-        player.x = 0;
-        player.y = 0;
+        player.x = 284;
+        player.y = 300;
         healthDown();
     }
 
@@ -392,7 +402,7 @@ function timer(){
         sec--;
         if (sec <= 0) {
             clearInterval(time);
-            /* Game Over */
+            restart();
             }
         }, 1000);
         
@@ -468,7 +478,7 @@ function collideEnemyCheck(obj){
         player.y + player.w >= obj.y)
 }
 
-function  attackEnemy(){  
+function attackEnemy(){  
     return levelEnemies.every(attackEnemyCheck);
 }
 
@@ -524,6 +534,18 @@ function collideExit(){
         }
 }
 
+function infoPanel(){
+    let pscrn = document.getElementById("screen info");
+
+    if(pause === true){
+        pscrn.style.visibility = "hidden";
+        pause = false;
+    } else if (pause === false){
+        pscrn.style.visibility = "visible";
+        pause = true;
+    }
+}
+
 function levelComplete(){
     let pltemp = document.getElementById("player");
     /*let attemp = document.getElementById("attack");*/
@@ -541,6 +563,19 @@ function levelComplete(){
     /* Move Player and attack out of map div
     Then empty map div. Call populate level with level incremented
     */ 
+}
+
+function restart(){
+    /*sec = 91;*/
+    location.reload();
+}
+
+function gameOver(){
+    /* brings up a div with an option to restart entire game*/
+}
+
+function gameWin(){
+    /* congratulations screen with total score displayed*/
 }
 
 /* Player controls and inputs*/
