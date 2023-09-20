@@ -60,6 +60,15 @@
     overflow: hidden;
     background-color: rgb(54, 0, 0);
 }
+.exit{
+    width: calc(var(--grid-cell)*6);
+    height: calc(var(--grid-cell)*2);
+    position: absolute;
+    overflow: hidden;
+    color:aliceblue;
+    background-color: rgb(27, 13, 109);
+}
+
 h1{
     text-align: center;
     right: 300px;

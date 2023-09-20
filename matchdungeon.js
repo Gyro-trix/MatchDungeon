@@ -20,6 +20,8 @@ let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
 
+let exit = new Object(0,0,0,0);
+
 let attack = new Attack(-32,-32,32);
 
 function Wall(x,y,w){
@@ -134,6 +136,8 @@ function levelPopulate(){
             createEnemy(400,100,32,400,332,"x");
             createEnemy(200,300,32,300,220,"y");
 
+            createExit(346,0,32,108);
+
             displayPlayer();
             
             createWall(50,50,32);
@@ -204,6 +208,25 @@ function symbolShuffle(array){
     }
 }
 
+function createExit(x,y,h,w){
+    exit.x = x;
+    exit.y = y;
+    exit.h = h;
+    exit.w = w;
+    exit.state = "closed";
+
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+    box.innerHTML = "Closed Exit";
+
+    box.setAttribute("class","exit");
+    box.setAttribute("id","exit");
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+
+}
+
 /*
 function createObstacle(x,y,w){
     let box = document.createElement('div');
@@ -242,9 +265,12 @@ function playerMovement(){
     
 
     collideSymbol();
+    collideExit();
     if (cursym === levelSymbols.length){
-        /* Spawn exit door */
-        console.log("Next Level");
+        exit.state = "open";
+        console.log("exit open")
+        let temp = document.getElementById("exit");
+        temp.innerHTML = "Open Exit";
         cursym = 0;
     }
 
@@ -361,8 +387,6 @@ function timer(){
     }
 }
 
-
-
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
 function gameLoop(){
     let fps = 30;
@@ -465,7 +489,22 @@ function collideSymbolCheck(obj, index){
     
 }
 
-
+function collideExit(){
+    if((exit.state === "open")&&
+        (player.x <= exit.x + exit.w && 
+        player.x + player.w >= exit.x &&
+        player.y <= exit.y + exit.h &&
+        player.y + player.w >= exit.y)){
+            scoreChange(1000);
+            level = level + 1;
+            console.log("Next Level " +level);
+            exit.x = -1000;
+            exit.y = -1000;
+            
+            
+            
+        }
+}
 
 /* Player controls and inputs*/
 
