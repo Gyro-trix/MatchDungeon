@@ -108,6 +108,7 @@ function init(){
     pbtn.addEventListener("click", toPause);
 
     let scrn = document.getElementById("screen");
+    
     let pscrn = document.createElement('div');
     pscrn.setAttribute("class","screen pause");
     pscrn.setAttribute("id","screen pause");
@@ -509,8 +510,10 @@ function collideSymbolCheck(obj, index){
             /* levelSymbols.splice(index, 1);*/
             levelSymbols[index] = " ";
             let temp = document.getElementById("symbol " + index)
-            let con = document.getElementById("map");
-            con.removeChild(temp);
+            let con = document.getElementById("pattern");
+            /*Need to transform symbol to fall in the right part of the pattern div*/
+            con.appendChild(temp);
+            temp.style.transform = `translate3d( ${index*32}px, ${0}px , 0 )`;
             cursym = cursym + 1;
             return false;
         }
@@ -540,9 +543,11 @@ function infoPanel(){
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;
+        timer();
     } else if (pause === false){
         pscrn.style.visibility = "visible";
         pause = true;
+        timer();
     }
 }
 

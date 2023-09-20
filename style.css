@@ -78,6 +78,17 @@ h1{
     
 
 }
+
+h1.engraved {
+    
+    font-family: Futura;
+    background-color: #666666;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: rgba(245,245,245,0.5) 3px 5px 1px;
+ }
 body{
     background-color: black;
     max-width: max-content;
@@ -190,6 +201,12 @@ body{
     height: 400px;
 }
 .screen.pause{
+    position: absolute;
+    margin-left: 0px;
+    margin-bottom:0px;
+    z-index: 5;
+}
+.screen.info{
     position: absolute;
     margin-left: 0px;
     margin-bottom:0px;
