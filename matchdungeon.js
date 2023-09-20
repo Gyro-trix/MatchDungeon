@@ -121,7 +121,8 @@ function levelPopulate(){
     
     switch (level){
         case 1:     
-            
+            timer();    
+
             healthUp();
             healthUp();
             healthUp();
@@ -394,14 +395,15 @@ function timer(){
             /* Game Over */
             }
         }, 1000);
-    
         
+    
     } else if(pause === true){
     
     
     clearInterval(time);
     
     }
+    
 }
 
 /* looping trough functions that need constant checking, may need to go back to frame checking*/
