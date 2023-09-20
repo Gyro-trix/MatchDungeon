@@ -154,12 +154,17 @@ function levelPopulate(){
             symbolShuffle(levelSymbols);
 
             createExit(246,0,32,108);
-
+            player.x = 284;
+            player.y = 300;
             displayPlayer();
 
         break;
         case 3:
-            console.log(level);
+            
+            createExit(246,0,32,108);
+            player.x = 284;
+            player.y = 300;
+            displayPlayer();
         break;
     }
 }
