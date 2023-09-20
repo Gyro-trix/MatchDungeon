@@ -7,7 +7,9 @@
     width: calc(var(--pixel-size)*600);
     height: calc(var(--pixel-size)*352);
     overflow: hidden;
-    background:rgb(9, 102, 1);
+    background: url(sprites/Floor2.jpg);
+    background-size: 32px;
+    background-repeat: repeat;
     position:absolute;
     float: left;
     top: 75px;
