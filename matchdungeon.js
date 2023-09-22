@@ -22,7 +22,7 @@ let levelEnemies = [];
 
 let symbolSet = ["line","cross","asterik","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
-            ];
+                "one","two", "three","four","Lucky, just count up."];
 
 let exit = new Object(0,0,0,0);
 
@@ -107,10 +107,7 @@ function init(){
     scrn.appendChild(pscrn);
     pscrn.style.visibility = "hidden";
 
-    let iscrn = document.createElement('div');
-    iscrn.setAttribute("class","screen info");
-    iscrn.setAttribute("id","screen info");
-    scrn.appendChild(iscrn);
+    let iscrn = document.getElementById("screen info");
     iscrn.style.visibility = "hidden";
 
     let a = document.getElementById("A");
@@ -548,6 +545,7 @@ function infoPanel(){
 
 function levelComplete(){
     let pltemp = document.getElementById("player");
+    let pattemp = document.getElementById("pattern")
     /*let attemp = document.getElementById("attack");*/
     let storage = document.createElement('div');
     let maptemp = document.getElementById("map");
@@ -558,7 +556,7 @@ function levelComplete(){
     levelSymbols = [];
     levelObstacles = [];
     maptemp.innerHTML = "";
-
+    pattemp.innerHTML = "";
     levelPopulate();
     /* Move Player and attack out of map div
     Then empty map div. Call populate level with level incremented

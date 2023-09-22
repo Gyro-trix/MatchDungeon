@@ -209,7 +209,8 @@ body{
     z-index: 5;
 }
 .screen.info{
-    background:rgb(198, 141, 252);
+    background:rgb(170, 125, 0);
+    color:black;
     position: absolute;
     margin:auto;
     z-index: 5;
