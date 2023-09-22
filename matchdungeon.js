@@ -109,6 +109,12 @@ function init(){
     let iscrn = document.getElementById("screen info");
     iscrn.style.visibility = "hidden";
 
+    let hscrn = document.createElement('div');
+    hscrn.setAttribute("class","screen hint");
+    hscrn.setAttribute("id","screen hint");
+    scrn.appendChild(hscrn);
+    hscrn.style.visibility = "hidden";
+
     let a = document.getElementById("A");
     a.addEventListener("click", playerAttack);
     let b = document.getElementById("B");
@@ -117,6 +123,8 @@ function init(){
     res.addEventListener("click", restart);
     let info = document.getElementById("info");
     info.addEventListener("click", infoPanel);
+    let hint = document.getElementById("Hint");
+    hint.addEventListener("click", hintPanel);
 }
 
 function levelPopulate(){
@@ -488,6 +496,10 @@ function attackEnemyCheck(obj,index){
         }
 }
 
+function playerBlock(){
+
+}
+
 function collideSymbol(){
     levelSymbols.forEach(collideSymbolCheck);
 }
@@ -576,8 +588,18 @@ function toPause(){
     }
 }
 
-function hint(){
-
+function hintPanel(){
+let hscrn = document.getElementById("screen hint");
+    hscrn.innerHTML = symbolSet[4];
+    if(pause === true){
+        hscrn.style.visibility = "hidden";
+        pause = false;
+        timer();
+    } else if (pause === false){
+        hscrn.style.visibility = "visible";
+        pause = true;
+        timer();
+    }
 }
 
 function restart(){
