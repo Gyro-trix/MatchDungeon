@@ -201,15 +201,24 @@ body{
     height: 400px;
 }
 .screen.pause{
+    background:rgb(123, 229, 255);
+    text-align: center;
     position: absolute;
-    margin-left: 0px;
-    margin-bottom:0px;
+    margin:auto;
+    
     z-index: 5;
 }
 .screen.info{
+    background:rgb(198, 141, 252);
     position: absolute;
-    margin-left: 0px;
-    margin-bottom:0px;
+    margin:auto;
+    z-index: 5;
+}
+.screen.over{
+    background:rgb(141, 0, 0);
+    text-align: center;
+    position: absolute;
+    margin:auto;
     z-index: 5;
 }
 .playarea{

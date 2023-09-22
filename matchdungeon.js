@@ -20,6 +20,10 @@ let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
 
+let symbolSet = ["line","cross","asterik","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
+                "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
+            ];
+
 let exit = new Object(0,0,0,0);
 
 let attack = new Attack(-32,-32,32);
@@ -86,22 +90,10 @@ function displayPlayer(){
     box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
 }
 
-function toPause(){
-    let pscrn = document.getElementById("screen pause");
 
-    if(pause === true){
-        pscrn.style.visibility = "hidden";
-        pause = false;
-        timer();
-    } else if (pause === false){
-        pscrn.style.visibility = "visible";
-        pause = true;
-        timer();
-    }
-}
 
 function init(){
-    document.getElementById("score").innerHTML = level;
+    document.getElementById("score").innerHTML = score;
     document.getElementById("level").innerHTML = level;
     
     let pbtn = document.getElementById("Pause");
@@ -136,6 +128,7 @@ function levelPopulate(){
     
     switch (level){
         case 1:     
+            document.getElementById("level").innerHTML = level;
             timer();    
 
             healthUp();
@@ -143,30 +136,30 @@ function levelPopulate(){
             healthUp();
 
             createSymbol(100,200,32);
+            createSymbol(100,100,32);
             createSymbol(300,200,32);
             createSymbol(300,100,32);
 
             symbolShuffle(levelSymbols);
 
-            createEnemy(400,100,32,400,332,"x");
-            createEnemy(200,300,32,300,220,"y");
-
             createExit(250,0,32,108);
-
+            player.x = 284;
+            player.y = 300;
             displayPlayer();
             
-            createWall(50,50,32);
-            createWall(50,82,32);
-            createWall(200,200,32);
         break;
         case 2:
-            console.log(level);
+            document.getElementById("level").innerHTML = level;
+            sec = 91;
 
             createSymbol(100,100,32);
             createSymbol(200,200,32);
             createSymbol(400,100,32);
 
             symbolShuffle(levelSymbols);
+
+            createEnemy(400,100,32,400,332,"x");
+            createEnemy(200,300,32,300,220,"y");
 
             createExit(246,0,32,108);
             player.x = 284;
@@ -175,7 +168,9 @@ function levelPopulate(){
 
         break;
         case 3:
-            
+            document.getElementById("level").innerHTML = level;
+            sec = 91;
+
             createExit(246,0,32,108);
             player.x = 284;
             player.y = 300;
@@ -538,14 +533,14 @@ function collideExit(){
 }
 
 function infoPanel(){
-    let pscrn = document.getElementById("screen info");
+    let iscrn = document.getElementById("screen info");
 
     if(pause === true){
-        pscrn.style.visibility = "hidden";
+        iscrn.style.visibility = "hidden";
         pause = false;
         timer();
     } else if (pause === false){
-        pscrn.style.visibility = "visible";
+        iscrn.style.visibility = "visible";
         pause = true;
         timer();
     }
@@ -568,6 +563,20 @@ function levelComplete(){
     /* Move Player and attack out of map div
     Then empty map div. Call populate level with level incremented
     */ 
+}
+
+function toPause(){
+    let pscrn = document.getElementById("screen pause");
+    pscrn.innerHTML = "<h1>PAUSED</h1>";
+    if(pause === true){
+        pscrn.style.visibility = "hidden";
+        pause = false;
+        timer();
+    } else if (pause === false){
+        pscrn.style.visibility = "visible";
+        pause = true;
+        timer();
+    }
 }
 
 function restart(){
@@ -603,10 +612,16 @@ document.addEventListener("keyup", (e) => {
 
 document.addEventListener("keydown", (e) => {
     console.log(e.key);
-    if (e.key === " "){
+    if (e.key === "Control"){
         playerAttack()
     }
     if (e.key === "Enter"){
+        toPause();
+    }
+    if (e.key === "Shift"){
+        toPause();
+    }
+    if (e.key === "z"){
         toPause();
     }
 })
