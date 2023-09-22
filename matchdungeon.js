@@ -20,6 +20,7 @@ let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
 
+let symbolOffSet = 0;
 let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
                 "one","two", "three","four","Lucky, just count up."];
@@ -224,7 +225,7 @@ function symbolShuffle(array){
         let obj = array[r];
         box.setAttribute("class","symbol");
         box.setAttribute("id","symbol " + r);
-        box.style.backgroundImage = "url(sprites/"+ symbolSet[r]+".jpg)";
+        box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".jpg)";
         target.appendChild(box);
         box.style.transform = `translate3d( ${obj.x}px, ${obj.y}px , 0 )`;
     }
@@ -573,6 +574,10 @@ function toPause(){
         pause = true;
         timer();
     }
+}
+
+function hint(){
+
 }
 
 function restart(){
