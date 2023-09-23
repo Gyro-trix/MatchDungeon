@@ -18,6 +18,7 @@ let levelWalls = [];
 let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
+let levelArrows = [];
 
 let symbolOffSet = 0;
 let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
@@ -237,53 +238,24 @@ function createTrap(x,y,w,facing,delay){
     box.setAttribute("id","trap");
     target.appendChild(box);
 
+    createArrow(x,y,facing);
+
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-/*
-    setTimeout(function() {
-    
-    while(true){
-    setTimeout(function(){
-        createArrow(x,y,facing);
-    },1000);
-    break;
-    }
-    },delay);
-*/
+
 }
 
 function createArrow(x,y,facing){
     let box = document.createElement('div');
     let target = document.getElementById("map");
     box.setAttribute("class","arrow");
-    box.setAttribute("id","arrow");
+    box.setAttribute("id","arrow " + levelArrows.length);
     box.setAttribute("facing",facing);
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-/*
-    if(facing === "left"){
-        while ( x >= 0 ){
-            x = x - 1;
-            box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-        }
 
-    } else if (facing === "right"){
-        while ( x <= 600 ){
-                x = x + 0.0005;
-                box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-        }
-    } else if (facing === "up"){
-        while ( y >= 0 ){
-            y = y - 1;
-            box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-        }
-    } else if (facing ==="down"){
-        while ( y <= 350 ){
-            y = y + 1;
-            box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-        }
-    }
-    */
+    let temp = new Arrow(x,y,facing);
+    levelArrows.push(temp);
 }
 
 function createSymbol(x,y,w){
@@ -459,6 +431,36 @@ function moveEnemy(obj,index){
     enmy.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
+function arrowMovement(){
+    levelArrows.forEach(moveArrow);
+}
+
+function moveArrow(obj,index){
+    let x = obj.x;
+    let y = obj.y;
+    let facing = obj.facing;
+    let arrw = document.getElementById("arrow "+ index);
+    let mp = document.getElementById("map");
+    if (facing === "right") {
+        if (obj.x <= 592){
+            obj.x = obj.x + 2;
+            arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
+        } 
+        else {
+            levelArrows[index] = "";
+            mp.removeChild(arrw);
+        }
+    } else if(facing === "left"){
+
+    } else if(facing === "up"){
+
+    } else if(facing === "down"){
+    
+    }
+
+    
+}
+
 function timer(){
     if (pause === false){
         time = setInterval(function(){
@@ -487,6 +489,7 @@ function gameLoop(){
     if (pause === false){
         playerMovement();
         enemyMovement();
+        arrowMovement();
     }
     setTimeout(() => {
     window.requestAnimationFrame(() => {
