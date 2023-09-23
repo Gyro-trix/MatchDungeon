@@ -55,6 +55,20 @@ function Enemy(x,y,w,strt,dest,axis){
     this.axis = axis;
 }
 
+function Trap(x,y,w,facing,delay){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.facing = facing;
+    this.delay = delay;
+}
+
+function Arrow(x,y,facing){
+    this.x = x;
+    this.y = y;
+    this.facing = facing;
+}
+
 const player = {
     x:284,
     y:300,
@@ -146,6 +160,8 @@ function levelPopulate(){
             createSymbol(300,200,32);
             createSymbol(300,100,32);
 
+            createTrap(10,10,32,"right",0);
+
             symbolShuffle(levelSymbols);
 
             createExit(250,0,32,108);
@@ -213,6 +229,62 @@ function createEnemy(x,y,w,strt,dest,axis){
     levelEnemies.push(temp);
 }
 
+function createTrap(x,y,w,facing,delay){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+
+    box.setAttribute("class","trap");
+    box.setAttribute("id","trap");
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    setTimeout(function() {
+    
+    while(true){
+    setTimeout(function(){
+        createArrow(x,y,facing);
+    },1000);
+    break;
+    }
+    },delay);
+    
+}
+
+function createArrow(x,y,facing){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+    box.setAttribute("class","arrow");
+    box.setAttribute("id","arrow");
+    box.setAttribute("facing",facing);
+    target.appendChild(box);
+
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+
+    if(facing === "left"){
+        while ( x >= 0 ){
+            x = x - 1;
+            box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+        }
+
+    } else if (facing === "right"){
+        while ( x <= 600 ){
+                x = x + 0.0005;
+                box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+        }
+    } else if (facing === "up"){
+        while ( y >= 0 ){
+            y = y - 1;
+            box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+        }
+    } else if (facing ==="down"){
+        while ( y <= 350 ){
+            y = y + 1;
+            box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+        }
+    }
+    
+}
+
 function createSymbol(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
@@ -260,18 +332,7 @@ function createExit(x,y,h,w){
 
 }
 
-/*
-function createObstacle(x,y,w){
-    let box = document.createElement('div');
-    let target = document.getElementById("map");
 
-    box.setAttribute("class","obstacle");
-    box.setAttribute("id","obstacle");
-    target.appendChild(box);
-
-    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-}
-*/
 function playerMovement(){
     ps = pixelSize;
     const direction = directions[0];

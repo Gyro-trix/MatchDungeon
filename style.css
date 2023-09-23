@@ -65,6 +65,20 @@
     overflow: hidden;
     background-color: rgb(54, 0, 0);
 }
+.trap{
+    width: calc(var(--grid-cell)*2);
+    height: calc(var(--grid-cell)*2);
+    position: absolute;
+    overflow: hidden;
+    background-color: rgb(34, 34, 34);
+}
+.arrow{
+    width: calc(var(--grid-cell));
+    height: calc(var(--grid-cell));
+    position: absolute;
+    overflow: hidden;
+    background-color: rgb(155, 114, 0);
+}
 .exit{
     width: calc(var(--grid-cell)*6);
     height: calc(var(--grid-cell)*2);
