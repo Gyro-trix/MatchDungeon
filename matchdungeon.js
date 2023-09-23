@@ -238,6 +238,7 @@ function createTrap(x,y,w,facing,delay){
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+/*
     setTimeout(function() {
     
     while(true){
@@ -247,7 +248,7 @@ function createTrap(x,y,w,facing,delay){
     break;
     }
     },delay);
-    
+*/
 }
 
 function createArrow(x,y,facing){
@@ -259,7 +260,7 @@ function createArrow(x,y,facing){
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-
+/*
     if(facing === "left"){
         while ( x >= 0 ){
             x = x - 1;
@@ -282,7 +283,7 @@ function createArrow(x,y,facing){
             box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
         }
     }
-    
+    */
 }
 
 function createSymbol(x,y,w){
