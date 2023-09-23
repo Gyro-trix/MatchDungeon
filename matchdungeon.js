@@ -163,6 +163,8 @@ function levelPopulate(){
 
             createTrap(10,10,32,"right",0);
 
+            createTrap(10,50,32,"right",500);
+
             symbolShuffle(levelSymbols);
 
             createExit(250,0,32,108);
@@ -237,8 +239,9 @@ function createTrap(x,y,w,facing,delay){
     box.setAttribute("class","trap");
     box.setAttribute("id","trap");
     target.appendChild(box);
-
-    createArrow(x,y,facing);
+    
+    setTimeout(function(){createArrow(x,y,facing);},delay)
+    
 
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 
