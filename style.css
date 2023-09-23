@@ -33,6 +33,9 @@
 .player[facing = right]{
     background-color: rgb(149, 175, 36);
 }
+.player[block = true]{
+    background-color: rgb(49, 25, 2);
+}
 .attack{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);

@@ -2,7 +2,6 @@ let score = 0;
 let pause = false;
 let level = 1;
 let speed = 5;
-let move = true;
 let sec = 91;
 let time;
 let cursym = 0;
@@ -61,7 +60,9 @@ const player = {
     y:300,
     w:32,
     health:3,
-    facing:"down",
+    facing: "down",
+    move: true,
+    block: false,
 }
 
 const playerDirections = {
@@ -86,6 +87,7 @@ function displayPlayer(){
     box.setAttribute("id","player");
     box.setAttribute("facing","down");
     box.setAttribute("walking","false");
+    box.setAttribute("block","false");
     target.appendChild(box);
 
     box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
@@ -118,7 +120,7 @@ function init(){
     let a = document.getElementById("A");
     a.addEventListener("click", playerAttack);
     let b = document.getElementById("B");
-    b.addEventListener("click", playerAttack);
+    b.addEventListener("click", playerBlock);
     let res = document.getElementById("reset");
     res.addEventListener("click", restart);
     let info = document.getElementById("info");
@@ -275,14 +277,14 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
 
-    if(direction && collideWall() && move != false){
+    if(direction && collideWall() && player.move != false){
         if(direction === playerDirections.right) {player.x += speed;}
         if(direction === playerDirections.left){player.x-= speed;}
         if(direction === playerDirections.down){player.y += speed;}
         if(direction === playerDirections.up){player.y -= speed;}
         plyr.setAttribute("facing", direction);
         player.facing = direction;
-    } else if (move === true){
+    } else if (player.move === true){
         if(direction === playerDirections.right){player.x -= 10;}
         if(direction === playerDirections.left){player.x+= 10;}
         if(direction === playerDirections.down){player.y -= 10;}
@@ -330,7 +332,7 @@ function playerAttack(){
     let dir = player.facing;
 
     console.log(dir);
-    move = false;
+    player.move = false;
     box.setAttribute("class","attack");
     box.setAttribute("id","attack");
     target.appendChild(box);
@@ -354,7 +356,7 @@ function playerAttack(){
 
     setTimeout(function(){
         box.remove();
-        move = true;
+        player.move = true;
    },500);
     
 }
@@ -497,6 +499,17 @@ function attackEnemyCheck(obj,index){
 }
 
 function playerBlock(){
+    let temp = document.getElementById("player");
+
+    temp.setAttribute("block","true")
+    player.move = false;
+    player.block = true;
+
+    setTimeout(function(){
+        temp.setAttribute("block","false")
+        player.move = true;
+        player.block = false;
+   },500);
 
 }
 
@@ -642,7 +655,7 @@ document.addEventListener("keydown", (e) => {
         toPause();
     }
     if (e.key === "Shift"){
-        toPause();
+        playerBlock();
     }
     if (e.key === "z"){
         toPause();
