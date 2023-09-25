@@ -578,22 +578,19 @@ function collideArrowCheck(obj,index){
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y)*/
-
-      if ((player.block === false) && (player.x <= obj.x + 16 && 
-            player.x + player.w >= obj.x &&
-            player.y <= obj.y + 16 &&
-            player.y + player.w >= obj.y)) {
+    if (player.x <= obj.x + 16 && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y + 16 &&
+        player.y + player.w >= obj.y){
+            if (player.block === false) {
                 healthDown();
                 mtemp.removeChild(temp);
                 levelArrows[index] = " "; 
-            } else if ((player.block === true) && (player.x <= obj.x + obj.w && 
-                player.x + player.w >= obj.x &&
-                player.y <= obj.y+ obj.w &&
-                player.y + player.w >= obj.y))
-            {
+            } else if (player.block === true){
                 mtemp.removeChild(temp);
                 levelArrows[index] = " ";
             }
+        }
 }
 
 function attackEnemy(){  
