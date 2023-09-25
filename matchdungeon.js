@@ -308,7 +308,6 @@ function createExit(x,y,h,w){
 
 }
 
-
 function playerMovement(){
     ps = pixelSize;
     const direction = directions[0];
@@ -328,10 +327,9 @@ function playerMovement(){
         if(direction === playerDirections.up){player.y += 10;} 
     } 
 
-    
-
     collideSymbol();
     collideExit();
+    collideArrows();
 
     if (cursym === levelSymbols.length){
         exit.state = "open";
@@ -445,7 +443,7 @@ function moveArrow(obj,index){
     let arrw = document.getElementById("arrow "+ index);
     let mp = document.getElementById("map");
     if (facing === "right") {
-        if (obj.x <= 592){
+        if (obj.x <= 584){
             obj.x = obj.x + 2;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
@@ -454,11 +452,32 @@ function moveArrow(obj,index){
             mp.removeChild(arrw);
         }
     } else if(facing === "left"){
-
+        if (obj.x >= 0){
+            obj.x = obj.x - 2;
+            arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
+        } 
+        else {
+            levelArrows[index] = "";
+            mp.removeChild(arrw);
+        }
     } else if(facing === "up"){
-
+        if (obj.y >= 0 ){
+            obj.y = obj.y - 2;
+            arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
+        } 
+        else {
+            levelArrows[index] = "";
+            mp.removeChild(arrw);
+        }
     } else if(facing === "down"){
-    
+        if (obj.y <= 384 ){
+            obj.y = obj.y - 2;
+            arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
+        } 
+        else {
+            levelArrows[index] = "";
+            mp.removeChild(arrw);
+        }
     }
 
     
@@ -546,6 +565,31 @@ function collideEnemyCheck(obj){
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y)
+}
+
+function collideArrows(){  
+    return levelArrows.forEach(collideArrowCheck);
+}
+
+function collideArrowCheck(obj,index){   
+   /* return !(player.x <= obj.x + obj.w && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y+ obj.w &&
+        player.y + player.w >= obj.y)*/
+
+      if ((player.block === false) && (player.x <= obj.x + 16 && 
+            player.x + player.w >= obj.x &&
+            player.y <= obj.y + 16 &&
+            player.y + player.w >= obj.y)) {
+                healthDown();
+                levelArrows[index] = " ";
+            } else if ((player.block === true) && (player.x <= obj.x + obj.w && 
+                player.x + player.w >= obj.x &&
+                player.y <= obj.y+ obj.w &&
+                player.y + player.w >= obj.y))
+            {
+                levelArrows[index] = " ";
+            }
 }
 
 function attackEnemy(){  
