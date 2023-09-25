@@ -165,6 +165,10 @@ function levelPopulate(){
 
             createTrap(10,50,32,"right",500);
 
+            createTrap(10,100,32,"right",1000);
+
+            createTrap(500,10,32,"left",500);
+
             symbolShuffle(levelSymbols);
 
             createExit(250,0,32,108);
@@ -574,11 +578,8 @@ function collideArrows(){
 function collideArrowCheck(obj,index){   
    let mtemp = document.getElementById("map");
    let temp = document.getElementById("arrow " + index);
-    /* return !(player.x <= obj.x + obj.w && 
-        player.x + player.w >= obj.x &&
-        player.y <= obj.y+ obj.w &&
-        player.y + player.w >= obj.y)*/
-    if (player.x <= obj.x + 16 && 
+
+   if (player.x <= obj.x + 16 && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y + 16 &&
         player.y + player.w >= obj.y){
