@@ -572,7 +572,9 @@ function collideArrows(){
 }
 
 function collideArrowCheck(obj,index){   
-   /* return !(player.x <= obj.x + obj.w && 
+   let mtemp = document.getElementById("map");
+   let temp = document.getElementById("arrow " + index);
+    /* return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y)*/
@@ -582,12 +584,14 @@ function collideArrowCheck(obj,index){
             player.y <= obj.y + 16 &&
             player.y + player.w >= obj.y)) {
                 healthDown();
-                levelArrows[index] = " ";
+                mtemp.removeChild(temp);
+                levelArrows[index] = " "; 
             } else if ((player.block === true) && (player.x <= obj.x + obj.w && 
                 player.x + player.w >= obj.x &&
                 player.y <= obj.y+ obj.w &&
                 player.y + player.w >= obj.y))
             {
+                mtemp.removeChild(temp);
                 levelArrows[index] = " ";
             }
 }
