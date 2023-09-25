@@ -146,7 +146,6 @@ function init(){
 
 function levelPopulate(){
     
-    
     switch (level){
         case 1:     
             document.getElementById("level").innerHTML = level;
