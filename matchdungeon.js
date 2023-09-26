@@ -5,48 +5,37 @@ let speed = 5;
 let sec = 91;
 let time;
 let cursym = 0;
-
 let solidCol = false;
-
 let directions = [];
-
 let isPressed = false;
-
 let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
-
 let levelWalls = [];
 let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
 let levelArrows = [];
-
 let symbolOffSet = 0;
 let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
                 "one","two", "three","four","Lucky, just count up."];
 
 let exit = new Object(0,0,0,0);
-
 let attack = new Attack(-32,-32,32);
-
 function Wall(x,y,w){
     this.x = x;
     this.y = y;
     this.w = w;
 }
-
 function Symbol(x,y,w){
     this.x = x;
     this.y = y;
     this.w = w;
 }
-
 function Attack(x,y,w){
     this.x=x;
     this.y=y;
     this.w=w;
 }
-
 function Enemy(x,y,w,strt,dest,axis){
     this.x = x;
     this.y = y;
@@ -55,7 +44,6 @@ function Enemy(x,y,w,strt,dest,axis){
     this.dest = dest;
     this.axis = axis;
 }
-
 function Trap(x,y,w,facing,delay){
     this.x = x;
     this.y = y;
@@ -63,13 +51,11 @@ function Trap(x,y,w,facing,delay){
     this.facing = facing;
     this.delay = delay;
 }
-
 function Arrow(x,y,facing){
     this.x = x;
     this.y = y;
     this.facing = facing;
 }
-
 const player = {
     x:284,
     y:300,
@@ -79,59 +65,49 @@ const player = {
     move: true,
     block: false,
 }
-
 const playerDirections = {
     up: "up",
     down: "down",
     left: "left",
     right: "right",
 }
-
 const keys = {
     ArrowUp: playerDirections.up,
     ArrowLeft: playerDirections.left,
     ArrowRight: playerDirections.right,
     ArrowDown: playerDirections.down,
 }
-
+//Creates and places the player
 function displayPlayer(){
     let box = document.createElement('div');
     let target = document.getElementById("map");
-   
     box.setAttribute("class","player");
     box.setAttribute("id","player");
     box.setAttribute("facing","down");
     box.setAttribute("walking","false");
     box.setAttribute("block","false");
     target.appendChild(box);
-
     box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
 }
-
+// Initialize event listeners
 function init(){
     document.getElementById("score").innerHTML = score;
     document.getElementById("level").innerHTML = level;
-    
     let pbtn = document.getElementById("Pause");
     pbtn.addEventListener("click", toPause);
-
     let scrn = document.getElementById("screen");
-    
     let pscrn = document.createElement('div');
     pscrn.setAttribute("class","screen pause");
     pscrn.setAttribute("id","screen pause");
     scrn.appendChild(pscrn);
     pscrn.style.visibility = "hidden";
-
     let iscrn = document.getElementById("screen info");
     iscrn.style.visibility = "hidden";
-
     let hscrn = document.createElement('div');
     hscrn.setAttribute("class","screen hint");
     hscrn.setAttribute("id","screen hint");
     scrn.appendChild(hscrn);
     hscrn.style.visibility = "hidden";
-
     let a = document.getElementById("A");
     a.addEventListener("click", playerAttack);
     let b = document.getElementById("B");
@@ -143,18 +119,15 @@ function init(){
     let hint = document.getElementById("Hint");
     hint.addEventListener("click", hintPanel);
 }
-
+//Populates each level, each case is a different level/layout
 function levelPopulate(){
-    
     switch (level){
         case 1:     
             document.getElementById("level").innerHTML = level;
             timer();    
-
             healthUp();
             healthUp();
             healthUp();
-
             createSymbol(100,200,32);
             createSymbol(100,100,32);
             createSymbol(300,200,32);
@@ -207,49 +180,39 @@ function levelPopulate(){
         break;
     }
 }
-
+//creates a wall(currently collision reaction is a bit off)
 function createWall(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
-
     box.setAttribute("class","wall");
     box.setAttribute("id","wall");
     target.appendChild(box);
-
     box.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px , 0 )`;
     let wl = new Wall(x,y,w);
     levelWalls.push(wl);
 }
-
+//Creates an enemy, adds to array of enemies
 function createEnemy(x,y,w,strt,dest,axis){
     let box = document.createElement('div');
     let target = document.getElementById("map");
-
     box.setAttribute("class","enemy");
     box.setAttribute("id","enemy "+ levelEnemies.length);
     target.appendChild(box);
-
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-
     let temp = new Enemy(x,y,w,strt,dest,axis);
     levelEnemies.push(temp);
 }
-
+//creates a trap, used as an arrow spawn point
 function createTrap(x,y,w,facing,delay){
     let box = document.createElement('div');
     let target = document.getElementById("map");
-
     box.setAttribute("class","trap");
     box.setAttribute("id","trap");
     target.appendChild(box);
-    
     setTimeout(function(){createArrow(x,y,facing);},delay)
-    
-
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-
 }
-
+//creates an arrow, adds to an array of arrows
 function createArrow(x,y,facing){
     let box = document.createElement('div');
     let target = document.getElementById("map");
@@ -257,22 +220,18 @@ function createArrow(x,y,facing){
     box.setAttribute("id","arrow " + levelArrows.length);
     box.setAttribute("facing",facing);
     target.appendChild(box);
-
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-
     let temp = new Arrow(x,y,facing);
     levelArrows.push(temp);
 }
-
+//creates a symbol, adds to an array of symbols
 function createSymbol(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
-  
     let temp = new Symbol(x,y,w);
     levelSymbols.push(temp);
 }
-
-/* Shuffles and visually creates symbols*/
+// Shuffles and visually creates symbols
 function symbolShuffle(array){
     for(let i = array.length -1; i>0;i--){
         let j = Math.floor(Math.random()*(i+1));
@@ -291,31 +250,26 @@ function symbolShuffle(array){
         box.style.transform = `translate3d( ${obj.x}px, ${obj.y}px , 0 )`;
     }
 }
-
+//Creates the exit point for the level
 function createExit(x,y,h,w){
     exit.x = x;
     exit.y = y;
     exit.h = h;
     exit.w = w;
     exit.state = "closed";
-
     let box = document.createElement('div');
     let target = document.getElementById("map");
     box.innerHTML = "Closed Exit";
-
     box.setAttribute("class","exit");
     box.setAttribute("id","exit");
     target.appendChild(box);
-
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
-
 }
-
+//Called on each game loop, handles updating the player position and health
 function playerMovement(){
     ps = pixelSize;
     const direction = directions[0];
     let plyr = document.getElementById("player");
-
     if(direction && collideWall() && player.move != false){
         if(direction === playerDirections.right) {player.x += speed;}
         if(direction === playerDirections.left){player.x-= speed;}
@@ -329,11 +283,9 @@ function playerMovement(){
         if(direction === playerDirections.down){player.y -= 10;}
         if(direction === playerDirections.up){player.y += 10;} 
     } 
-
     collideSymbol();
     collideExit();
     collideArrows();
-
     if (cursym === levelSymbols.length){
         exit.state = "open";
         console.log("exit open")
@@ -341,40 +293,33 @@ function playerMovement(){
         temp.innerHTML = "Open Exit";
         cursym = 0;
     }
-
-
     if(collideEnemy() === false){
         player.x = 284;
         player.y = 300;
         healthDown();
     }
-
     plyr.setAttribute("walking", direction ? "true" : "false");
-
+    // Sets the boundaries to prevent the player from moving outside the play space
     let lLimit = 0;
     let rLimit = 600 - 32;
     let tLimit = 0;
     let bLimit = 350 - 32;
-
     if (player.x < lLimit) {player.x = lLimit;}
     if (player.x > rLimit) {player.x = rLimit;}
     if (player.y < tLimit) {player.y = tLimit;}
     if (player.y > bLimit) {player.y = bLimit;}
-
     plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
 }
-
+// Creates a box in front of the player which can destroy enemies (only enemies)
 function playerAttack(){
     let box = document.createElement('div');
     let target = document.getElementById("map");
     let dir = player.facing;
-
     console.log(dir);
     player.move = false;
     box.setAttribute("class","attack");
     box.setAttribute("id","attack");
     target.appendChild(box);
-
     if(dir === "down"){
         attack.x = player.x;
         attack.y = player.y+32;
@@ -389,27 +334,23 @@ function playerAttack(){
         attack.y = player.y;
     }
     box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
-
     levelEnemies.forEach(attackEnemyCheck);
-
     setTimeout(function(){
         box.remove();
         player.move = true;
    },500);
-    
 }
-
+//applies movement across all enemies in the array
 function enemyMovement(){
     levelEnemies.forEach(moveEnemy);
 }
-
+// Basic movement of a single enemy object
 function moveEnemy(obj,index){
     let x = obj.x;
     let y = obj.y;
     let strt = obj.strt;
     let dest = obj.dest;
     let enmy = document.getElementById("enemy "+ index);;
-
     if(obj.axis === "x" && obj.x < obj.dest){
         obj.x += 2;
     }
@@ -422,7 +363,6 @@ function moveEnemy(obj,index){
     else if((obj.axis === "y" && obj.y > obj.dest)){
         obj.y -= 2;
     }
-
     if (obj.axis === "x" && obj.x === obj.dest){
         obj.x = dest;
         obj.dest = strt;
@@ -434,11 +374,11 @@ function moveEnemy(obj,index){
     }
     enmy.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
-
+//applies movement across all arrow objects in the array
 function arrowMovement(){
     levelArrows.forEach(moveArrow);
 }
-
+//movement and interactions for a single arrow
 function moveArrow(obj,index){
     let x = obj.x;
     let y = obj.y;
@@ -482,10 +422,8 @@ function moveArrow(obj,index){
             mp.removeChild(arrw);
         }
     }
-
-    
 }
-
+// Timer that will end the game at zero
 function timer(){
     if (pause === false){
         time = setInterval(function(){
@@ -494,23 +432,16 @@ function timer(){
         if (sec <= 0) {
             clearInterval(time);
             restart();
+            // Will bring up a game over screen when finished
             }
-        }, 1000);
-        
-    
+        }, 1000);    
     } else if(pause === true){
-    
-    
-    clearInterval(time);
-    
-    }
-    
+        clearInterval(time);
+    }    
 }
-
-/* looping trough functions that need constant checking, may need to go back to frame checking*/
+// Game Loop, everything that needs to stay updated during gameplay
 function gameLoop(){
     let fps = 30;
-   
     if (pause === false){
         playerMovement();
         enemyMovement();
@@ -522,62 +453,61 @@ function gameLoop(){
      })
     }, 1000 / fps)
 }
-
+// adds to the score by an amount, num
 function scoreChange(num){
     score = score + num;
     document.getElementById("score").innerHTML = "";
     document.getElementById("score").innerHTML = score;
 }
-
+// changes level by an amount, num
 function levelChange(num){
     level = level + num;
     document.getElementById("level").innerHTML = "";
     document.getElementById("level").innerHTML = score;
 }
-
+//Increases health by one
 function healthUp(){
     let con = document.getElementById("health");
     let div = document.createElement('div');
     div.setAttribute('id','heart');
     con.appendChild(div);
 }
-
+//decrease health by one
 function healthDown(){
     let con = document.getElementById("health");
     player.health -= 1;
     con.removeChild(con.children[0]);
 }
-
+//Check for collisions of wall objects with the player
 function collideWall(){  
     return levelWalls.every(collideWallCheck);
 }
-
+//Check for player wall collision on a single object
 function collideWallCheck(obj){   
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
 }
-
+//Applies collision check across all enemies in the array(play space)
 function collideEnemy(){  
     return levelEnemies.every(collideEnemyCheck);
 }
-
+//collision check between player and a single enemy
 function collideEnemyCheck(obj){   
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y)
 }
-
+//Applies collision check across all arrows in the array(play space)
 function collideArrows(){  
     return levelArrows.forEach(collideArrowCheck);
 }
-
+//collision check between player and a single arrow, and if player is blocking or not
 function collideArrowCheck(obj,index){   
    let mtemp = document.getElementById("map");
    let temp = document.getElementById("arrow " + index);
-
    if (player.x <= obj.x + 16 && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y + 16 &&
