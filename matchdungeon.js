@@ -151,15 +151,14 @@ function levelPopulate(){
             createSymbol(100,100,32);
             createSymbol(300,200,32);
             createSymbol(300,100,32);
+            
+            createHole(0,0,32);
+            createHole(0,32,32);
 
-            createTrap(10,10,32,"right",0);
-
-            createTrap(10,50,32,"right",500);
-
-            createTrap(10,100,32,"right",1000);
-
+            createTrap(0,64,32,"right",0);
+            createTrap(0,96,32,"right",500);
+            createTrap(0,128,32,"right",1000);
             createTrap(500,10,32,"left",500);
-
             symbolShuffle(levelSymbols);
 
             createExit(250,0,32,108);
@@ -199,6 +198,87 @@ function levelPopulate(){
         break;
     }
 }
+//Called on each game loop, handles updating the player position and health
+function playerMovement(){
+    ps = pixelSize;
+    const direction = directions[0];
+    let plyr = document.getElementById("player");
+    if(direction && collideWall() && player.move != false){
+        if(direction === playerDirections.right) {player.x += speed;}
+        if(direction === playerDirections.left){player.x-= speed;}
+        if(direction === playerDirections.down){player.y += speed;}
+        if(direction === playerDirections.up){player.y -= speed;}
+        plyr.setAttribute("facing", direction);
+        player.facing = direction;
+    } else if (player.move === true){
+        if(direction === playerDirections.right){player.x -= 10;}
+        if(direction === playerDirections.left){player.x+= 10;}
+        if(direction === playerDirections.down){player.y -= 10;}
+        if(direction === playerDirections.up){player.y += 10;} 
+    } 
+    collideSymbol();
+    collideExit();
+    collideArrows();
+    if (cursym === levelSymbols.length){
+        exit.state = "open";
+        console.log("exit open")
+        let temp = document.getElementById("exit");
+        temp.innerHTML = "Open Exit";
+        cursym = 0;
+    }
+    if(collideEnemy() === false){
+        player.x = startx;
+        player.y = starty;
+        healthDown();
+    }
+    if(collideHole() === false){
+        player.x = startx;
+        player.y = starty;
+        healthDown();
+    }
+    plyr.setAttribute("walking", direction ? "true" : "false");
+    // Sets the boundaries to prevent the player from moving outside the play space
+    let lLimit = 0;
+    let rLimit = 600 - 32;
+    let tLimit = 0;
+    let bLimit = 350 - 32;
+    if (player.x < lLimit) {player.x = lLimit;}
+    if (player.x > rLimit) {player.x = rLimit;}
+    if (player.y < tLimit) {player.y = tLimit;}
+    if (player.y > bLimit) {player.y = bLimit;}
+    plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
+}
+// Creates a box in front of the player which can destroy enemies (only enemies)
+function playerAttack(){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+    let dir = player.facing;
+    console.log(dir);
+    player.move = false;
+    box.setAttribute("class","attack");
+    box.setAttribute("id","attack");
+    target.appendChild(box);
+    if(dir === "down"){
+        attack.x = player.x;
+        attack.y = player.y+32;
+    }else if(dir === "up"){
+        attack.x = player.x;
+        attack.y = player.y-32;
+    }else if(dir === "left"){
+        attack.x = player.x-32;
+        attack.y = player.y;
+    }else if(dir=== "right"){
+        attack.x = player.x+32;
+        attack.y = player.y;
+    }
+    box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
+    levelEnemies.forEach(attackEnemyCheck);
+    setTimeout(function(){
+        box.remove();
+        player.move = true;
+   },500);
+}
+
 //creates a wall(currently collision reaction is a bit off)
 function createWall(x,y,w){
     let box = document.createElement('div');
@@ -297,81 +377,7 @@ function createHole(x,y,w,h){
     levelHoles.push(temp);
 }
 
-//Called on each game loop, handles updating the player position and health
-function playerMovement(){
-    ps = pixelSize;
-    const direction = directions[0];
-    let plyr = document.getElementById("player");
-    if(direction && collideWall() && player.move != false){
-        if(direction === playerDirections.right) {player.x += speed;}
-        if(direction === playerDirections.left){player.x-= speed;}
-        if(direction === playerDirections.down){player.y += speed;}
-        if(direction === playerDirections.up){player.y -= speed;}
-        plyr.setAttribute("facing", direction);
-        player.facing = direction;
-    } else if (player.move === true){
-        if(direction === playerDirections.right){player.x -= 10;}
-        if(direction === playerDirections.left){player.x+= 10;}
-        if(direction === playerDirections.down){player.y -= 10;}
-        if(direction === playerDirections.up){player.y += 10;} 
-    } 
-    collideSymbol();
-    collideExit();
-    collideArrows();
-    if (cursym === levelSymbols.length){
-        exit.state = "open";
-        console.log("exit open")
-        let temp = document.getElementById("exit");
-        temp.innerHTML = "Open Exit";
-        cursym = 0;
-    }
-    if(collideEnemy() === false){
-        player.x = 284;
-        player.y = 300;
-        healthDown();
-    }
-    plyr.setAttribute("walking", direction ? "true" : "false");
-    // Sets the boundaries to prevent the player from moving outside the play space
-    let lLimit = 0;
-    let rLimit = 600 - 32;
-    let tLimit = 0;
-    let bLimit = 350 - 32;
-    if (player.x < lLimit) {player.x = lLimit;}
-    if (player.x > rLimit) {player.x = rLimit;}
-    if (player.y < tLimit) {player.y = tLimit;}
-    if (player.y > bLimit) {player.y = bLimit;}
-    plyr.style.transform = `translate3d( ${player.x*pixelSize}px, ${player.y*pixelSize}px, 0 )`;  
-}
-// Creates a box in front of the player which can destroy enemies (only enemies)
-function playerAttack(){
-    let box = document.createElement('div');
-    let target = document.getElementById("map");
-    let dir = player.facing;
-    console.log(dir);
-    player.move = false;
-    box.setAttribute("class","attack");
-    box.setAttribute("id","attack");
-    target.appendChild(box);
-    if(dir === "down"){
-        attack.x = player.x;
-        attack.y = player.y+32;
-    }else if(dir === "up"){
-        attack.x = player.x;
-        attack.y = player.y-32;
-    }else if(dir === "left"){
-        attack.x = player.x-32;
-        attack.y = player.y;
-    }else if(dir=== "right"){
-        attack.x = player.x+32;
-        attack.y = player.y;
-    }
-    box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
-    levelEnemies.forEach(attackEnemyCheck);
-    setTimeout(function(){
-        box.remove();
-        player.move = true;
-   },500);
-}
+
 //applies movement across all enemies in the array
 function enemyMovement(){
     levelEnemies.forEach(moveEnemy);
@@ -521,6 +527,20 @@ function collideWallCheck(obj){
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
 }
+
+function collideHole(){  
+    return levelHoles.every(collideWallCheck);
+}
+//Check for player wall collision on a single object
+function collideHoleCheck(obj){   
+    return !(player.x <= obj.x + obj.w && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y+ obj.w &&
+        player.y + player.w >= obj.y);
+}
+
+
+
 //Applies collision check across all enemies in the array(play space)
 function collideEnemy(){  
     return levelEnemies.every(collideEnemyCheck);
