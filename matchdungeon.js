@@ -313,7 +313,6 @@ function createTrap(x,y,w,facing,delay){
     let trp = new GameObject(x,y,facing);
     trp.delay = delay;
     levelTraps.push(trp);
-
     
 }
 //creates an arrow, adds to an array of arrows
@@ -417,16 +416,18 @@ function moveEnemy(obj,index){
 }
 function arrowBarrage(){
     levelTraps.forEach(arrowFire);
-    
 }
 function arrowFire(obj,index){
     let x = obj.x;
-    console.log(x);
-    //setTimeout(function(){
-      //  window.setInterval(function(){
-        //    createArrow(obj.x,obj.y,obj.facing);
-        //},1000);
-    //},250);
+    let y = obj.y;
+    let facing = obj.facing;
+    let delay = obj.delay;
+    
+    setTimeout(function(){
+        window.setInterval(function(){
+           createArrow(x,y,facing);
+        },1000);
+    },delay);
 }
 
 //applies movement across all arrow objects in the array
@@ -500,7 +501,7 @@ function gameLoop(){
     if (pause === false){
         playerMovement();
         enemyMovement();
-        arrowFire();
+        arrowBarrage();
         arrowMovement();
     }
     setTimeout(() => {
