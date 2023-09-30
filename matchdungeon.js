@@ -1,5 +1,6 @@
 const startx = 284;
 const starty = 300;
+const iframe = 10;
 let score = 0;
 let pause = false;
 let level = 1;
@@ -427,6 +428,12 @@ function arrowFire(obj,index){
     let y = obj.y;
     let facing = obj.facing;
     let delay = obj.delay;
+    //Adjusts spawn location towards middle of origin image
+    if (facing === "right" || facing === "left"){
+        y = y + 8;
+    } else if(facing === "up" || facing === "down"){
+        x = x + 8;
+    }
     arrowIntervals.push(setTimeout(function(){
         window.setInterval(function(){
            if(pause === false){createArrow(x,y,facing);}
