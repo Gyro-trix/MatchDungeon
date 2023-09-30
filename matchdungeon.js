@@ -1,3 +1,5 @@
+const startx = 284;
+const starty = 300;
 let score = 0;
 let pause = false;
 let level = 1;
@@ -14,13 +16,26 @@ let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
 let levelArrows = [];
+let levelHoles = [];
 let symbolOffSet = 0;
+//Symbol possibilities with corresponding hint for correct order
 let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
                 "one","two", "three","four","Lucky, just count up."];
 
 let exit = new Object(0,0,0,0);
 let attack = new Attack(-32,-32,32);
+// Generic Game Object with coordinates, width, height, id, and were it is facing
+function GameObject(x,y,w,h,id,facing){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.id = id;
+    this.facing = facing;
+
+}
+
 function Wall(x,y,w){
     this.x = x;
     this.y = y;
@@ -57,8 +72,8 @@ function Arrow(x,y,facing){
     this.facing = facing;
 }
 const player = {
-    x:284,
-    y:300,
+    x:startx,
+    y:starty,
     w:32,
     health:3,
     facing: "down",
@@ -103,6 +118,10 @@ function init(){
     pscrn.style.visibility = "hidden";
     let iscrn = document.getElementById("screen info");
     iscrn.style.visibility = "hidden";
+    let oscrn = document.getElementById("screen gameOver");
+    oscrn.style.visibility = "hidden";
+    let wscrn = document.getElementById("screen gameWin");
+    wscrn.style.visibility = "hidden";
     let hscrn = document.createElement('div');
     hscrn.setAttribute("class","screen hint");
     hscrn.setAttribute("id","screen hint");
@@ -265,6 +284,19 @@ function createExit(x,y,h,w){
     target.appendChild(box);
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 }
+//creates a hole that sends the player back to start and cost a health
+function createHole(x,y,w,h){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+    let id = "hole";
+    box.setAttribute("class","hole");
+    box.setAttribute("id","hole");
+    target.appendChild(box);
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    let temp = new GameObject(x,y,w,h,id);
+    levelHoles.push(temp);
+}
+
 //Called on each game loop, handles updating the player position and health
 function playerMovement(){
     ps = pixelSize;
@@ -651,16 +683,35 @@ let hscrn = document.getElementById("screen hint");
 }
 
 function restart(){
-    /*sec = 91;*/
     location.reload();
 }
 
 function gameOver(){
-    /* brings up a div with an option to restart entire game*/
+    let pscrn = document.getElementById("screen gameOver");
+    pscrn.innerHTML = "<h1>Game Over</h1>";
+    if(pause === true){
+        pscrn.style.visibility = "hidden";
+        pause = false;
+        timer();
+    } else if (pause === false){
+        pscrn.style.visibility = "visible";
+        pause = true;
+        timer();
+    }
 }
 
 function gameWin(){
-    /* congratulations screen with total score displayed*/
+    let pscrn = document.getElementById("screen gameWin");
+    pscrn.innerHTML = "<h1>Congratulations</h1>";
+    if(pause === true){
+        pscrn.style.visibility = "hidden";
+        pause = false;
+        timer();
+    } else if (pause === false){
+        pscrn.style.visibility = "visible";
+        pause = true;
+        timer();
+    }
 }
 
 /* Player controls and inputs*/
