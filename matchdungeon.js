@@ -18,6 +18,7 @@ let levelEnemies = [];
 let levelTraps = [];
 let levelArrows = [];
 let levelHoles = [];
+let arrowIntervals = [];
 let symbolOffSet = 0;
 //Symbol possibilities with corresponding hint for correct order
 let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
@@ -162,9 +163,9 @@ function levelPopulate(){
             symbolShuffle(levelSymbols);
 
             createExit(250,0,32,108);
-            player.x = 284;
-            player.y = 300;
+
             displayPlayer();
+            arrowBarrage();
             
         break;
         case 2:
@@ -235,6 +236,9 @@ function playerMovement(){
         player.x = startx;
         player.y = starty;
         healthDown();
+    }
+    if(player.health === 0){
+        restart();
     }
     plyr.setAttribute("walking", direction ? "true" : "false");
     // Sets the boundaries to prevent the player from moving outside the play space
@@ -310,8 +314,7 @@ function createTrap(x,y,w,facing,delay){
     
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 
-    let trp = new GameObject(x,y,facing);
-    trp.delay = delay;
+    let trp = new Trap(x,y,w,facing,delay);
     levelTraps.push(trp);
     
 }
@@ -414,22 +417,22 @@ function moveEnemy(obj,index){
     }
     enmy.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
+
 function arrowBarrage(){
     levelTraps.forEach(arrowFire);
 }
+
 function arrowFire(obj,index){
     let x = obj.x;
     let y = obj.y;
     let facing = obj.facing;
     let delay = obj.delay;
-    
-    setTimeout(function(){
+    arrowIntervals.push(setTimeout(function(){
         window.setInterval(function(){
-           createArrow(x,y,facing);
+           if(pause === false){createArrow(x,y,facing);}
         },1000);
-    },delay);
+    },delay));
 }
-
 //applies movement across all arrow objects in the array
 function arrowMovement(){
     levelArrows.forEach(moveArrow);
@@ -501,7 +504,6 @@ function gameLoop(){
     if (pause === false){
         playerMovement();
         enemyMovement();
-        arrowBarrage();
         arrowMovement();
     }
     setTimeout(() => {
