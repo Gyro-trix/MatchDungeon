@@ -15,6 +15,7 @@ let levelWalls = [];
 let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
+let levelTraps = [];
 let levelArrows = [];
 let levelHoles = [];
 let symbolOffSet = 0;
@@ -33,7 +34,6 @@ function GameObject(x,y,w,h,id,facing){
     this.h = h;
     this.id = id;
     this.facing = facing;
-
 }
 
 function Wall(x,y,w){
@@ -158,7 +158,7 @@ function levelPopulate(){
             createTrap(0,64,32,"right",0);
             createTrap(0,96,32,"right",500);
             createTrap(0,128,32,"right",1000);
-            createTrap(500,10,32,"left",500);
+            createTrap(568,0,32,"left",1500);
             symbolShuffle(levelSymbols);
 
             createExit(250,0,32,108);
@@ -278,7 +278,6 @@ function playerAttack(){
         player.move = true;
    },500);
 }
-
 //creates a wall(currently collision reaction is a bit off)
 function createWall(x,y,w){
     let box = document.createElement('div');
@@ -308,8 +307,14 @@ function createTrap(x,y,w,facing,delay){
     box.setAttribute("class","trap");
     box.setAttribute("id","trap");
     target.appendChild(box);
-    setTimeout(function(){createArrow(x,y,facing);},delay)
+    
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+
+    let trp = new GameObject(x,y,facing);
+    trp.delay = delay;
+    levelTraps.push(trp);
+
+    
 }
 //creates an arrow, adds to an array of arrows
 function createArrow(x,y,facing){
@@ -376,8 +381,6 @@ function createHole(x,y,w,h){
     let temp = new GameObject(x,y,w,h,id);
     levelHoles.push(temp);
 }
-
-
 //applies movement across all enemies in the array
 function enemyMovement(){
     levelEnemies.forEach(moveEnemy);
@@ -412,6 +415,20 @@ function moveEnemy(obj,index){
     }
     enmy.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
+function arrowBarrage(){
+    levelTraps.forEach(arrowFire);
+    
+}
+function arrowFire(obj,index){
+    let x = obj.x;
+    console.log(x);
+    //setTimeout(function(){
+      //  window.setInterval(function(){
+        //    createArrow(obj.x,obj.y,obj.facing);
+        //},1000);
+    //},250);
+}
+
 //applies movement across all arrow objects in the array
 function arrowMovement(){
     levelArrows.forEach(moveArrow);
@@ -425,7 +442,7 @@ function moveArrow(obj,index){
     let mp = document.getElementById("map");
     if (facing === "right") {
         if (obj.x <= 584){
-            obj.x = obj.x + 2;
+            obj.x = obj.x + 8;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
@@ -434,7 +451,7 @@ function moveArrow(obj,index){
         }
     } else if(facing === "left"){
         if (obj.x >= 0){
-            obj.x = obj.x - 2;
+            obj.x = obj.x - 8;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
@@ -443,7 +460,7 @@ function moveArrow(obj,index){
         }
     } else if(facing === "up"){
         if (obj.y >= 0 ){
-            obj.y = obj.y - 2;
+            obj.y = obj.y - 8;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
@@ -452,7 +469,7 @@ function moveArrow(obj,index){
         }
     } else if(facing === "down"){
         if (obj.y <= 384 ){
-            obj.y = obj.y - 2;
+            obj.y = obj.y - 8;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
@@ -483,6 +500,7 @@ function gameLoop(){
     if (pause === false){
         playerMovement();
         enemyMovement();
+        arrowFire();
         arrowMovement();
     }
     setTimeout(() => {
@@ -527,7 +545,6 @@ function collideWallCheck(obj){
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
 }
-
 function collideHole(){  
     return levelHoles.every(collideWallCheck);
 }
@@ -538,9 +555,6 @@ function collideHoleCheck(obj){
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
 }
-
-
-
 //Applies collision check across all enemies in the array(play space)
 function collideEnemy(){  
     return levelEnemies.every(collideEnemyCheck);
