@@ -183,8 +183,8 @@ function levelPopulate(){
             createEnemy(200,300,32,300,220,"y");
 
             createExit(246,0,32,108);
-            player.x = 284;
-            player.y = 300;
+            player.x = startx;
+            player.y = starty;
             displayPlayer();
 
         break;
@@ -193,8 +193,8 @@ function levelPopulate(){
             sec = 91;
 
             createExit(246,0,32,108);
-            player.x = 284;
-            player.y = 300;
+            player.x = startx;
+            player.y = starty;
             displayPlayer();
 
         break;
