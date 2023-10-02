@@ -383,9 +383,9 @@ function createHole(x,y,w,h){
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
     box.style.width = ''+w+'px';
     box.style.height = ''+h+'px';
-    //box.setAttribute("style","width:"+w+"px");
-    //box.setAttribute("style","height:"+h+"px");
     let temp = new GameObject(x,y,w,h,id);
+    console.log(temp.w);
+    console.log(temp.h);
     levelHoles.push(temp);
 }
 //applies movement across all enemies in the array
