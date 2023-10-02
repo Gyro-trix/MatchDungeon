@@ -564,6 +564,8 @@ function collideHole(){
 }
 //Check for player wall collision on a single object
 function collideHoleCheck(obj){   
+    console.log(obj.h);
+    console.log(obj.w);
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
         player.y <= obj.y + obj.h &&
