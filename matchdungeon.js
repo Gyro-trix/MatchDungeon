@@ -154,13 +154,13 @@ function levelPopulate(){
             createSymbol(300,200,32);
             createSymbol(300,100,32);
             
-            createHole(0,0,32);
-            createHole(0,32,32);
+            createHole(0,0,128,32);
+            createHole(0,32,32,128);
 
-            createTrap(0,64,32,"right",0);
-            createTrap(0,96,32,"right",500);
-            createTrap(0,128,32,"right",1000);
-            createTrap(568,0,32,"left",1500);
+            //createTrap(0,64,32,"right",0);
+           // createTrap(0,96,32,"right",500);
+           // createTrap(0,128,32,"right",1000);
+           // createTrap(568,0,32,"left",1500);
             symbolShuffle(levelSymbols);
 
             createExit(250,0,32,108);
@@ -381,6 +381,10 @@ function createHole(x,y,w,h){
     box.setAttribute("id","hole");
     target.appendChild(box);
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    box.style.width = ''+w+'px';
+    box.style.height = ''+h+'px';
+    //box.setAttribute("style","width:"+w+"px");
+    //box.setAttribute("style","height:"+h+"px");
     let temp = new GameObject(x,y,w,h,id);
     levelHoles.push(temp);
 }
@@ -562,7 +566,7 @@ function collideHole(){
 function collideHoleCheck(obj){   
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
-        player.y <= obj.y+ obj.w &&
+        player.y <= obj.y + obj.h &&
         player.y + player.w >= obj.y);
 }
 //Applies collision check across all enemies in the array(play space)
