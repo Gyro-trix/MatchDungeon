@@ -118,12 +118,13 @@ function init(){
     pscrn.setAttribute("id","screen pause");
     scrn.appendChild(pscrn);
     pscrn.style.visibility = "hidden";
-    let iscrn = document.getElementById("screen info");
-    iscrn.style.visibility = "hidden";
-    let oscrn = document.getElementById("screen gameOver");
-    oscrn.style.visibility = "hidden";
-    let wscrn = document.getElementById("screen gameWin");
-    wscrn.style.visibility = "hidden";
+    infoCreate();
+    //let iscrn = document.getElementById("screen info");
+    //iscrn.style.visibility = "hidden";
+    //let oscrn = document.getElementById("screen gameOver");
+    //oscrn.style.visibility = "hidden";
+    //let wscrn = document.getElementById("screen gameWin");
+    //wscrn.style.visibility = "hidden";
     let hscrn = document.createElement('div');
     hscrn.setAttribute("class","screen hint");
     hscrn.setAttribute("id","screen hint");
@@ -670,7 +671,33 @@ function collideExit(){
         }
 }
 
-function infoPanel(){
+function infoCreate(){
+    let box = document.createElement('div');
+    let content = document.createElement('div');
+    let pbutton = document.createElement('Button');
+    let nbutton = document.createElement('Button');
+    let target = document.getElementById("map");
+    let ptext = document.createTextNode("Previous Page");
+    let ntext = document.createTextNode("Next Page");
+    let index = 1;
+    let pageone = "One";
+    let pagetwo = "Two";
+    let pagethree = "Three";
+    box.setAttribute("class","screen info");
+    box.setAttribute("id","screen info");
+    target.appendChild(box);
+    pbutton.appendChild(ptext);
+    nbutton.appendChild(ntext);
+    box.appendChild(pbutton);
+    box.appendChild(content);
+    content.innerHTML = pageone;
+    box.appendChild(nbutton);
+    box.style.visibility = "hidden";
+}
+
+    
+       
+function infoPanel(){    
     let iscrn = document.getElementById("screen info");
     if(pause === true){
         iscrn.style.visibility = "hidden";

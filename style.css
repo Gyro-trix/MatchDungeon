@@ -9,7 +9,7 @@
     height: calc(var(--pixel-size)*352);
     overflow: hidden;
     background: url(sprites/Floor.jpg);
-    background-size: 64px;
+    background-size: 32px;
     background-repeat: repeat;
     position:absolute;
     float: left;
