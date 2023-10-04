@@ -154,8 +154,9 @@ function levelPopulate(){
             createSymbol(300,200,32);
             createSymbol(300,100,32);
             
-            createHole(0,0,128,32);
-            createHole(0,32,32,128);
+            createHole(0,250,504,32);
+            createHole(504,154,32,128);
+            createHole(100,154,264,32);
 
             //createTrap(0,64,32,"right",0);
            // createTrap(0,96,32,"right",500);
