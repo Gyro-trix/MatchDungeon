@@ -560,7 +560,7 @@ function collideWallCheck(obj){
         player.y + player.w >= obj.y);
 }
 function collideHole(){  
-    return levelHoles.every(collideWallCheck);
+    return levelHoles.every(collideHoleCheck);
 }
 //Check for player wall collision on a single object
 function collideHoleCheck(obj){   
