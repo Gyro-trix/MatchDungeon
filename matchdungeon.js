@@ -27,9 +27,9 @@ let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Jus
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
                 "one","two", "three","four","Lucky, just count up."];
 let infocontents = [];
-infocontents[0] ="Controls: ";
-infocontents[1] ="Obstacles: ";
-infocontents[2] ="Objectives: ";
+infocontents[0] ="<h2>Controls:</h2> <p>Use the on screen arrows or the arrow keys on the keyboard.</p><p>The A button or Crtl on the keyboard attacks.</p><p>The B button or Shift on the keyboard blocks.</p>";
+infocontents[1] ="<h2>Obstacles:</h2> <p>Note, only for the test version</p><p>Small yellow boxes represent arrows, they can be blocked.</p><p>Moving red boxes are enemies that can be attacked, touching them sends you back to the start and looses a health.</p> <p>Darker floor areas are holes, which move you back to start and loose a health.</p>";
+infocontents[2] ="<h2>Objectives:</h2> <p>Before the timer reaches zero or you go to zero health (no hearts left) collect all symbols in the right order.</p><p>The hint button can provide help with the symbol order.</p><p>Once the symbols are collected head to the open exit to go to the next level</p>";
 let exit = new Object(0,0,0,0);
 let attack = new Attack(-32,-32,32);
 // Generic Game Object with coordinates, width, height, id, and were it is facing
@@ -123,12 +123,6 @@ function init(){
     scrn.appendChild(pscrn);
     pscrn.style.visibility = "hidden";
     infoCreate();
-    //let iscrn = document.getElementById("screen info");
-    //iscrn.style.visibility = "hidden";
-    //let oscrn = document.getElementById("screen gameOver");
-    //oscrn.style.visibility = "hidden";
-    //let wscrn = document.getElementById("screen gameWin");
-    //wscrn.style.visibility = "hidden";
     let hscrn = document.createElement('div');
     hscrn.setAttribute("class","screen hint");
     hscrn.setAttribute("id","screen hint");
@@ -156,14 +150,13 @@ function levelPopulate(){
             healthUp();
             createSymbol(100,200,32);
             createSymbol(100,100,32);
-            createSymbol(300,200,32);
+            createSymbol(472,200,32);
             createSymbol(300,100,32);
-            
+            createHole(32,0,32,250);
             createHole(0,250,504,32);
             createHole(504,154,32,128);
-            createHole(100,154,264,32);
-
-            //createTrap(0,64,32,"right",0);
+            createHole(240,154,264,32);
+            createTrap(0,200,32,"right",0);
            // createTrap(0,96,32,"right",500);
            // createTrap(0,128,32,"right",1000);
            // createTrap(568,0,32,"left",1500);
@@ -681,8 +674,8 @@ function infoCreate(){
     let pbutton = document.createElement('Button');
     let nbutton = document.createElement('Button');
     let target = document.getElementById("map");
-    let ptext = document.createTextNode("Previous Page");
-    let ntext = document.createTextNode("Next Page");
+    let ptext = document.createTextNode("<");
+    let ntext = document.createTextNode(">");
     
 
     box.setAttribute("class","screen info");
@@ -733,8 +726,6 @@ function infoChange(state){
         nbtemp.disabled = true;
         temp.innerHTML = infocontents[infoindex];
     }
-
-
 }    
        
 function infoPanel(){    
@@ -762,6 +753,10 @@ function levelComplete(){
     levelEnemies = [];
     levelSymbols = [];
     levelObstacles = [];
+    levelTraps = [];
+    levelArrows = [];
+    levelHoles = [];
+    arrowIntervals = [];
     maptemp.innerHTML = "";
     pattemp.innerHTML = "";
     levelPopulate();

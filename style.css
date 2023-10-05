@@ -104,7 +104,6 @@ h1{
 }
 
 h1.engraved {
-    
     font-family: Futura;
     background-color: #666666;
     -webkit-background-clip: text;
@@ -224,6 +223,19 @@ body{
     width: 608px;
     height: 400px;
 }
+.content{
+    width: 558px;
+    height: 400px;
+}
+.pbutton{
+    background-color: rgba(255, 171, 75, 0.459);
+    width: 25px;
+}
+.nbutton{
+    background-color: rgba(255, 171, 75, 0.459);
+    width: 25px;
+}
+
 .screen.pause{
     background:rgb(123, 229, 255);
     text-align: center;
@@ -262,6 +274,9 @@ body{
     width: 608px;
     height:100px;
     z-index: 5;
+}
+.pattern{
+    justify-content: center;
 }
 .playarea{
     background: transparent;
