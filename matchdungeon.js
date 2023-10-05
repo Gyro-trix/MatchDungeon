@@ -8,6 +8,7 @@ let speed = 5;
 let sec = 91;
 let time;
 let cursym = 0;
+let infoindex = 0;
 let solidCol = false;
 let directions = [];
 let isPressed = false;
@@ -25,7 +26,10 @@ let symbolOffSet = 0;
 let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
                 "one","two", "three","four","Lucky, just count up."];
-
+let infocontents = [];
+infocontents[0] ="Controls: ";
+infocontents[1] ="Obstacles: ";
+infocontents[2] ="Objectives: ";
 let exit = new Object(0,0,0,0);
 let attack = new Attack(-32,-32,32);
 // Generic Game Object with coordinates, width, height, id, and were it is facing
@@ -679,23 +683,59 @@ function infoCreate(){
     let target = document.getElementById("map");
     let ptext = document.createTextNode("Previous Page");
     let ntext = document.createTextNode("Next Page");
-    let index = 1;
-    let pageone = "One";
-    let pagetwo = "Two";
-    let pagethree = "Three";
+    
+
     box.setAttribute("class","screen info");
     box.setAttribute("id","screen info");
+    content.setAttribute("class","content");
+    content.setAttribute("id","content");
+    pbutton.setAttribute("class","pbutton");
+    pbutton.setAttribute("id","pbutton");
+    nbutton.setAttribute("class","nbutton");
+    nbutton.setAttribute("id","nbutton");
     target.appendChild(box);
     pbutton.appendChild(ptext);
     nbutton.appendChild(ntext);
     box.appendChild(pbutton);
     box.appendChild(content);
-    content.innerHTML = pageone;
+    content.innerHTML = infocontents[infoindex];
     box.appendChild(nbutton);
+    
+    pbutton.addEventListener("click", function(){infoChange("p")});
+    pbutton.disabled = true;
+    nbutton.addEventListener("click", function(){infoChange("n")});
     box.style.visibility = "hidden";
 }
 
-    
+function infoChange(state){
+    let temp = document.getElementById("content");
+    let pbtemp = document.getElementById("pbutton");
+    let nbtemp = document.getElementById("nbutton");
+    let upper = 2; 
+  
+    if (state ==="p"){
+        infoindex = infoindex - 1;
+    }
+    else if (state === "n"){
+        infoindex = infoindex + 1;
+    }
+
+    if (infoindex === 0){
+        pbtemp.disabled = true;
+        temp.innerHTML = infocontents[infoindex];
+    }
+    else if(infoindex != 0 && infoindex != upper){
+        pbtemp.disabled = false;
+        nbtemp.disabled = false;
+        temp.innerHTML = infocontents[infoindex];
+    }
+    else if (infoindex === upper){
+        nbtemp.disabled = true;
+        temp.innerHTML = infocontents[infoindex];
+    }
+
+
+}    
        
 function infoPanel(){    
     let iscrn = document.getElementById("screen info");
