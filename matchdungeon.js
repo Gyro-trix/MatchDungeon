@@ -6,6 +6,7 @@ let pause = false;
 let level = 1;
 let speed = 5;
 let sec = 91;
+let elasped = 0;
 let time;
 let cursym = 0;
 let infoindex = 0;
@@ -41,7 +42,6 @@ function GameObject(x,y,w,h,id,facing){
     this.id = id;
     this.facing = facing;
 }
-
 function Wall(x,y,w){
     this.x = x;
     this.y = y;
@@ -112,6 +112,8 @@ function displayPlayer(){
 }
 // Initialize event listeners
 function init(){
+    
+    elapsed = 0;
     document.getElementById("score").innerHTML = score;
     document.getElementById("level").innerHTML = level;
     let pbtn = document.getElementById("Pause");
@@ -438,10 +440,10 @@ function arrowFire(obj,index){
     } else if(facing === "up" || facing === "down"){
         x = x + 8;
     }
-        setTimeout(function(){
+    setTimeout(function(){
         arrowIntervals.push(window.setInterval(function(){
-           if(pause === false){createArrow(x,y,facing);}
-        },1000));
+            if(pause === false){createArrow(x,y,facing);}
+        },1000 - elasped));
     },delay);
 }
 //applies movement across all arrow objects in the array
@@ -769,12 +771,23 @@ function levelComplete(){
 
 function toPause(){
     let pscrn = document.getElementById("screen pause");
+    let tempInterval;
     pscrn.innerHTML = "<h1>PAUSED</h1>";
+    console.log(elapsed);
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;
         timer();
+        elapsed = 0;
+        clearInterval(tempInterval);
     } else if (pause === false){
+        tempInterval = setInterval(function(){
+            if (elasped < 999){
+                elapsed++;
+            } else if (elapsed > 1000){
+                elapsed = 0;
+            }
+            },1);
         pscrn.style.visibility = "visible";
         pause = true;
         timer();
