@@ -437,11 +437,11 @@ function arrowFire(obj,index){
     } else if(facing === "up" || facing === "down"){
         x = x + 8;
     }
-    arrowIntervals.push(setTimeout(function(){
-        window.setInterval(function(){
+        setTimeout(function(){
+        arrowIntervals.push(window.setInterval(function(){
            if(pause === false){createArrow(x,y,facing);}
-        },1000);
-    },delay));
+        },1000));
+    },delay);
 }
 //applies movement across all arrow objects in the array
 function arrowMovement(){
@@ -558,6 +558,7 @@ function collideWallCheck(obj){
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
 }
+
 function collideHole(){  
     return levelHoles.every(collideHoleCheck);
 }
@@ -756,7 +757,7 @@ function levelComplete(){
     levelTraps = [];
     levelArrows = [];
     levelHoles = [];
-    arrowIntervals = [];
+    arrowIntervals.forEach(clearInterval);
     maptemp.innerHTML = "";
     pattemp.innerHTML = "";
     levelPopulate();
