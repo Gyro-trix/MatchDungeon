@@ -148,22 +148,23 @@ function levelPopulate(){
             healthUp();
             healthUp();
             healthUp();
-            createSymbol(100,200,32);
-            createSymbol(100,100,32);
-            createSymbol(472,200,32);
-            createSymbol(300,100,32);
+            createSymbol(80,32,32);
+            createSymbol(80,200,32);
+            createSymbol(504,16,32);
+            createSymbol(456,200,32);
             createHole(32,0,32,250);
+            createHole(128,0,32,96);
+            createHole(128,282,32,80);
             createHole(0,250,504,32);
             createHole(504,154,32,128);
-            createHole(240,154,264,32);
+            createHole(340,154,164,32);
+            createHole(404,64,204,32);
+            createHole(64,154,96,32);
+            createEnemy(368,16,32,16,100,"y");
             createTrap(0,200,32,"right",0);
-           // createTrap(0,96,32,"right",500);
-           // createTrap(0,128,32,"right",1000);
-           // createTrap(568,0,32,"left",1500);
+            createTrap(80,300,32,"up",500);
             symbolShuffle(levelSymbols);
-
             createExit(250,0,32,108);
-
             displayPlayer();
             arrowBarrage();
             
