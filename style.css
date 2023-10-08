@@ -72,6 +72,13 @@
     overflow: hidden;
     background-color: rgb(54, 0, 0);
 }
+.ghost{
+    width: calc(var(--grid-cell)*2);
+    height: calc(var(--grid-cell)*2);
+    position: absolute;
+    overflow: hidden;
+    background-color: rgba(35, 0, 46, 0.678);
+}
 .trap{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);

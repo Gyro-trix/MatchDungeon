@@ -18,6 +18,7 @@ let levelWalls = [];
 let levelSymbols = [];
 let levelObstacles = [];
 let levelEnemies = [];
+let levelGhosts = [];
 let levelTraps = [];
 let levelArrows = [];
 let levelHoles = [];
@@ -112,7 +113,6 @@ function displayPlayer(){
 }
 // Initialize event listeners
 function init(){
-    
     elapsed = 0;
     document.getElementById("score").innerHTML = score;
     document.getElementById("level").innerHTML = level;
@@ -147,6 +147,7 @@ function levelPopulate(){
         case 1:     
             document.getElementById("level").innerHTML = level;
             timer();    
+            createGhost(0,0,32);
             healthUp();
             healthUp();
             healthUp();
@@ -307,6 +308,17 @@ function createEnemy(x,y,w,strt,dest,axis){
     let temp = new Enemy(x,y,w,strt,dest,axis);
     levelEnemies.push(temp);
 }
+
+function createGhost(x,y,w){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+    box.setAttribute("class","ghost");
+    box.setAttribute("id","ghost "+ levelEnemies.length);
+    target.appendChild(box);
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    let temp = new Enemy(x,y,w);
+    levelGhosts.push(temp);
+}
 //creates a trap, used as an arrow spawn point
 function createTrap(x,y,w,facing,delay){
     let box = document.createElement('div');
@@ -425,6 +437,22 @@ function moveEnemy(obj,index){
     enmy.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
 
+function ghostMovement(){
+    levelGhosts.forEach(moveGhost);
+}
+
+function moveGhost(obj,index){
+    let xDistance = obj.x - player.x;
+    let yDistance = obj.y - player.y;
+    let speed = 0.01;
+    
+    obj.x -= xDistance * speed;
+    obj.y -= yDistance * speed;
+
+    let ghst = document.getElementById("ghost "+ index);;
+    ghst.style.transform = `translate3d( ${obj.x*pixelSize}px, ${obj.y*pixelSize}px, 0 )`;
+}
+
 function arrowBarrage(){
     levelTraps.forEach(arrowFire);
 }
@@ -517,6 +545,7 @@ function gameLoop(){
     if (pause === false){
         playerMovement();
         enemyMovement();
+        ghostMovement();
         arrowMovement();
     }
     setTimeout(() => {
