@@ -51,6 +51,13 @@
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.514);
 }
+.safezone{
+    width: calc(var(--grid-cell)*2);
+    height: calc(var(--grid-cell)*2);
+    position: absolute;
+    overflow: hidden;
+    background-color: rgba(210, 255, 47, 0.397);
+}
 .wall{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);

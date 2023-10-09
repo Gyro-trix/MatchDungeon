@@ -22,6 +22,7 @@ let levelGhosts = [];
 let levelTraps = [];
 let levelArrows = [];
 let levelHoles = [];
+let levelSafeZones = [];
 let arrowIntervals = [];
 let symbolOffSet = 0;
 //Symbol possibilities with corresponding hint for correct order
@@ -86,6 +87,7 @@ const player = {
     facing: "down",
     move: true,
     block: false,
+    safe: false,
 }
 const playerDirections = {
     up: "up",
@@ -146,7 +148,8 @@ function levelPopulate(){
     switch (level){
         case 1:     
             document.getElementById("level").innerHTML = level;
-            timer();    
+            timer();
+            createSafeZone(284,300,64,64);    
             createGhost(0,0,32);
             healthUp();
             healthUp();
@@ -224,6 +227,7 @@ function playerMovement(){
     collideSymbol();
     collideExit();
     collideArrows();
+    collideGhost();
     if (cursym === levelSymbols.length){
         exit.state = "open";
         console.log("exit open")
@@ -240,6 +244,11 @@ function playerMovement(){
         player.x = startx;
         player.y = starty;
         healthDown();
+    }
+    if(collideSafeZones() === false){
+        player.safe = true;
+    } else {
+        player.safe = false;
     }
     if(player.health === 0){
         restart();
@@ -317,6 +326,8 @@ function createGhost(x,y,w){
     target.appendChild(box);
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
     let temp = new Enemy(x,y,w);
+    temp.stx = x;
+    temp.sty = y;
     levelGhosts.push(temp);
 }
 //creates a trap, used as an arrow spawn point
@@ -398,9 +409,21 @@ function createHole(x,y,w,h){
     box.style.width = ''+w+'px';
     box.style.height = ''+h+'px';
     let temp = new GameObject(x,y,w,h,id);
-    console.log(temp.w);
-    console.log(temp.h);
     levelHoles.push(temp);
+}
+
+function createSafeZone(x,y,w,h){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+    let id = "safezone";
+    box.setAttribute("class","safezone");
+    box.setAttribute("id","safezone");
+    target.appendChild(box);
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    box.style.width = ''+w+'px';
+    box.style.height = ''+h+'px';
+    let temp = new GameObject(x,y,w,h,id);
+    levelSafeZones.push(temp);
 }
 //applies movement across all enemies in the array
 function enemyMovement(){
@@ -442,12 +465,23 @@ function ghostMovement(){
 }
 
 function moveGhost(obj,index){
-    let xDistance = obj.x - player.x;
-    let yDistance = obj.y - player.y;
-    let speed = 0.01;
+    let xDistance;
+    let yDistance;
+    let speed;
+    if (player.safe === false){
+        xDistance = obj.x - player.x;
+        yDistance = obj.y - player.y;
+        speed = 0.01;
+        obj.x -= xDistance * speed;
+        obj.y -= yDistance * speed;
+    } else if (player.safe === true){
+        xDistance = obj.x - obj.stx;
+        yDistance = obj.y - obj.sty;
+        speed = 0.01;
+        obj.x -= xDistance * speed;
+        obj.y -= yDistance * speed;
+    }
     
-    obj.x -= xDistance * speed;
-    obj.y -= yDistance * speed;
 
     let ghst = document.getElementById("ghost "+ index);;
     ghst.style.transform = `translate3d( ${obj.x*pixelSize}px, ${obj.y*pixelSize}px, 0 )`;
@@ -601,6 +635,16 @@ function collideHoleCheck(obj){
         player.y <= obj.y + obj.h &&
         player.y + player.w >= obj.y);
 }
+function collideSafeZones(){  
+    return levelSafeZones.every(collideSafeZoneCheck);
+}
+//Check for player wall collision on a single object
+function collideSafeZoneCheck(obj){   
+    return !(player.x <= obj.x + obj.w && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y + obj.h &&
+        player.y + player.w >= obj.y);
+}
 //Applies collision check across all enemies in the array(play space)
 function collideEnemy(){  
     return levelEnemies.every(collideEnemyCheck);
@@ -611,6 +655,24 @@ function collideEnemyCheck(obj){
         player.x + player.w >= obj.x &&
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y)
+}
+//Applies collision check across all enemies in the array(play space)
+function collideGhost(){  
+    levelGhosts.forEach(collideGhostCheck);
+}
+//collision check between player and a single enemy
+function collideGhostCheck(obj,index){   
+    let mtemp = document.getElementById("map");
+    let temp = document.getElementById("ghost " + index);
+   if (player.x <= obj.x + obj.w && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y + obj.w &&
+        player.y + player.w >= obj.y){
+            obj.x = obj.stx;
+            obj.y = obj.sty;
+            temp.style.transform = `translate3d( ${obj.x}px, ${obj.y}px , 0 )`;
+            healthDown();
+        }
 }
 //Applies collision check across all arrows in the array(play space)
 function collideArrows(){  
@@ -789,6 +851,8 @@ function levelComplete(){
     levelTraps = [];
     levelArrows = [];
     levelHoles = [];
+    levelSafeZones = [];
+    levelGhosts = [];
     arrowIntervals.forEach(clearInterval);
     maptemp.innerHTML = "";
     pattemp.innerHTML = "";
