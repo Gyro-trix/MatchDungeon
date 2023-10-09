@@ -13,7 +13,9 @@ let infoindex = 0;
 let solidCol = false;
 let directions = [];
 let isPressed = false;
+//Grabs the pixel size from the css file
 let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
+//arrays to store current level objects
 let levelWalls = [];
 let levelSymbols = [];
 let levelObstacles = [];
@@ -29,13 +31,14 @@ let symbolOffSet = 0;
 let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
                 "one","two", "three","four","Lucky, just count up."];
+//Contents of the Info Panel
 let infocontents = [];
 infocontents[0] ="<h2>Controls:</h2> <p>Use the on screen arrows or the arrow keys on the keyboard.</p><p>The A button or Crtl on the keyboard attacks.</p><p>The B button or Shift on the keyboard blocks.</p>";
 infocontents[1] ="<h2>Obstacles:</h2> <p>Note, only for the test version</p><p>Small yellow boxes represent arrows, they can be blocked.</p><p>Moving red boxes are enemies that can be attacked, touching them sends you back to the start and looses a health.</p> <p>Darker floor areas are holes, which move you back to start and loose a health.</p>";
 infocontents[2] ="<h2>Objectives:</h2> <p>Before the timer reaches zero or you go to zero health (no hearts left) collect all symbols in the right order.</p><p>The hint button can provide help with the symbol order.</p><p>Once the symbols are collected head to the open exit to go to the next level</p>";
 let exit = new Object(0,0,0,0);
 let attack = new Attack(-32,-32,32);
-// Generic Game Object with coordinates, width, height, id, and were it is facing
+// Generic Game Object with coordinates, width, height, id, and were it is facing(Implemented late, hoping to use this accress all game objects)
 function GameObject(x,y,w,h,id,facing){
     this.x = x;
     this.y = y;
@@ -79,6 +82,7 @@ function Arrow(x,y,facing){
     this.y = y;
     this.facing = facing;
 }
+//Object representing the player, x and y coordinates, width, health, facing, can player move?, player blocking?, player in safe zone?
 const player = {
     x:startx,
     y:starty,
@@ -89,12 +93,14 @@ const player = {
     block: false,
     safe: false,
 }
+//Object containing strings of directions for event listeners
 const playerDirections = {
     up: "up",
     down: "down",
     left: "left",
     right: "right",
 }
+//Associated keys for the above directions, might be able to create a rebind key option?
 const keys = {
     ArrowUp: playerDirections.up,
     ArrowLeft: playerDirections.left,
@@ -317,7 +323,7 @@ function createEnemy(x,y,w,strt,dest,axis){
     let temp = new Enemy(x,y,w,strt,dest,axis);
     levelEnemies.push(temp);
 }
-
+//Creates a ghost that follows the player
 function createGhost(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
@@ -411,7 +417,7 @@ function createHole(x,y,w,h){
     let temp = new GameObject(x,y,w,h,id);
     levelHoles.push(temp);
 }
-
+//Creates a safe zone of size w by h where ghost do not chase the player
 function createSafeZone(x,y,w,h){
     let box = document.createElement('div');
     let target = document.getElementById("map");
@@ -425,11 +431,11 @@ function createSafeZone(x,y,w,h){
     let temp = new GameObject(x,y,w,h,id);
     levelSafeZones.push(temp);
 }
-//applies movement across all enemies in the array
+//Applies movement across all enemies in the array
 function enemyMovement(){
     levelEnemies.forEach(moveEnemy);
 }
-// Basic movement of a single enemy object
+//Basic movement of a single enemy object
 function moveEnemy(obj,index){
     let x = obj.x;
     let y = obj.y;
@@ -459,11 +465,11 @@ function moveEnemy(obj,index){
     }
     enmy.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
 }
-
+//Applies movement to all ghost objects 
 function ghostMovement(){
     levelGhosts.forEach(moveGhost);
 }
-
+//Basic movement of ghosts objects
 function moveGhost(obj,index){
     let xDistance;
     let yDistance;
@@ -501,11 +507,11 @@ function moveGhost(obj,index){
     let ghst = document.getElementById("ghost "+ index);;
     ghst.style.transform = `translate3d( ${obj.x*pixelSize}px, ${obj.y*pixelSize}px, 0 )`;
 }
-
+//applies arrow spawning to all created spawn points, linked to the trap objects
 function arrowBarrage(){
     levelTraps.forEach(arrowFire);
 }
-
+//Spawning of arrows
 function arrowFire(obj,index){
     let x = obj.x;
     let y = obj.y;
@@ -639,7 +645,7 @@ function collideWallCheck(obj){
         player.y <= obj.y+ obj.w &&
         player.y + player.w >= obj.y);
 }
-
+//Collision with holes, sending player back to start and losing a health
 function collideHole(){  
     return levelHoles.every(collideHoleCheck);
 }
@@ -650,10 +656,11 @@ function collideHoleCheck(obj){
         player.y <= obj.y + obj.h &&
         player.y + player.w >= obj.y);
 }
+//applies collision check to each safe zone in the level
 function collideSafeZones(){  
     return levelSafeZones.every(collideSafeZoneCheck);
 }
-//Check for player wall collision on a single object
+//Check for collision between player and safezone
 function collideSafeZoneCheck(obj){   
     return !(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
@@ -740,11 +747,11 @@ function playerBlock(){
         player.block = false;
    },500);
 }
-
+//Applies player and symbol collision check to all symbols
 function collideSymbol(){
     levelSymbols.forEach(collideSymbolCheck);
 }
-
+//Checks for collision between player and symbol
 function collideSymbolCheck(obj, index){   
     if ((cursym === index)&&(player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
@@ -762,7 +769,7 @@ function collideSymbolCheck(obj, index){
             return false;
     }
 }
-
+//Check for collision of player and exit, if not open nothing happens
 function collideExit(){
     if((exit.state === "open")&&
         (player.x <= exit.x + exit.w && 
@@ -777,7 +784,7 @@ function collideExit(){
             levelComplete();            
         }
 }
-
+//Creates the info screen/div
 function infoCreate(){
     let box = document.createElement('div');
     let content = document.createElement('div');
@@ -809,7 +816,7 @@ function infoCreate(){
     nbutton.addEventListener("click", function(){infoChange("n")});
     box.style.visibility = "hidden";
 }
-
+//Handles multiple page info screen
 function infoChange(state){
     let temp = document.getElementById("content");
     let pbtemp = document.getElementById("pbutton");
@@ -837,7 +844,7 @@ function infoChange(state){
         temp.innerHTML = infocontents[infoindex];
     }
 }    
-       
+//used to display the info panel    
 function infoPanel(){    
     let iscrn = document.getElementById("screen info");
     if(pause === true){
@@ -850,7 +857,7 @@ function infoPanel(){
         timer();
     }
 }
-
+//Called on level complete, clears objects from level before making objects for the next level
 function levelComplete(){
     let pltemp = document.getElementById("player");
     let pattemp = document.getElementById("pattern")
@@ -876,7 +883,7 @@ function levelComplete(){
     Then empty map div. Call populate level with level incremented
     */ 
 }
-
+//Pauses the game
 function toPause(){
     let pscrn = document.getElementById("screen pause");
     let tempInterval;
@@ -901,7 +908,7 @@ function toPause(){
         timer();
     }
 }
-
+//Brings up hint dialogue for symbol order
 function hintPanel(){
 let hscrn = document.getElementById("screen hint");
     hscrn.innerHTML = symbolSet[4];
@@ -915,11 +922,11 @@ let hscrn = document.getElementById("screen hint");
         timer();
     }
 }
-
+//restarts the game, just refreshes the page
 function restart(){
     location.reload();
 }
-
+//Screen if player loses all health or time runs out
 function gameOver(){
     let pscrn = document.getElementById("screen gameOver");
     pscrn.innerHTML = "<h1>Game Over</h1>";
@@ -933,7 +940,7 @@ function gameOver(){
         timer();
     }
 }
-
+//Congratulation screen after completing the final level
 function gameWin(){
     let pscrn = document.getElementById("screen gameWin");
     pscrn.innerHTML = "<h1>Congratulations</h1>";
@@ -947,7 +954,6 @@ function gameWin(){
         timer();
     }
 }
-
 /* Player controls and inputs*/
 document.addEventListener("keydown", (e) =>{
     let dir = keys[e.key];
