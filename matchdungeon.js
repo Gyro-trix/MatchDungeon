@@ -4,7 +4,7 @@ const iframe = 10;
 let score = 0;
 let pause = false;
 let level = 1;
-let speed = 5;
+let speed = 6;
 let sec = 91;
 let elasped = 0;
 let time;
@@ -471,18 +471,33 @@ function moveGhost(obj,index){
     if (player.safe === false){
         xDistance = obj.x - player.x;
         yDistance = obj.y - player.y;
-        speed = 0.01;
+        xytotal = xDistance + yDistance;
+        if (xytotal > 100){
+            speed = 0.02;
+        }
+        else if (xytotal <= 100 && xytotal > 75){
+            speed = 0.03;
+        } else if (xytotal <= 75){
+            speed = 0.04;
+        }
         obj.x -= xDistance * speed;
         obj.y -= yDistance * speed;
     } else if (player.safe === true){
         xDistance = obj.x - obj.stx;
         yDistance = obj.y - obj.sty;
-        speed = 0.01;
+        xytotal = xDistance + yDistance;
+        if (xytotal > 100){
+            speed = 0.03;
+        }
+        else if (xytotal <= 100 && xytotal > 75){
+            speed = 0.04;
+        } else if (xytotal <= 75){
+            speed = 0.05;
+        }
+        
         obj.x -= xDistance * speed;
         obj.y -= yDistance * speed;
     }
-    
-
     let ghst = document.getElementById("ghost "+ index);;
     ghst.style.transform = `translate3d( ${obj.x*pixelSize}px, ${obj.y*pixelSize}px, 0 )`;
 }
