@@ -190,8 +190,16 @@ function levelPopulate(){
             createSymbol(400,100,32);
             createSymbol(400,100,32);
 
-            createEnemy(400,100,32,400,332,"x");
-            createEnemy(200,300,32,300,220,"y");
+            symbolShuffle(levelSymbols);
+
+            createHole(0,288,512,32);
+            createHole(512,288,32,64);
+            createHole(64,192,544,32);
+            createHole(0,96,544,32);
+            createHole(96,0,544,32);
+
+            createEnemy(16,128,32,128,256,"y");
+            createEnemy(560,32,32,32,160,"y");
 
             createTrap(0,320,32,"up",0);
             createTrap(32,320,32,"up",0);
@@ -208,7 +216,7 @@ function levelPopulate(){
             createTrap(448,320,32,"up",0);
             createTrap(480,320,32,"up",0);
 
-            createExit(0,0,32,108);
+            createExit(0,0,32,96);
             createSafeZone(560,288,64,64);   
             player.x = 576;
             player.y = 320;
