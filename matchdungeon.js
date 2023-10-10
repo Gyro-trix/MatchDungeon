@@ -212,7 +212,7 @@ function levelPopulate(){
             createEnemy(368,16,32,16,100,"y");
             createTrap(0,200,32,"right",0);
             createTrap(80,300,32,"up",500);
-            symbolShuffle(levelSymbols);
+            //symbolShuffle(levelSymbols);
             createExit(250,0,32,108);
             displayPlayer();
             arrowBarrage();
@@ -231,7 +231,7 @@ function levelPopulate(){
             createSymbol(560,48,32);
             createSymbol(432,48,32);
 
-            symbolShuffle(levelSymbols);
+            //symbolShuffle(levelSymbols);
 
             createHole(0,288,512,32);
             createHole(512,288,32,64);
@@ -435,6 +435,10 @@ function createArrow(x,y,facing){
 function createSymbol(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
+    box.setAttribute("class","symbol");
+    box.setAttribute("id","symbol " + levelArrows.length);
+    target.appendChild(box);
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
     let temp = new Symbol(x,y,w);
     levelSymbols.push(temp);
 }
