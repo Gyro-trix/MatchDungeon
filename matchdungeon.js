@@ -1,5 +1,5 @@
-const startx = 284;
-const starty = 300;
+let startx = 284;
+let starty = 300;
 const iframe = 10;
 let score = 0;
 let pause = false;
@@ -155,6 +155,8 @@ function levelPopulate(){
         case 2:     
             document.getElementById("level").innerHTML = level;
             timer();
+            startx = 284;
+            starty = 300;
             createSafeZone(284,300,64,64);    
             createGhost(0,0,32);
             healthUp();
@@ -189,10 +191,10 @@ function levelPopulate(){
             healthUp();
             healthUp();
 
-            createSymbol(400,240,32);
+            createSymbol(432,240,32);
             createSymbol(240,144,32);
-            createSymbol(544,48,32);
-            createSymbol(400,48,32);
+            createSymbol(560,48,32);
+            createSymbol(432,48,32);
 
             symbolShuffle(levelSymbols);
 
@@ -205,8 +207,8 @@ function levelPopulate(){
             createEnemy(16,128,32,128,256,"y");
             createEnemy(560,32,32,32,160,"y");
 
-            createTrap(0,320,32,"up",0);
-            createTrap(32,320,32,"up",0);
+            //createTrap(0,320,32,"up",0);
+            //createTrap(32,320,32,"up",0);
             createTrap(64,320,32,"up",0);
             createTrap(96,320,32,"up",0);
 
@@ -222,6 +224,9 @@ function levelPopulate(){
 
             createExit(0,0,32,96);
             createSafeZone(560,288,64,64);   
+            startx = 576;
+            starty = 320;
+            
             player.x = 576;
             player.y = 320;
             displayPlayer();
