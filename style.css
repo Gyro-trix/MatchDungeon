@@ -58,6 +58,13 @@
     overflow: hidden;
     background-color: rgba(210, 255, 47, 0.397);
 }
+.trigger{
+    width: calc(var(--grid-cell)*2);
+    height: calc(var(--grid-cell)*2);
+    position: absolute;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.178);
+}
 .wall{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);

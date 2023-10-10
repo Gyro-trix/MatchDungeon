@@ -25,6 +25,7 @@ let levelTraps = [];
 let levelArrows = [];
 let levelHoles = [];
 let levelSafeZones = [];
+let levelTriggers = [];
 let arrowIntervals = [];
 let symbolOffSet = 0;
 //Symbol possibilities with corresponding hint for correct order
@@ -152,6 +153,39 @@ function init(){
 //Populates each level, each case is a different level/layout
 function levelPopulate(){
     switch (level){
+        //Title Screen, not yet implemented
+        case 0:
+
+        break;
+        //Intro Level, one of each mechanic, not meant to be difficult, not yet implemented
+        case 1:
+            document.getElementById("level").innerHTML = level;
+            timer();
+            startx = 284;
+            starty = 300;
+            createSafeZone(284,300,64,64);    
+            //createGhost(0,0,32);
+            healthUp();
+            healthUp();
+            healthUp();
+            createTrigger(0,0,64,64,function(){createEnemy(368,16,32,16,100,"y")});
+            //createHole(32,0,32,250);
+            //createHole(128,0,32,96);
+            //createHole(128,282,32,80);
+            //createHole(0,250,504,32);
+            //createHole(504,154,32,128);
+            //createHole(340,154,164,32);
+            //createHole(404,64,204,32);
+            //createHole(64,154,96,32);
+            //createEnemy(368,16,32,16,100,"y");
+            //createTrap(0,200,32,"right",0);
+            //createTrap(80,300,32,"up",500);
+            //symbolShuffle(levelSymbols);
+            createExit(250,0,32,108);
+            displayPlayer();
+            //arrowBarrage();
+        break;
+
         case 2:     
             document.getElementById("level").innerHTML = level;
             timer();
@@ -183,7 +217,7 @@ function levelPopulate(){
             arrowBarrage();
             
         break;
-        case 1:
+        case 3:
             document.getElementById("level").innerHTML = level;
             sec = 91;
 
@@ -267,6 +301,7 @@ function playerMovement(){
     collideExit();
     collideArrows();
     collideGhost();
+    collideTriggers();
     if (cursym === levelSymbols.length){
         exit.state = "open";
         console.log("exit open")
@@ -463,6 +498,22 @@ function createSafeZone(x,y,w,h){
     box.style.height = ''+h+'px';
     let temp = new GameObject(x,y,w,h,id);
     levelSafeZones.push(temp);
+}
+//Creates a safe zone of size w by h where ghost do not chase the player
+function createTrigger(x,y,w,h,func){
+    let box = document.createElement('div');
+    let target = document.getElementById("map");
+    let id = "trigger";
+    box.setAttribute("class","trigger");
+    box.setAttribute("id","trigger");
+    target.appendChild(box);
+    box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
+    box.style.width = ''+w+'px';
+    box.style.height = ''+h+'px';
+    let temp = new GameObject(x,y,w,h,id);
+    temp.state = true;
+    temp.func = func;
+    levelTriggers.push(temp);
 }
 //Applies movement across all enemies in the array
 function enemyMovement(){
@@ -700,6 +751,21 @@ function collideSafeZoneCheck(obj){
         player.y <= obj.y + obj.h &&
         player.y + player.w >= obj.y);
 }
+//Applies 
+function collideTriggers(){  
+    levelTriggers.forEach(collideTriggerCheck);
+}
+//collision 
+function collideTriggerCheck(obj){   
+    if ((player.x <= obj.x + obj.w && 
+        player.x + player.w >= obj.x &&
+        player.y <= obj.y + obj.h &&
+        player.y + player.w >= obj.y)
+        &&(obj.state === true)){
+            obj.func();
+            obj.state = false;
+        }
+}
 //Applies collision check across all enemies in the array(play space)
 function collideEnemy(){  
     return levelEnemies.every(collideEnemyCheck);
@@ -717,7 +783,6 @@ function collideGhost(){
 }
 //collision check between player and a single enemy
 function collideGhostCheck(obj,index){   
-    let mtemp = document.getElementById("map");
     let temp = document.getElementById("ghost " + index);
    if (player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
@@ -908,13 +973,13 @@ function levelComplete(){
     levelHoles = [];
     levelSafeZones = [];
     levelGhosts = [];
+    levelTriggers = [];
     arrowIntervals.forEach(clearInterval);
     maptemp.innerHTML = "";
     pattemp.innerHTML = "";
     levelPopulate();
-    /* Move Player and attack out of map div
-    Then empty map div. Call populate level with level incremented
-    */ 
+    //Move Player and attack out of map div
+    //Then empty map div. Call populate level with level incremented 
 }
 //Pauses the game
 function toPause(){
