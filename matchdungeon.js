@@ -169,6 +169,7 @@ function levelPopulate(){
             healthUp();
             healthUp();
             createTrigger(0,0,64,64,function(){createEnemy(368,16,32,16,100,"y")});
+            createTrigger(0,200,64,64,function(){createHole(0,0,32,250);});
             //createHole(32,0,32,250);
             //createHole(128,0,32,96);
             //createHole(128,282,32,80);
