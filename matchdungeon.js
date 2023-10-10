@@ -221,7 +221,7 @@ function levelPopulate(){
         case 1:
             document.getElementById("level").innerHTML = level;
             sec = 91;
-
+            timer();
             healthUp();
             healthUp();
             healthUp();
@@ -435,7 +435,6 @@ function createArrow(x,y,facing){
 function createSymbol(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
-    
     box.setAttribute("class","symbol");
     box.setAttribute("id","symbol " + levelSymbols.length);
     target.appendChild(box);
@@ -447,7 +446,8 @@ function createSymbol(x,y,w){
 }
 // Shuffles and visually creates symbols
 function symbolShuffle(array){
-    for(let i = array.length -1; i>0;i--){
+    
+    /*for(let i = array.length -1; i>0;i--){
         let j = Math.floor(Math.random()*(i+1));
         let t = array[i];
         array[i] = array[j];
@@ -462,7 +462,7 @@ function symbolShuffle(array){
         box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".jpg)";
         target.appendChild(box);
         box.style.transform = `translate3d( ${obj.x}px, ${obj.y}px , 0 )`;
-    }
+    }*/
 }
 //Creates the exit point for the level
 function createExit(x,y,h,w){
