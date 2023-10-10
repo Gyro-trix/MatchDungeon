@@ -185,10 +185,14 @@ function levelPopulate(){
             document.getElementById("level").innerHTML = level;
             sec = 91;
 
-            createSymbol(100,100,32);
-            createSymbol(200,200,32);
-            createSymbol(400,100,32);
-            createSymbol(400,100,32);
+            healthUp();
+            healthUp();
+            healthUp();
+
+            createSymbol(400,240,32);
+            createSymbol(240,144,32);
+            createSymbol(544,48,32);
+            createSymbol(400,48,32);
 
             symbolShuffle(levelSymbols);
 
