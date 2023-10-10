@@ -158,7 +158,7 @@ function levelPopulate(){
 
         break;
         //Intro Level, one of each mechanic, not meant to be difficult, not yet implemented
-        case 1:
+        case 2:
             document.getElementById("level").innerHTML = level;
             timer();
             startx = 284;
@@ -187,7 +187,7 @@ function levelPopulate(){
             //arrowBarrage();
         break;
 
-        case 2:     
+        case 3:     
             document.getElementById("level").innerHTML = level;
             timer();
             startx = 284;
@@ -218,7 +218,7 @@ function levelPopulate(){
             arrowBarrage();
             
         break;
-        case 3:
+        case 1:
             document.getElementById("level").innerHTML = level;
             sec = 91;
 
@@ -435,12 +435,15 @@ function createArrow(x,y,facing){
 function createSymbol(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
+    
     box.setAttribute("class","symbol");
-    box.setAttribute("id","symbol " + levelArrows.length);
+    box.setAttribute("id","symbol " + levelSymbols.length);
     target.appendChild(box);
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
     let temp = new Symbol(x,y,w);
     levelSymbols.push(temp);
+    let r = levelSymbols.length - 1;
+    box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".jpg)";
 }
 // Shuffles and visually creates symbols
 function symbolShuffle(array){
