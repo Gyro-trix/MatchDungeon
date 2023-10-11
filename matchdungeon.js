@@ -120,25 +120,34 @@ function displayPlayer(){
     target.appendChild(box);
     box.style.transform = `translate3d( ${player.x}px, ${player.y}px , 0 )`;
 }
-// Initialize event listeners
+// Initialize and some html content 
 function init(){
     elapsed = 0;
     document.getElementById("score").innerHTML = score;
     document.getElementById("level").innerHTML = level;
-    let pbtn = document.getElementById("Pause");
-    pbtn.addEventListener("click", toPause);
     let scrn = document.getElementById("screen");
+    //Create pause div and hide it
     let pscrn = document.createElement('div');
     pscrn.setAttribute("class","screen pause");
     pscrn.setAttribute("id","screen pause");
     scrn.appendChild(pscrn);
     pscrn.style.visibility = "hidden";
     infoCreate();
+    //Create hint div and hide it
     let hscrn = document.createElement('div');
     hscrn.setAttribute("class","screen hint");
     hscrn.setAttribute("id","screen hint");
     scrn.appendChild(hscrn);
     hscrn.style.visibility = "hidden";
+    //Create dialogue div and hide it
+    let dscrn = document.createElement('div');
+    dscrn.setAttribute("class","screen dialogue");
+    dscrn.setAttribute("id","screen dialogue");
+    scrn.appendChild(dscrn);
+    dscrn.style.visibility = "hidden";
+    //On screen buttons event handlers
+    let pbtn = document.getElementById("Pause");
+    pbtn.addEventListener("click", toPause);
     let a = document.getElementById("A");
     a.addEventListener("click", playerAttack);
     let b = document.getElementById("B");
@@ -159,6 +168,7 @@ function levelPopulate(){
         break;
         //Intro Level, one of each mechanic, not meant to be difficult, not yet implemented
         case 1:
+            let triggerone = "<p>You are the square currently in the upper right. Use the arrow buttons to the left or the arrow keys on the keyboard to move.</p>";
             document.getElementById("level").innerHTML = level;
             timer();
             startx = 560;
@@ -170,7 +180,8 @@ function levelPopulate(){
             healthUp();
             healthUp();
             healthUp();
-            //createTrigger(0,0,64,64,function(){createEnemy(368,16,32,16,100,"y")});
+            dialoguePanel(triggerone);
+            //createTrigger(544,0,64,64,function(){dialoguePanel(triggerone);});
             //createTrigger(0,200,64,64,function(){createHole(0,0,32,250);});
             createHole(96,0,32,256);
             createHole(192,128,32,224);
@@ -449,7 +460,7 @@ function createSymbol(x,y,w){
     let r = levelSymbols.length - 1;
     box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".jpg)";
 }
-// Shuffles and visually creates symbols
+// Shuffles and visually creates symbols, currently disabled
 function symbolShuffle(array){
     
     /*for(let i = array.length -1; i>0;i--){
@@ -766,11 +777,11 @@ function collideSafeZoneCheck(obj){
         player.y <= obj.y + obj.h &&
         player.y + player.w >= obj.y);
 }
-//Applies 
+//Applies collision to all Trigger objects
 function collideTriggers(){  
     levelTriggers.forEach(collideTriggerCheck);
 }
-//collision 
+//collision check between player and invisible trigger 
 function collideTriggerCheck(obj){   
     if ((player.x <= obj.x + obj.w && 
         player.x + player.w >= obj.x &&
@@ -1034,6 +1045,24 @@ let hscrn = document.getElementById("screen hint");
         pause = true;
         timer();
     }
+}
+//Creates dialogue that can be triggered to inform the player during gameplay, takes str as a string 
+function dialoguePanel(str){
+    let portrait = document.createElement('div');
+    portrait.setAttribute("class","portrait");
+    portrait.setAttribute("id","portrait");
+    let dscrn = document.getElementById("screen dialogue");
+    dscrn.appendChild(portrait);
+    dscrn.innerHTML += str;
+    pause = true;
+    timer();
+    dscrn.style.visibility = "visible";
+    setTimeout(function(){
+        pause = false;
+        dscrn.style.visibility = "hidden";
+        timer();
+        dscrn.innerHTML = "";
+    }, 5000);
 }
 //restarts the game, just refreshes the page
 function restart(){
