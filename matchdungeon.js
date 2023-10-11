@@ -165,7 +165,7 @@ function levelPopulate(){
             starty = 16;
             player.x = startx;
             player.y = starty;
-            createSafeZone(284,300,64,64);    
+            createSafeZone(0,0,96,352);    
             //createGhost(0,0,32);
             healthUp();
             healthUp();
@@ -179,11 +179,13 @@ function levelPopulate(){
             createHole(288,0,32,256);
             createHole(384,96,32,256);
             createHole(480,0,32,256);
-            //createHole(404,64,204,32);
-            //createHole(64,154,96,32);
-            //createEnemy(368,16,32,16,100,"y");
-            //createTrap(0,200,32,"right",0);
-            //createTrap(80,300,32,"up",500);
+            createEnemy(320,32,32,320,448,"x");
+            createTrap(224,0,32,"down",0);
+            createTrap(256,0,32,"down",0);
+            createSymbol(32,224,32);
+            createSymbol(32,160,32);
+            createSymbol(32,96,32);
+            createSymbol(32,32,32);
             //symbolShuffle(levelSymbols);
             createExit(0,0,32,96);
             displayPlayer();
@@ -666,7 +668,7 @@ function moveArrow(obj,index){
         }
     } else if(facing === "down"){
         if (obj.y <= 384 ){
-            obj.y = obj.y - 8;
+            obj.y = obj.y + 8;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
