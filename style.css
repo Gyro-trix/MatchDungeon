@@ -311,13 +311,25 @@ body{
 }
 .portrait{
     background:rgb(96, 98, 224);
+    display: block;
     text-align: center;
     position: absolute;
     margin:auto;
     margin-top: 10px;
+    margin-left: 10px;
     width: 80px;
     height:80px;
-    z-index: 7;
+}
+.dtext{
+    display: inline;
+    color: azure;
+    text-align: left;
+    position: absolute;
+    margin:auto;
+    margin-top: 10px;
+    margin-left: 100px;
+    width: 500px;
+    height:80px;
 }
 .pattern{
     justify-content: center;

@@ -168,7 +168,12 @@ function levelPopulate(){
         break;
         //Intro Level, one of each mechanic, not meant to be difficult, not yet implemented
         case 1:
-            let triggerone = "<p>You are the square currently in the upper right. Use the arrow buttons to the left or the arrow keys on the keyboard to move.</p>";
+            let triggerone = "<p>You are the square currently in the upper right. Use the arrow buttons to the left or the arrow keys on the keyboard to move. Dialogue pauses and lasts for five seconds.</p>";
+            let triggertwo = "<p>You need to make your way to the exit. Be careful, as to the left(shaded area) are holes that cause you to lose health and be put back to start if you move into it. When health reaches zero the level restarts.</p>"
+            let triggerthree = "<p>Either pressing the A button to the right or press CRTL on the keyboard causes you to attack infront on you. The red square moving back and forth above you is an enemy that will do the same as the holes if you touch it. </p>"
+            let triggerfour = "<p>See those small yellow squares, getting hit will cause you to lose a health. The B button or SHIFT on the keyboard makes you block, which prevents the health lose.</p>"
+            let triggerfive = "<p>See the purple block, it will chase you down and hit you, the yellow area to the left scares the purple block off. Getting hit by the purple block causes you to lose a health and the ghost goes back to where it started.</p>"
+            let triggersix = "<p>Notice the exit says it is closed, you need to collect symbols in the right order to open the door. The hint button to the right can help with that. However these are lined up nicely for you. Grab them and head to the exit.</p>"
             document.getElementById("level").innerHTML = level;
             timer();
             startx = 560;
@@ -1051,9 +1056,13 @@ function dialoguePanel(str){
     let portrait = document.createElement('div');
     portrait.setAttribute("class","portrait");
     portrait.setAttribute("id","portrait");
+    let text = document.createElement('div');
+    text.setAttribute("class","dtext");
+    text.setAttribute("id","dtext");
     let dscrn = document.getElementById("screen dialogue");
     dscrn.appendChild(portrait);
-    dscrn.innerHTML += str;
+    text.innerHTML = str;
+    dscrn.appendChild(text);
     pause = true;
     timer();
     dscrn.style.visibility = "visible";
