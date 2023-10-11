@@ -158,33 +158,36 @@ function levelPopulate(){
 
         break;
         //Intro Level, one of each mechanic, not meant to be difficult, not yet implemented
-        case 2:
+        case 1:
             document.getElementById("level").innerHTML = level;
             timer();
-            startx = 284;
-            starty = 300;
+            startx = 560;
+            starty = 16;
+            player.x = startx;
+            player.y = starty;
             createSafeZone(284,300,64,64);    
             //createGhost(0,0,32);
             healthUp();
             healthUp();
             healthUp();
-            createTrigger(0,0,64,64,function(){createEnemy(368,16,32,16,100,"y")});
-            createTrigger(0,200,64,64,function(){createHole(0,0,32,250);});
-            //createHole(32,0,32,250);
-            //createHole(128,0,32,96);
-            //createHole(128,282,32,80);
-            //createHole(0,250,504,32);
-            //createHole(504,154,32,128);
-            //createHole(340,154,164,32);
+            //createTrigger(0,0,64,64,function(){createEnemy(368,16,32,16,100,"y")});
+            //createTrigger(0,200,64,64,function(){createHole(0,0,32,250);});
+            createHole(96,0,32,256);
+            createHole(192,128,32,224);
+            createHole(192,0,32,64);
+            createHole(224,32,64,32);
+            createHole(288,0,32,256);
+            createHole(384,96,32,256);
+            createHole(480,0,32,256);
             //createHole(404,64,204,32);
             //createHole(64,154,96,32);
             //createEnemy(368,16,32,16,100,"y");
             //createTrap(0,200,32,"right",0);
             //createTrap(80,300,32,"up",500);
             //symbolShuffle(levelSymbols);
-            createExit(250,0,32,108);
+            createExit(0,0,32,96);
             displayPlayer();
-            //arrowBarrage();
+            arrowBarrage();
         break;
 
         case 3:     
@@ -218,7 +221,7 @@ function levelPopulate(){
             arrowBarrage();
             
         break;
-        case 1:
+        case 2:
             document.getElementById("level").innerHTML = level;
             sec = 91;
             timer();
@@ -476,6 +479,8 @@ function createExit(x,y,h,w){
     box.innerHTML = "Closed Exit";
     box.setAttribute("class","exit");
     box.setAttribute("id","exit");
+    box.style.width = ''+w+'px';
+    box.style.height = ''+h+'px';
     target.appendChild(box);
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
 }
