@@ -1,4 +1,5 @@
 const iframe = 10;
+let pressed = true;
 let startx = 284;
 let starty = 300;
 let pause = false;
@@ -1111,7 +1112,8 @@ document.addEventListener("keyup", (e) => {
 })
 document.addEventListener("keydown", (e) => {
     if(!e.repeat){
-    if (e.key === "Control"){
+
+        if (e.key === "Control"){
         playerAttack();
     } else if (e.key === "Enter"){
         toPause(); 
@@ -1123,6 +1125,7 @@ document.addEventListener("keydown", (e) => {
     }
 })
 document.addEventListener("keyup", (e) => {
+    
     if (e.key === "Shift"){
         playerBlock();
     }
