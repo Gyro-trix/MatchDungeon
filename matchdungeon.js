@@ -1,6 +1,7 @@
+const iframe = 10;
 let startx = 284;
 let starty = 300;
-const iframe = 10;
+let pressed = false;
 let score = 0;
 let pause = false;
 let level = 1;
@@ -852,14 +853,19 @@ function attackEnemyCheck(obj,index){
 //Called to enable player blocking
 function playerBlock(){
     let temp = document.getElementById("player");
-    temp.setAttribute("block","true")
-    player.move = false;
-    player.block = true;
-    setTimeout(function(){
+    if (player.block === false){
+        temp.setAttribute("block","true");
+        player.block = true;
+        player.move = false;
+    } else if (player.block === true){
         temp.setAttribute("block","false")
         player.move = true;
         player.block = false;
-   },500);
+
+    }
+    //setTimeout(function(){
+        
+   //},500);
 }
 //Applies player and symbol collision check to all symbols
 function collideSymbol(){
@@ -1106,18 +1112,38 @@ document.addEventListener("keyup", (e) => {
     }
 })
 document.addEventListener("keydown", (e) => {
-    console.log(e.key);
+if (pressed === false){
     if (e.key === "Control"){
         playerAttack()
+        pressed = true;
     }
     if (e.key === "Enter"){
         toPause();
+        pressed = true;
     }
     if (e.key === "Shift"){
         playerBlock();
+        pressed = true;
     }
     if (e.key === "z"){
         toPause();
+        pressed = true;
+    }
+}
+
+})
+document.addEventListener("keyup", (e) => {
+    if (e.key === "Control"){
+        pressed = false;
+    }
+    if (e.key === "Enter"){
+        pressed = false;
+    }
+    if (e.key === "Shift"){
+        pressed = false;
+    }
+    if (e.key === "z"){
+        pressed = false;
     }
 })
 /* D-pad functionality*/
