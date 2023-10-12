@@ -1,8 +1,6 @@
 const iframe = 10;
 let startx = 284;
 let starty = 300;
-let pressed = false;
-let score = 0;
 let pause = false;
 let level = 1;
 let speed = 6;
@@ -1112,39 +1110,23 @@ document.addEventListener("keyup", (e) => {
     }
 })
 document.addEventListener("keydown", (e) => {
-if (pressed === false){
+    if(!e.repeat){
     if (e.key === "Control"){
-        playerAttack()
-        pressed = true;
-    }
-    if (e.key === "Enter"){
-        toPause();
-        pressed = true;
-    }
-    if (e.key === "Shift"){
+        playerAttack();
+    } else if (e.key === "Enter"){
+        toPause(); 
+    } else if (e.key === "Shift"){
         playerBlock();
-        pressed = true;
-    }
-    if (e.key === "z"){
+    } else if (e.key === "z"){
         toPause();
-        pressed = true;
     }
-}
-
+    }
 })
 document.addEventListener("keyup", (e) => {
-    if (e.key === "Control"){
-        pressed = false;
-    }
-    if (e.key === "Enter"){
-        pressed = false;
-    }
     if (e.key === "Shift"){
-        pressed = false;
+        playerBlock();
     }
-    if (e.key === "z"){
-        pressed = false;
-    }
+    
 })
 /* D-pad functionality*/
 const removePressedAll = () => {
