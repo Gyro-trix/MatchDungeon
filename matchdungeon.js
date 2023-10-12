@@ -186,8 +186,10 @@ function levelPopulate(){
             healthUp();
             healthUp();
             dialoguePanel(triggerone);
-            //createTrigger(544,0,64,64,function(){dialoguePanel(triggerone);});
-            //createTrigger(0,200,64,64,function(){createHole(0,0,32,250);});
+            createTrigger(512,0,32,352,function(){dialoguePanel(triggertwo);});
+            createTrigger(416,96,64,64,function(){dialoguePanel(triggerthree);});
+            createTrigger(320,192,64,64,function(){dialoguePanel(triggerfour);});
+            createTrigger(96,64,64,64,function(){createGhost(572,0,32); dialoguePanel(triggerfive); });
             createHole(96,0,32,256);
             createHole(192,128,32,224);
             createHole(192,0,32,64);
