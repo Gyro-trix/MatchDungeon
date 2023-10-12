@@ -166,7 +166,7 @@ function levelPopulate(){
         case 0:
 
         break;
-        //Intro Level, one of each mechanic, not meant to be difficult, not yet implemented
+        //Intro/tutorial Level, one of each mechanic with on screen popups, not meant to be difficult
         case 1:
             let triggerone = "<p>You are the square currently in the upper right. Use the arrow buttons to the left or the arrow keys on the keyboard to move. Dialogue pauses and lasts for five seconds.</p>";
             let triggertwo = "<p>You need to make your way to the exit. Be careful, as to the left(shaded area) are holes that cause you to lose health and be put back to start if you move into it. When health reaches zero the level restarts.</p>"
@@ -181,7 +181,6 @@ function levelPopulate(){
             player.x = startx;
             player.y = starty;
             createSafeZone(0,0,96,352);    
-            //createGhost(0,0,32);
             healthUp();
             healthUp();
             healthUp();
@@ -190,6 +189,7 @@ function levelPopulate(){
             createTrigger(416,96,64,64,function(){dialoguePanel(triggerthree);});
             createTrigger(320,192,64,64,function(){dialoguePanel(triggerfour);});
             createTrigger(96,64,64,64,function(){createGhost(572,0,32); dialoguePanel(triggerfive); });
+            createTrigger(0,256,96,96,function(){dialoguePanel(triggersix); });
             createHole(96,0,32,256);
             createHole(192,128,32,224);
             createHole(192,0,32,64);
@@ -204,7 +204,6 @@ function levelPopulate(){
             createSymbol(32,160,32);
             createSymbol(32,96,32);
             createSymbol(32,32,32);
-            //symbolShuffle(levelSymbols);
             createExit(0,0,32,96);
             displayPlayer();
             arrowBarrage();
@@ -217,9 +216,6 @@ function levelPopulate(){
             starty = 300;
             createSafeZone(284,300,64,64);    
             createGhost(0,0,32);
-            healthUp();
-            healthUp();
-            healthUp();
             createSymbol(80,32,32);
             createSymbol(80,200,32);
             createSymbol(504,16,32);
@@ -245,53 +241,39 @@ function levelPopulate(){
             document.getElementById("level").innerHTML = level;
             sec = 91;
             timer();
-            healthUp();
-            healthUp();
-            healthUp();
-
             createSymbol(432,240,32);
             createSymbol(240,144,32);
             createSymbol(560,48,32);
             createSymbol(432,48,32);
-
             //symbolShuffle(levelSymbols);
-
             createHole(0,288,512,32);
             createHole(512,288,32,64);
             createHole(64,192,544,32);
             createHole(0,96,544,32);
             createHole(96,0,544,32);
-
             createEnemy(16,128,32,128,256,"y");
             createEnemy(560,32,32,32,160,"y");
-
-            //createTrap(0,320,32,"up",0);
-            //createTrap(32,320,32,"up",0);
             createTrap(64,320,32,"up",0);
             createTrap(96,320,32,"up",0);
-
             createTrap(192,320,32,"up",0);
             createTrap(224,320,32,"up",0);
             createTrap(256,320,32,"up",0);
             createTrap(288,320,32,"up",0);
-
             createTrap(384,320,32,"up",0);
             createTrap(416,320,32,"up",0);
             createTrap(448,320,32,"up",0);
             createTrap(480,320,32,"up",0);
-
             createExit(0,0,32,96);
             createSafeZone(560,288,64,64);   
             startx = 576;
             starty = 320;
-            
             player.x = 576;
             player.y = 320;
             displayPlayer();
             arrowBarrage();
-
         break;
-        case 3:
+        //Not yet implemented
+        case 4:
             document.getElementById("level").innerHTML = level;
             sec = 91;
 
@@ -420,7 +402,7 @@ function createGhost(x,y,w){
     let box = document.createElement('div');
     let target = document.getElementById("map");
     box.setAttribute("class","ghost");
-    box.setAttribute("id","ghost "+ levelEnemies.length);
+    box.setAttribute("id","ghost "+ levelGhosts.length);
     target.appendChild(box);
     box.style.transform = `translate3d( ${x}px, ${y}px , 0 )`;
     let temp = new Enemy(x,y,w);
@@ -591,6 +573,7 @@ function moveGhost(obj,index){
     let xDistance;
     let yDistance;
     let speed;
+    let ghst = document.getElementById("ghost "+ index);
     if (player.safe === false){
         xDistance = obj.x - player.x;
         yDistance = obj.y - player.y;
@@ -621,7 +604,7 @@ function moveGhost(obj,index){
         obj.x -= xDistance * speed;
         obj.y -= yDistance * speed;
     }
-    let ghst = document.getElementById("ghost "+ index);;
+    
     ghst.style.transform = `translate3d( ${obj.x*pixelSize}px, ${obj.y*pixelSize}px, 0 )`;
 }
 //applies arrow spawning to all created spawn points, linked to the trap objects
