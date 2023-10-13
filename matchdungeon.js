@@ -30,9 +30,12 @@ let levelTriggers = [];
 let arrowIntervals = [];
 let symbolOffSet = 0;
 //Symbol possibilities with corresponding hint for correct order
-let symbolSet = ["line","cross","asterik1","asterik2","Same as 1,2,3 then 4. Just not with numbers.",
+let symbolSet = ["line","cross","asterik1","asterik2","Counting up, just with lines",
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
-                "one","two", "three","four","Lucky, just count up."];
+                "one","two", "three","four","Lucky, just count up.",
+                "tip","blade","guard","hilt","A sword for thee.",
+                "O","P","E","N", "What you want the exit to do.",
+                "tri","square","penta","hexa","All about the sides."];
 //Contents of the Info Panel
 let infocontents = [];
 infocontents[0] ="<h2>Controls:</h2> <p>Use the on screen arrows or the arrow keys on the keyboard.</p><p>The A button or Crtl on the keyboard attacks.</p><p>The B button or Shift on the keyboard blocks.</p>";
@@ -292,10 +295,10 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
     if(direction && collideWall() && player.move != false){
-        if(direction === playerDirections.right) {player.x += speed;}
-        if(direction === playerDirections.left){player.x-= speed;}
-        if(direction === playerDirections.down){player.y += speed;}
-        if(direction === playerDirections.up){player.y -= speed;}
+        if(direction === playerDirections.right) {player.x += speed; plyr.innerHTML = ">"}
+        if(direction === playerDirections.left){player.x-= speed; plyr.innerHTML = "<"}
+        if(direction === playerDirections.down){player.y += speed; plyr.innerHTML = "."}
+        if(direction === playerDirections.up){player.y -= speed; plyr.innerHTML = "^"}
         plyr.setAttribute("facing", direction);
         player.facing = direction;
     } else if (player.move === true){
