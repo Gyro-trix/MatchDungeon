@@ -1,4 +1,5 @@
 const iframe = 10;
+const fps = 30;
 let startx = 284;
 let starty = 300;
 let score = 0;
@@ -617,6 +618,7 @@ function arrowFire(obj,index){
     let y = obj.y;
     let facing = obj.facing;
     let delay = obj.delay;
+    let count = 0;
     //Adjusts spawn location towards middle of origin image
     if (facing === "right" || facing === "left"){
         y = y + 8;
@@ -625,8 +627,8 @@ function arrowFire(obj,index){
     }
     setTimeout(function(){
         arrowIntervals.push(window.setInterval(function(){
-            if(pause === false){createArrow(x,y,facing);}
-        },1000 - elasped));
+            if(pause === false){if (count === 200) {createArrow(x,y,facing); count = 0;} count++;}
+        },1));
     },delay);
 }
 //applies movement across all arrow objects in the array
@@ -696,7 +698,6 @@ function timer(){
 }
 // Game Loop, everything that needs to stay updated during gameplay
 function gameLoop(){
-    let fps = 30;
     if (pause === false){
         playerMovement();
         enemyMovement();
@@ -705,9 +706,9 @@ function gameLoop(){
     }
     setTimeout(() => {
     window.requestAnimationFrame(() => {
-        gameLoop();
+    gameLoop();
      })
-    }, 1000 / fps)
+    }, 1000/fps)
 }
 // adds to the score by an amount, num
 function scoreChange(num){
