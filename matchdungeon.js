@@ -1,7 +1,7 @@
 const iframe = 10;
-let pressed = true;
 let startx = 284;
 let starty = 300;
+let score = 0;
 let pause = false;
 let level = 1;
 let speed = 6;
@@ -1111,24 +1111,25 @@ document.addEventListener("keyup", (e) => {
     }
 })
 document.addEventListener("keydown", (e) => {
-    if(!e.repeat){
-
-        if (e.key === "Control"){
+    
+if(!e.repeat && player.move === true){
+    if (e.key === "Control" ){
         playerAttack();
     } else if (e.key === "Enter"){
-        toPause(); 
+        toPause();
     } else if (e.key === "Shift"){
         playerBlock();
     } else if (e.key === "z"){
         toPause();
     }
-    }
+}
 })
 document.addEventListener("keyup", (e) => {
     
-    if (e.key === "Shift"){
-        playerBlock();
-    }
+    if (e.key === "Shift" && player.move === false){
+            playerBlock();
+        } 
+        
     
 })
 /* D-pad functionality*/
