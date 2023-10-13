@@ -281,7 +281,7 @@ function levelPopulate(){
         case 4:
             document.getElementById("level").innerHTML = level;
             sec = 91;
-
+            level = 2;
             createExit(246,0,32,108);
             player.x = startx;
             player.y = starty;
