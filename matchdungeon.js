@@ -3,6 +3,7 @@ const fps = 30;
 let startx = 284;
 let starty = 300;
 let score = 0;
+let prevscore = 0;
 let pause = false;
 let level = 1;
 let speed = 6;
@@ -212,35 +213,6 @@ function levelPopulate(){
             displayPlayer();
             arrowBarrage();
         break;
-
-        case 3:     
-            document.getElementById("level").innerHTML = level;
-            timer();
-            startx = 284;
-            starty = 300;
-            createSafeZone(284,300,64,64);    
-            createGhost(0,0,32);
-            createSymbol(80,32,32);
-            createSymbol(80,200,32);
-            createSymbol(504,16,32);
-            createSymbol(456,200,32);
-            createHole(32,0,32,250);
-            createHole(128,0,32,96);
-            createHole(128,282,32,80);
-            createHole(0,250,504,32);
-            createHole(504,154,32,128);
-            createHole(340,154,164,32);
-            createHole(404,64,204,32);
-            createHole(64,154,96,32);
-            createEnemy(368,16,32,16,100,"y");
-            createTrap(0,200,32,"right",0);
-            createTrap(80,300,32,"up",500);
-            //symbolShuffle(levelSymbols);
-            createExit(250,0,32,108);
-            displayPlayer();
-            arrowBarrage();
-            
-        break;
         case 2:
             document.getElementById("level").innerHTML = level;
             sec = 91;
@@ -276,6 +248,35 @@ function levelPopulate(){
             displayPlayer();
             arrowBarrage();
         break;
+        case 3:     
+            document.getElementById("level").innerHTML = level;
+            timer();
+            startx = 284;
+            starty = 300;
+            createSafeZone(284,300,64,64);    
+            createGhost(0,0,32);
+            createSymbol(80,32,32);
+            createSymbol(80,200,32);
+            createSymbol(504,16,32);
+            createSymbol(456,200,32);
+            createHole(32,0,32,250);
+            createHole(128,0,32,96);
+            createHole(128,282,32,80);
+            createHole(0,250,504,32);
+            createHole(504,154,32,128);
+            createHole(340,154,164,32);
+            createHole(404,64,204,32);
+            createHole(64,154,96,32);
+            createEnemy(368,16,32,16,100,"y");
+            createTrap(0,200,32,"right",0);
+            createTrap(80,300,32,"up",500);
+            //symbolShuffle(levelSymbols);
+            createExit(250,0,32,108);
+            displayPlayer();
+            arrowBarrage();
+            
+        break;
+        
         //Not yet implemented
         case 4:
             document.getElementById("level").innerHTML = level;
