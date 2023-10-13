@@ -180,6 +180,7 @@ function levelPopulate(){
             let triggerfive = "<p>See the purple block, it will chase you down and hit you, the yellow area to the left scares the purple block off. Getting hit by the purple block causes you to lose a health and the ghost goes back to where it started.</p>"
             let triggersix = "<p>Notice the exit says it is closed, you need to collect symbols in the right order to open the door. The hint button to the right can help with that. However these are lined up nicely for you. Grab them and head to the exit.</p>"
             document.getElementById("level").innerHTML = level;
+            sec = 91;
             timer();
             startx = 560;
             starty = 16;
@@ -336,7 +337,9 @@ function playerMovement(){
         player.safe = false;
     }
     if(player.health === 0){
-        restart();
+        player.health = 3;
+        timer();
+        levelComplete();
     }
     plyr.setAttribute("walking", direction ? "true" : "false");
     // Sets the boundaries to prevent the player from moving outside the play space
