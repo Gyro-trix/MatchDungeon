@@ -1073,6 +1073,13 @@ function dialoguePanel(str){
         dscrn.style.visibility = "hidden";
         timer();
         dscrn.innerHTML = "";});
+    document.addEventListener("keydown",(e) => {
+        if (!e.repeat){
+        pause = false;
+        dscrn.style.visibility = "hidden";
+        timer();
+        dscrn.innerHTML = "";}
+    });
     dscrn.style.visibility = "visible";
 }
 //restarts the game, just refreshes the page
