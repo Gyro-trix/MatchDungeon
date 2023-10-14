@@ -759,10 +759,10 @@ function collideHole(){
 }
 //Check for player wall collision on a single object
 function collideHoleCheck(obj){   
-    return !(player.x <= obj.x + obj.w && 
-        player.x + player.w >= obj.x &&
-        player.y <= obj.y + obj.h &&
-        player.y + player.w >= obj.y);
+    return !(player.x + 8 <= obj.x + obj.w && 
+        player.x + player.w -8>= obj.x &&
+        player.y +8<= obj.y + obj.h &&
+        player.y + player.w -8>= obj.y);
 }
 //applies collision check to each safe zone in the level
 function collideSafeZones(){  
