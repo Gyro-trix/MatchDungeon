@@ -1074,8 +1074,9 @@ function dialoguePanel(str){
         timer();
         dscrn.innerHTML = "";});
     document.addEventListener("keydown",(e) => {
-        if (!e.repeat){
-        pause = false;
+        if (!e.repeat && pause === true){
+        console.log("Dialogue");
+            pause = false;
         dscrn.style.visibility = "hidden";
         timer();
         dscrn.innerHTML = "";}
