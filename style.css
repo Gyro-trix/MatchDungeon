@@ -123,8 +123,6 @@ h1{
     text-align: center;
     right: 300px;
     color:rgba(255, 255, 255, 0.5);
-    
-
 }
 
 h1.engraved {
@@ -333,6 +331,18 @@ body{
     margin-left: 100px;
     width: 500px;
     height:80px;
+}
+.scrnexit{
+    width: 15px;
+    height: 15px;
+    display: inline;
+    color: azure;
+    text-align: center;
+    position: absolute;
+    margin:auto;
+    margin-top: 10px;
+    margin-left: 580px;
+    border:1px solid rgb(255, 255, 255);
 }
 .pattern{
     justify-content: center;

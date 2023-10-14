@@ -1057,19 +1057,23 @@ function dialoguePanel(str){
     let text = document.createElement('div');
     text.setAttribute("class","dtext");
     text.setAttribute("id","dtext");
+    let scrnexit = document.createElement('div');
+    scrnexit.setAttribute("class","scrnexit");
+    scrnexit.setAttribute("id","scrnexit");
+    scrnexit.innerHTML = "X";
     let dscrn = document.getElementById("screen dialogue");
     dscrn.appendChild(portrait);
     text.innerHTML = str;
     dscrn.appendChild(text);
+    dscrn.appendChild(scrnexit);
     pause = true;
     timer();
-    dscrn.style.visibility = "visible";
-    setTimeout(function(){
-        pause = false;
+    let xbtn = document.getElementById("scrnexit");
+    xbtn.addEventListener("click", function(){ pause = false;
         dscrn.style.visibility = "hidden";
         timer();
-        dscrn.innerHTML = "";
-    }, 5000);
+        dscrn.innerHTML = "";});
+    dscrn.style.visibility = "visible";
 }
 //restarts the game, just refreshes the page
 function restart(){
