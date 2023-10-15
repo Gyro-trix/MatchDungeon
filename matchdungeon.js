@@ -2,6 +2,7 @@ const iframe = 10;
 const fps = 30;
 let startx = 284;
 let starty = 300;
+let offset = 8;
 let score = 0;
 let prevscore = 0;
 let pause = false;
@@ -759,10 +760,10 @@ function collideHole(){
 }
 //Check for player wall collision on a single object
 function collideHoleCheck(obj){   
-    return !(player.x + 8 <= obj.x + obj.w && 
-        player.x + player.w -8>= obj.x &&
-        player.y +8<= obj.y + obj.h &&
-        player.y + player.w -8>= obj.y);
+    return !(player.x + offset <= obj.x + obj.w && 
+        player.x + player.w - offset>= obj.x &&
+        player.y + offset<= obj.y + obj.h &&
+        player.y + player.w - offset>= obj.y);
 }
 //applies collision check to each safe zone in the level
 function collideSafeZones(){  
@@ -796,10 +797,10 @@ function collideEnemy(){
 }
 //collision check between player and a single enemy
 function collideEnemyCheck(obj){   
-    return !(player.x <= obj.x + obj.w && 
-        player.x + player.w >= obj.x &&
-        player.y <= obj.y+ obj.w &&
-        player.y + player.w >= obj.y)
+    return !(player.x + offset<= obj.x + obj.w && 
+        player.x + player.w - offset>= obj.x &&
+        player.y + offset<= obj.y+ obj.w &&
+        player.y + player.w - offset >= obj.y)
 }
 //Applies collision check across all enemies in the array(play space)
 function collideGhost(){  
@@ -808,10 +809,10 @@ function collideGhost(){
 //collision check between player and a single enemy
 function collideGhostCheck(obj,index){   
     let temp = document.getElementById("ghost " + index);
-   if (player.x <= obj.x + obj.w && 
-        player.x + player.w >= obj.x &&
-        player.y <= obj.y + obj.w &&
-        player.y + player.w >= obj.y){
+   if (player.x + offset<= obj.x + obj.w && 
+        player.x + player.w - offset>= obj.x &&
+        player.y + offset<= obj.y + obj.w &&
+        player.y + player.w - offset>= obj.y){
             obj.x = obj.stx;
             obj.y = obj.sty;
             temp.style.transform = `translate3d( ${obj.x}px, ${obj.y}px , 0 )`;
@@ -987,12 +988,10 @@ function infoPanel(){
 //Called on level complete, clears objects from level before making objects for the next level
 function levelComplete(){
     let pltemp = document.getElementById("player");
-    let pattemp = document.getElementById("pattern")
-    /*let attemp = document.getElementById("attack");*/
+    let pattemp = document.getElementById("pattern");
     let storage = document.createElement('div');
     let maptemp = document.getElementById("map");
     storage.appendChild(pltemp);
-    /*storage.appendChild(attemp);*/
     levelWalls = [];
     levelEnemies = [];
     levelSymbols = [];
@@ -1007,8 +1006,10 @@ function levelComplete(){
     maptemp.innerHTML = "";
     pattemp.innerHTML = "";
     levelPopulate();
-    //Move Player and attack out of map div
-    //Then empty map div. Call populate level with level incremented 
+}
+//Level restart for when time is up or life goes to zero
+function levelRestart(){
+
 }
 //Pauses the game
 function toPause(){
