@@ -181,12 +181,13 @@ function levelPopulate(){
             let triggerfive = "<p>See the purple block, it will chase you down and hit you, the yellow area to the left scares the purple block off. Getting hit by the purple block causes you to lose a health and the ghost goes back to where it started.</p>"
             let triggersix = "<p>Notice the exit says it is closed, you need to collect symbols in the right order to open the door. The hint button to the right can help with that. However these are lined up nicely for you. Grab them and head to the exit.</p>"
             document.getElementById("level").innerHTML = level;
-            sec = 91;
-            timer();
+            sec = 10;
             startx = 560;
             starty = 16;
             player.x = startx;
             player.y = starty;
+            score = prevscore;
+            timer();
             createSafeZone(0,0,96,352);    
             healthUp();
             healthUp();
@@ -218,12 +219,16 @@ function levelPopulate(){
         case 2:
             document.getElementById("level").innerHTML = level;
             sec = 91;
+            startx = 576;
+            starty = 320;
+            player.x = startx;
+            player.y = starty;
+            score = prevscore;
             timer();
             createSymbol(432,240,32);
             createSymbol(240,144,32);
             createSymbol(560,48,32);
             createSymbol(432,48,32);
-            //symbolShuffle(levelSymbols);
             createHole(0,288,512,32);
             createHole(512,288,32,64);
             createHole(64,192,544,32);
@@ -243,10 +248,7 @@ function levelPopulate(){
             createTrap(480,320,32,"up",0);
             createExit(0,0,32,96);
             createSafeZone(560,288,64,64);   
-            startx = 576;
-            starty = 320;
-            player.x = 576;
-            player.y = 320;
+            
             displayPlayer();
             arrowBarrage();
         break;
@@ -272,7 +274,6 @@ function levelPopulate(){
             createEnemy(368,16,32,16,100,"y");
             createTrap(0,200,32,"right",0);
             createTrap(80,300,32,"up",500);
-            //symbolShuffle(levelSymbols);
             createExit(250,0,32,108);
             displayPlayer();
             arrowBarrage();
@@ -292,7 +293,7 @@ function levelPopulate(){
         break;
     }
 }
-//Called on each game loop, handles updating the player position and health
+//Called on each game loop, handles updating the player position, health, collision status
 function playerMovement(){
     ps = pixelSize;
     const direction = directions[0];
@@ -339,8 +340,7 @@ function playerMovement(){
     }
     if(player.health === 0){
         player.health = 3;
-        timer();
-        levelComplete();
+        levelRestart();
     }
     plyr.setAttribute("walking", direction ? "true" : "false");
     // Sets the boundaries to prevent the player from moving outside the play space
@@ -696,7 +696,7 @@ function timer(){
         sec--;
         if (sec <= 0) {
             clearInterval(time);
-            restart();
+            levelRestart();
             // Will bring up a game over screen when finished
             }
         }, 1000);    
@@ -734,8 +734,11 @@ function levelChange(num){
 function healthUp(){
     let con = document.getElementById("health");
     let div = document.createElement('div');
-    div.setAttribute('id','heart');
-    con.appendChild(div);
+    if (player.health < 3){
+        div.setAttribute('id','heart');
+        con.appendChild(div);
+    }
+    
 }
 //decrease health by one
 function healthDown(){
@@ -992,6 +995,7 @@ function levelComplete(){
     let storage = document.createElement('div');
     let maptemp = document.getElementById("map");
     storage.appendChild(pltemp);
+    prevscore = score;
     levelWalls = [];
     levelEnemies = [];
     levelSymbols = [];
@@ -1009,7 +1013,26 @@ function levelComplete(){
 }
 //Level restart for when time is up or life goes to zero
 function levelRestart(){
-
+    let pltemp = document.getElementById("player");
+    let pattemp = document.getElementById("pattern");
+    let storage = document.createElement('div');
+    let maptemp = document.getElementById("map");
+    storage.appendChild(pltemp);
+    prescore = score;
+    levelWalls = [];
+    levelEnemies = [];
+    levelSymbols = [];
+    levelObstacles = [];
+    levelTraps = [];
+    levelArrows = [];
+    levelHoles = [];
+    levelSafeZones = [];
+    levelGhosts = [];
+    levelTriggers = [];
+    arrowIntervals.forEach(clearInterval);
+    maptemp.innerHTML = "";
+    pattemp.innerHTML = "";
+    levelPopulate();
 }
 //Pauses the game
 function toPause(){
