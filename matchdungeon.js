@@ -357,27 +357,34 @@ function playerAttack(){
     let box = document.createElement('div');
     let target = document.getElementById("map");
     let dir = player.facing;
+    let count = 0;
     player.move = false;
     box.setAttribute("class","attack");
     box.setAttribute("id","attack");
     target.appendChild(box);
     attack.x = player.x;
     attack.y = player.y;
-    if(dir === "down"){
-        attack.y = attack.y+32;
-    }else if(dir === "up"){
-        attack.y = attack.y-32;
-    }else if(dir === "left"){
-        attack.x = attack.x-32;
-    }else if(dir=== "right"){
-        attack.x = attack.x+32;
-    }
-    box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
-    levelEnemies.forEach(attackEnemyCheck);
-    setTimeout(function(){
-        box.remove();
+    
+    let interval = setInterval(function(){
+        count = count + 1;
+        if(dir === "down"){
+            attack.y = attack.y+4;
+        }else if(dir === "up"){
+            attack.y = attack.y-4;
+        }else if(dir === "left"){
+            attack.x = attack.x-4;
+        }else if(dir=== "right"){
+            attack.x = attack.x+4;
+        }
+        box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
+        levelEnemies.forEach(attackEnemyCheck);
+        if (count === 9){
+            clearInterval(interval);
+            box.remove();
         player.move = true;
-   },500);
+        }
+    },40);
+    
 }
 //creates a wall(currently collision reaction is a bit off)
 function createWall(x,y,w){
