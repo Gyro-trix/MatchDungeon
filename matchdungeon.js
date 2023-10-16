@@ -177,12 +177,12 @@ function levelPopulate(){
         break;
         //Intro/tutorial Level, one of each mechanic with on screen popups, not meant to be difficult
         case 1:
-            let triggerone = "<p>You are the square currently in the upper right. Use the arrow buttons to the left or the arrow keys on the keyboard to move. Dialogue pauses and lasts for five seconds.</p>";
-            let triggertwo = "<p>You need to make your way to the exit. Be careful, as to the left(shaded area) are holes that cause you to lose health and be put back to start if you move into it. When health reaches zero the level restarts.</p>"
-            let triggerthree = "<p>Either pressing the A button to the right or press CRTL on the keyboard causes you to attack infront on you. The red square moving back and forth above you is an enemy that will do the same as the holes if you touch it. </p>"
-            let triggerfour = "<p>See those small yellow squares, getting hit will cause you to lose a health. The B button or SHIFT on the keyboard makes you block, which prevents the health lose.</p>"
-            let triggerfive = "<p>See the purple block, it will chase you down and hit you, the yellow area to the left scares the purple block off. Getting hit by the purple block causes you to lose a health and the ghost goes back to where it started.</p>"
-            let triggersix = "<p>Notice the exit says it is closed, you need to collect symbols in the right order to open the door. The hint button to the right can help with that. However these are lined up nicely for you. Grab them and head to the exit.</p>"
+            let triggerone =    "<p>Welcome to the tutorial level! To move use either the arrow keys on the keyboard or the arrows to the left. This and following dialogue popups can be closed by pressing any button or clicking the X in the upper right of the popup.</p>";
+            let triggertwo =    "<p>See the closed exit to the left, that is your goal. Be careful, as to the left(shaded area) are holes that cause you to lose health and be put back to start if you move into it. When health reaches zero the level restarts.</p>"
+            let triggerthree =  "<p>Either pressing the A button to the right or press CRTL on the keyboard causes you to attack infront on you. The red square moving back and forth above you is an enemy that will do the same as the holes if you touch it. </p>"
+            let triggerfour =   "<p>See those small yellow squares, getting hit will cause you to lose a health. The B button or SHIFT on the keyboard makes you block, which prevents the health lose.</p>"
+            let triggerfive =   "<p>See the purple block, it will chase you down and hit you, the yellow area to the left scares the purple block off. Getting hit by the purple block causes you to lose a health and the ghost goes back to where it started.</p>"
+            let triggersix =    "<p>Notice the exit says it is closed, you need to collect symbols in the right order to open the door. The hint button to the right can help with that. However these are lined up nicely for you. Grab them and head to the exit.</p>"
             document.getElementById("level").innerHTML = level;
             sec = 91;
             startx = 560;
@@ -196,7 +196,7 @@ function levelPopulate(){
             createTrigger(512,0,32,352,function(){dialoguePanel(triggertwo);});
             createTrigger(416,96,64,64,function(){dialoguePanel(triggerthree);});
             createTrigger(320,192,64,64,function(){dialoguePanel(triggerfour);});
-            createTrigger(96,64,64,64,function(){createGhost(572,0,32); dialoguePanel(triggerfive); });
+            createTrigger(128,64,64,64,function(){createGhost(572,0,32); dialoguePanel(triggerfive); });
             createTrigger(0,256,96,96,function(){dialoguePanel(triggersix); });
             createHole(96,0,32,256);
             createHole(192,128,32,224);
@@ -987,6 +987,7 @@ function infoPanel(){
         timer();
     }
 }
+//Clear contents of divs with id "id" +" "+"number"  
 function clearDiv(id,number){
 for (let i = 0; i < number; i++){
     let temp = document.getElementById(id +" "+ i);
