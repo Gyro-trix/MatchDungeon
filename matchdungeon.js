@@ -94,7 +94,7 @@ const player = {
     x:startx,
     y:starty,
     w:32,
-    health:3,
+    health:0,
     facing: "down",
     move: true,
     block: false,
@@ -128,6 +128,9 @@ function displayPlayer(){
 }
 // Initialize and some html content 
 function init(){
+    while(player.health < 3){
+        healthUp();
+    }
     elapsed = 0;
     document.getElementById("score").innerHTML = score;
     document.getElementById("level").innerHTML = level;
@@ -181,7 +184,7 @@ function levelPopulate(){
             let triggerfive = "<p>See the purple block, it will chase you down and hit you, the yellow area to the left scares the purple block off. Getting hit by the purple block causes you to lose a health and the ghost goes back to where it started.</p>"
             let triggersix = "<p>Notice the exit says it is closed, you need to collect symbols in the right order to open the door. The hint button to the right can help with that. However these are lined up nicely for you. Grab them and head to the exit.</p>"
             document.getElementById("level").innerHTML = level;
-            sec = 10;
+            sec = 91;
             startx = 560;
             starty = 16;
             player.x = startx;
@@ -189,9 +192,6 @@ function levelPopulate(){
             score = prevscore;
             timer();
             createSafeZone(0,0,96,352);    
-            healthUp();
-            healthUp();
-            healthUp();
             dialoguePanel(triggerone);
             createTrigger(512,0,32,352,function(){dialoguePanel(triggertwo);});
             createTrigger(416,96,64,64,function(){dialoguePanel(triggerthree);});
@@ -339,8 +339,7 @@ function playerMovement(){
         player.safe = false;
     }
     if(player.health === 0){
-        player.health = 3;
-        levelRestart();
+        levelComplete();
     }
     plyr.setAttribute("walking", direction ? "true" : "false");
     // Sets the boundaries to prevent the player from moving outside the play space
@@ -696,8 +695,7 @@ function timer(){
         sec--;
         if (sec <= 0) {
             clearInterval(time);
-            levelRestart();
-            // Will bring up a game over screen when finished
+            levelComplete();
             }
         }, 1000);    
     } else if(pause === true){
@@ -734,10 +732,10 @@ function levelChange(num){
 function healthUp(){
     let con = document.getElementById("health");
     let div = document.createElement('div');
-    if (player.health < 3){
-        div.setAttribute('id','heart');
-        con.appendChild(div);
-    }
+    player.health += 1;
+    div.setAttribute('id','heart');
+    con.appendChild(div);
+    
     
 }
 //decrease health by one
@@ -995,30 +993,10 @@ function levelComplete(){
     let storage = document.createElement('div');
     let maptemp = document.getElementById("map");
     storage.appendChild(pltemp);
+    while(player.health < 3){
+        healthUp();
+    }
     prevscore = score;
-    levelWalls = [];
-    levelEnemies = [];
-    levelSymbols = [];
-    levelObstacles = [];
-    levelTraps = [];
-    levelArrows = [];
-    levelHoles = [];
-    levelSafeZones = [];
-    levelGhosts = [];
-    levelTriggers = [];
-    arrowIntervals.forEach(clearInterval);
-    maptemp.innerHTML = "";
-    pattemp.innerHTML = "";
-    levelPopulate();
-}
-//Level restart for when time is up or life goes to zero
-function levelRestart(){
-    let pltemp = document.getElementById("player");
-    let pattemp = document.getElementById("pattern");
-    let storage = document.createElement('div');
-    let maptemp = document.getElementById("map");
-    storage.appendChild(pltemp);
-    prescore = score;
     levelWalls = [];
     levelEnemies = [];
     levelSymbols = [];
