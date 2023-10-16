@@ -361,18 +361,16 @@ function playerAttack(){
     box.setAttribute("class","attack");
     box.setAttribute("id","attack");
     target.appendChild(box);
+    attack.x = player.x;
+    attack.y = player.y;
     if(dir === "down"){
-        attack.x = player.x;
-        attack.y = player.y+32;
+        attack.y = attack.y+32;
     }else if(dir === "up"){
-        attack.x = player.x;
-        attack.y = player.y-32;
+        attack.y = attack.y-32;
     }else if(dir === "left"){
-        attack.x = player.x-32;
-        attack.y = player.y;
+        attack.x = attack.x-32;
     }else if(dir=== "right"){
-        attack.x = player.x+32;
-        attack.y = player.y;
+        attack.x = attack.x+32;
     }
     box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
     levelEnemies.forEach(attackEnemyCheck);
