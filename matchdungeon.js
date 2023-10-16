@@ -637,7 +637,7 @@ function arrowFire(obj,index){
     }
     setTimeout(function(){
         arrowIntervals.push(window.setInterval(function(){
-            if(pause === false){if (count === 200) {createArrow(x,y,facing); count = 0;} count++;}
+            if(pause === false){if (count === 300) {createArrow(x,y,facing); count = 0;} count++;}
         },1));
     },delay);
 }
@@ -654,7 +654,7 @@ function moveArrow(obj,index){
     let mp = document.getElementById("map");
     if (facing === "right") {
         if (obj.x <= 584){
-            obj.x = obj.x + 8;
+            obj.x = obj.x + 6;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
@@ -663,7 +663,7 @@ function moveArrow(obj,index){
         }
     } else if(facing === "left"){
         if (obj.x >= 0){
-            obj.x = obj.x - 8;
+            obj.x = obj.x - 6;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
@@ -672,7 +672,7 @@ function moveArrow(obj,index){
         }
     } else if(facing === "up"){
         if (obj.y >= 0 ){
-            obj.y = obj.y - 8;
+            obj.y = obj.y - 6;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
@@ -681,7 +681,7 @@ function moveArrow(obj,index){
         }
     } else if(facing === "down"){
         if (obj.y <= 384 ){
-            obj.y = obj.y + 8;
+            obj.y = obj.y + 6;
             arrw.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0 )`;
         } 
         else {
