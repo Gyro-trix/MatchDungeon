@@ -824,9 +824,9 @@ function collideArrows(){
 function collideArrowCheck(obj,index){   
    let mtemp = document.getElementById("map");
    let temp = document.getElementById("arrow " + index);
-   if (player.x <= obj.x + 16 && 
+   if (player.x <= obj.x && 
         player.x + player.w >= obj.x &&
-        player.y <= obj.y + 16 &&
+        player.y <= obj.y &&
         player.y + player.w >= obj.y){
             if (player.block === false) {
                 healthDown();
