@@ -184,7 +184,7 @@ function levelPopulate(){
         case 1:
             let triggerone =    "<p>Welcome to the tutorial level! To move use either the arrow keys on the keyboard or the arrows to the left. This and following dialogue popups can be closed by pressing any button or clicking the X in the upper right of the popup.</p>";
             let triggertwo =    "<p>See the closed exit to the left, that is your goal. Be careful, as to the left(shaded area) are holes that cause you to lose health and be put back to start if you move into it. When health reaches zero the level restarts.</p>"
-            let triggerthree =  "<p>Either pressing the A button to the right or press CRTL on the keyboard causes you to attack infront on you. The red square moving back and forth above you is an enemy that will do the same as the holes if you touch it. </p>"
+            let triggerthree =  "<p>Attack using the A button to the right or pressing CRTL on the keyboard. Touching the patrolling red square above will cause you to lose one health and gain one second of invincibilty.</p>"
             let triggerfour =   "<p>See those small yellow squares, getting hit will cause you to lose a health. The B button or SHIFT on the keyboard makes you block, which prevents the health lose.</p>"
             let triggerfive =   "<p>See the purple block, it will chase you down and hit you, the yellow area to the left scares the purple block off. Getting hit by the purple block causes you to lose a health and the ghost goes back to where it started.</p>"
             let triggersix =    "<p>Notice the exit says it is closed, you need to collect symbols in the right order to open the door. The hint button to the right can help with that. However these are lined up nicely for you. Grab them and head to the exit.</p>"
@@ -195,7 +195,6 @@ function levelPopulate(){
             player.x = startx;
             player.y = starty;
             score = prevscore;
-            //timer();
             createSafeZone(0,0,96,352);    
             dialoguePanel(triggerone);
             createTrigger(512,0,32,352,function(){dialoguePanel(triggertwo);});
@@ -229,7 +228,7 @@ function levelPopulate(){
             player.x = startx;
             player.y = starty;
             score = prevscore;
-            timer();
+            //timer();
             createSymbol(432,240,32);
             createSymbol(240,144,32);
             createSymbol(560,48,32);
@@ -259,7 +258,7 @@ function levelPopulate(){
         break;
         case 3:     
             document.getElementById("level").innerHTML = level;
-            timer();
+            sec = 91;
             startx = 284;
             starty = 300;
             createSafeZone(284,300,64,64);    
