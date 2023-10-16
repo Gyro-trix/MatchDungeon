@@ -1,13 +1,16 @@
-const iframe = 10;
 const fps = 30;
 let startx = 284;
 let starty = 300;
+//Offset for player collision, may allow for difficulty options
 let offset = 8;
 let score = 0;
 let prevscore = 0;
 let pause = false;
 let level = 1;
+//Player speed
 let speed = 6;
+//Player is invincible or not, for iFrames
+let inv = false;
 let sec = 91;
 let elasped = 0;
 let time;
@@ -18,7 +21,7 @@ let directions = [];
 let isPressed = false;
 //Grabs the pixel size from the css file
 let pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
-//arrays to store current level objects
+//Arrays to store current level objects
 let levelWalls = [];
 let levelSymbols = [];
 let levelObstacles = [];
@@ -30,8 +33,8 @@ let levelHoles = [];
 let levelSafeZones = [];
 let levelTriggers = [];
 let arrowIntervals = [];
-let symbolOffSet = 0;
 //Symbol possibilities with corresponding hint for correct order
+let symbolOffSet = 0;
 let symbolSet = ["line","cross","asterik1","asterik2","Counting up, just with lines",
                 "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
                 "one","two", "three","four","Lucky, just count up.",
@@ -131,6 +134,8 @@ function init(){
     while(player.health < 3){
         healthUp();
     }
+    sec = 999;
+    timer();
     elapsed = 0;
     document.getElementById("score").innerHTML = score;
     document.getElementById("level").innerHTML = level;
@@ -190,7 +195,7 @@ function levelPopulate(){
             player.x = startx;
             player.y = starty;
             score = prevscore;
-            timer();
+            //timer();
             createSafeZone(0,0,96,352);    
             dialoguePanel(triggerone);
             createTrigger(512,0,32,352,function(){dialoguePanel(triggertwo);});
@@ -322,9 +327,8 @@ function playerMovement(){
         temp.innerHTML = "Open Exit";
         cursym = 0;
     }
-    if(collideEnemy() === false){
-        player.x = startx;
-        player.y = starty;
+    if(collideEnemy() === false && inv === false){
+        playerIFrames(1000);
         healthDown();
     }
     if(collideHole() === false){
@@ -385,6 +389,16 @@ function playerAttack(){
         }
     },40);
     
+}
+//Make player invincible to damage (does not include holes) for a duration in milliseconds and causes player to blink
+function playerIFrames(dur){
+    let ply = document.getElementById("player");
+    inv = true;
+    ply.style.animation = 'blinker .25s linear infinite'
+    setTimeout(function(){
+        ply.style.animation = 'none';
+        inv = false;
+    },dur);
 }
 //creates a wall(currently collision reaction is a bit off)
 function createWall(x,y,w){
@@ -1138,7 +1152,6 @@ document.addEventListener("keyup", (e) => {
     }
 })
 document.addEventListener("keydown", (e) => {
-    
 if(!e.repeat && player.move === true){
     if (e.key === "Control" ){
         playerAttack();
