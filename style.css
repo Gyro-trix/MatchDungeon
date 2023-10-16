@@ -78,6 +78,8 @@
 .symbol{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);
+    image-rendering: pixelated;
+    background-size: cover;
     position: absolute;
     overflow: hidden;
     background-color: rgb(36, 180, 216);
@@ -345,7 +347,15 @@ body{
     border:1px solid rgb(255, 255, 255);
 }
 .pattern{
-    justify-content: center;
+    margin:auto;
+    margin-left: 28%;
+}
+.slot{
+    width: 64px;
+    height: 64px;
+    background-color: #1d1d1ddc;
+    float: left;
+    border:1px solid rgba(0, 0, 0, 0.692);
 }
 .playarea{
     background: transparent;
@@ -469,7 +479,7 @@ body{
     background-color: rgb(129, 129, 129);
     margin-left: 200px;
     width: 600px;
-    height: 50px;
+    height: 74px;
 }
 
 #heart {

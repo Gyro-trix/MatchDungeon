@@ -318,7 +318,6 @@ function playerMovement(){
     collideTriggers();
     if (cursym === levelSymbols.length){
         exit.state = "open";
-        console.log("exit open")
         let temp = document.getElementById("exit");
         temp.innerHTML = "Open Exit";
         cursym = 0;
@@ -358,7 +357,6 @@ function playerAttack(){
     let box = document.createElement('div');
     let target = document.getElementById("map");
     let dir = player.facing;
-    console.log(dir);
     player.move = false;
     box.setAttribute("class","attack");
     box.setAttribute("id","attack");
@@ -734,9 +732,7 @@ function healthUp(){
     let div = document.createElement('div');
     player.health += 1;
     div.setAttribute('id','heart');
-    con.appendChild(div);
-    
-    
+    con.appendChild(div);    
 }
 //decrease health by one
 function healthDown(){
@@ -854,7 +850,6 @@ function attackEnemyCheck(obj,index){
         attack.y + attack.w >= obj.y){
             scoreChange(100);
             levelEnemies[index] = " ";
-            console.log(index);
             let box = document.getElementById("enemy "+ index);
             box.style.visibility = "hidden";
         }
@@ -890,10 +885,12 @@ function collideSymbolCheck(obj, index){
             /* levelSymbols.splice(index, 1);*/
             levelSymbols[index] = " ";
             let temp = document.getElementById("symbol " + index)
-            let con = document.getElementById("pattern");
+            let con = document.getElementById("slot " + index);
             /*Need to transform symbol to fall in the right part of the pattern div*/
             con.appendChild(temp);
-            temp.style.transform = `translate3d( ${index*32}px, ${0}px , 0 )`;
+            temp.style.transform = `translate3d( ${0}px, ${0}px , 0 )`;
+            temp.style.width = "64px";
+            temp.style.height = "64px";
             cursym = cursym + 1;
             return false;
     }
@@ -907,7 +904,6 @@ function collideExit(){
         player.y + player.w >= exit.y)){
             scoreChange(1000);
             level = level + 1;
-            console.log("Next Level " +level);
             exit.x = -1000;
             exit.y = -1000;
             levelComplete();            
@@ -986,10 +982,15 @@ function infoPanel(){
         timer();
     }
 }
+function clearDiv(id,number){
+for (let i = 0; i < number; i++){
+    let temp = document.getElementById(id +" "+ i);
+    temp.innerHTML = "";
+}
+}
 //Called on level complete, clears objects from level before making objects for the next level
 function levelComplete(){
     let pltemp = document.getElementById("player");
-    let pattemp = document.getElementById("pattern");
     let storage = document.createElement('div');
     let maptemp = document.getElementById("map");
     storage.appendChild(pltemp);
@@ -1009,7 +1010,7 @@ function levelComplete(){
     levelTriggers = [];
     arrowIntervals.forEach(clearInterval);
     maptemp.innerHTML = "";
-    pattemp.innerHTML = "";
+    clearDiv("slot",4);
     levelPopulate();
 }
 //Pauses the game
@@ -1017,7 +1018,6 @@ function toPause(){
     let pscrn = document.getElementById("screen pause");
     let tempInterval;
     pscrn.innerHTML = "<h1>PAUSED</h1>";
-    console.log(elapsed);
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;
@@ -1077,7 +1077,6 @@ function dialoguePanel(str){
         dscrn.innerHTML = "";});
     document.addEventListener("keydown",(e) => {
         if (!e.repeat && pause === true){
-        console.log("Dialogue");
             pause = false;
         dscrn.style.visibility = "hidden";
         timer();
@@ -1161,11 +1160,9 @@ const removePressedAll = () => {
    })
 }
 document.body.addEventListener("mousedown", () => {
-   console.log('mouse  down')
    isPressed = true;
 })
 document.body.addEventListener("mouseup", () => {
-   console.log('mouse  up')
    isPressed = false;
    directions = [];
    removePressedAll();
@@ -1177,7 +1174,6 @@ const handleDpadPress = (direction, click) => {
    directions = (isPressed) ? [direction] : []
    if (isPressed) {
       removePressedAll();
-      console.log(direction);
       document.querySelector("."+direction+"Arrow").classList.add("pressed");
    }
 }
