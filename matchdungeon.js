@@ -261,6 +261,8 @@ function levelPopulate(){
             sec = 91;
             startx = 284;
             starty = 300;
+            player.x = startx;
+            player.y = starty;
             createSafeZone(284,300,64,64);    
             createGhost(0,0,32);
             createSymbol(80,32,32);
@@ -920,12 +922,52 @@ function collideExit(){
         player.x + player.w >= exit.x &&
         player.y <= exit.y + exit.h &&
         player.y + player.w >= exit.y)){
-            scoreChange(1000);
-            level = level + 1;
+            scoreScreen();
+            level += 1;
             exit.x = -1000;
             exit.y = -1000;
             levelComplete();            
         }
+}
+//Score screen for end of level to show time bonus, exit bonus, and allow to proceed to next level
+function scoreScreen(){
+    let timebonus = sec * 10;
+    let exitbonus = 1000;
+    let tempscr = document.createElement('div');
+    let target = document.getElementById("screen")
+    pause = true;
+    timer();
+    scoreChange(exitbonus+timebonus);
+    tempscr.setAttribute("class","screen score");
+    tempscr.setAttribute("id","screen score");
+
+    let scrnexit = document.createElement('div');
+    scrnexit.setAttribute("class","scrnexit");
+    scrnexit.setAttribute("id","scrnexit");
+    scrnexit.innerHTML = "X";
+
+    
+
+    tempscr.innerHTML = "Level Complete <br>";
+    tempscr.innerHTML += "Time Bonus: "+ timebonus + "<br>";
+    tempscr.innerHTML += "Exit Bonus: "+ exitbonus + "<br>";
+
+    target.appendChild(tempscr);
+    tempscr.appendChild(scrnexit);
+
+    let xbtn = document.getElementById("scrnexit");
+    xbtn.addEventListener("click", function(){ pause = false;
+        tempscr.style.visibility = "hidden";
+        timer();
+        tempscr.innerHTML = "";});
+    document.addEventListener("keydown",(e) => {
+        if (!e.repeat && pause === true){
+            pause = false;
+            tempscr.style.visibility = "hidden";
+        timer();
+        tempscr.innerHTML = "";}
+    });
+    tempscr.style.visibility = "visible";
 }
 //Creates the info screen/div
 function infoCreate(){

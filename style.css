@@ -243,7 +243,7 @@ body{
     display: flex;
     position: relative;
     margin-left: 25px;
-    margin-bottom: 25px;;
+    margin-bottom: 25px;
     width: 608px;
     height: 400px;
 }
@@ -265,7 +265,16 @@ body{
     text-align: center;
     position: absolute;
     margin:auto;
-    
+    z-index: 5;
+}
+.screen.score{
+    background:rgb(123, 229, 255);
+    text-align: center;
+    position: absolute;
+    margin:auto;
+    color:black;
+    width: 608px;
+    height: 400px;
     z-index: 5;
 }
 .screen.info{
@@ -312,6 +321,7 @@ body{
     height:100px;
     z-index: 5;
 }
+
 .portrait{
     background:rgb(96, 98, 224);
     display: block;
