@@ -211,7 +211,7 @@ function levelPopulate(){
             createHole(480,0,32,256);
             createEnemy(320,32,32,320,448,"x");
             createTrap(224,0,32,"down",0);
-            createTrap(256,0,32,"down",0);
+            createTrap(256,0,32,"down",0);          
             createSymbol(32,224,32);
             createSymbol(32,160,32);
             createSymbol(32,96,32);
@@ -290,7 +290,6 @@ function levelPopulate(){
         case 4:
             document.getElementById("level").innerHTML = level;
             sec = 91;
-            level = 2;
             createExit(246,0,32,108);
             player.x = startx;
             player.y = starty;
@@ -454,6 +453,21 @@ function createTrap(x,y,w,facing,delay){
 function createArrow(x,y,facing){
     let box = document.createElement('div');
     let target = document.getElementById("map");
+    let img = document.createElement("img");
+    img.setAttribute("src","sprites/TrapArrow.png");
+    if (facing === "up"){
+    //Do Nothing
+    } else if (facing === "down"){
+        img.style.transform = `translate3d( ${0}px, ${-16}px , 0 )`;
+        img.style.transform += 'rotate(180deg)';
+    } else if (facing === "right"){
+        img.style.transform = `translate3d( ${-8}px, ${-8}px , 0 )`;
+        img.style.transform += 'rotate(90deg)';
+    } else if (facing === "left"){
+        img.style.transform = `translate3d( ${8}px, ${-8}px , 0 )`;
+        img.style.transform += 'rotate(270deg)';
+    }
+    box.appendChild(img);
     box.setAttribute("class","arrow");
     box.setAttribute("id","arrow " + levelArrows.length);
     box.setAttribute("facing",facing);
@@ -473,7 +487,7 @@ function createSymbol(x,y,w){
     let temp = new Symbol(x,y,w);
     levelSymbols.push(temp);
     let r = levelSymbols.length - 1;
-    box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".jpg)";
+    box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".png)";
 }
 // Shuffles and visually creates symbols, currently disabled
 function symbolShuffle(array){
@@ -1078,7 +1092,6 @@ function levelComplete(){
 function toPause(){
     let pscrn = document.getElementById("screen pause");
     let tempInterval;
-    pscrn.innerHTML = "<h1>PAUSED</h1>";
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;
