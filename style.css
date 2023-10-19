@@ -361,6 +361,14 @@ body{
 .playarea{
     background: transparent;
 }
+.label{
+    background-color: #666666b2;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: rgb(255, 255, 255);
+    height: 30px;
+}
 .level, .score, .health, .timer{
     text-indent: 10px;
     border: #000000;
