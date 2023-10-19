@@ -966,8 +966,9 @@ function scoreScreen(){
     
 
     tempscr.innerHTML = "Level Complete <br>";
-    tempscr.innerHTML += "Time Bonus: "+ timebonus + "<br>";
-    tempscr.innerHTML += "Exit Bonus: "+ exitbonus + "<br>";
+    tempscr.innerHTML += "Time Bonus : "+ timebonus + "<br>";
+    tempscr.innerHTML += "Exit Bonus : "+ exitbonus + "<br>";
+    tempscr.innerHTML += "Score Total: "+ score + "<br>";
 
     target.appendChild(tempscr);
     tempscr.appendChild(scrnexit);
