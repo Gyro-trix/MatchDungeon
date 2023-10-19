@@ -253,6 +253,7 @@ body{
     border-radius: 3px;
     display:inline;
     text-align: center;
+    text-shadow: 5px 5px #000000be;
     font-family: 'Copperplate', monospace;
     font-size: 75px;
     color: aliceblue;
@@ -266,6 +267,9 @@ body{
     border-style: groove;
     border-radius: 3px;
     font-family: 'Copperplate', monospace;
+    display:inline;
+    font-size: 30px;
+    color: aliceblue;
     text-align: center;
     position: absolute;
     margin:auto;

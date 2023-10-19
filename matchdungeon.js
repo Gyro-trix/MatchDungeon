@@ -3,6 +3,8 @@ let startx = 284;
 let starty = 300;
 //Offset for player collision, may allow for difficulty options
 let offset = 8;
+//Prevents inputs from certain event handlers
+let inputDisable = false;
 let score = 0;
 let prevscore = 0;
 let pause = false;
@@ -47,7 +49,7 @@ infocontents[0] ="<h2>Controls:</h2> <p>Use the on screen arrows or the arrow ke
 infocontents[1] ="<h2>Obstacles:</h2> <p>Note, only for the test version</p><p>Small yellow boxes represent arrows, they can be blocked.</p><p>Moving red boxes are enemies that can be attacked, touching them sends you back to the start and looses a health.</p> <p>Darker floor areas are holes, which move you back to start and loose a health.</p>";
 infocontents[2] ="<h2>Objectives:</h2> <p>Before the timer reaches zero or you go to zero health (no hearts left) collect all symbols in the right order.</p><p>The hint button can provide help with the symbol order.</p><p>Once the symbols are collected head to the open exit to go to the next level</p>";
 let exit = new Object(0,0,0,0);
-let attack = new Attack(-32,-32,32);
+let attack = new Attack(-64,-64,32);
 // Generic Game Object with coordinates, width, height, id, and were it is facing(Implemented late, hoping to use this accress all game objects)
 function GameObject(x,y,w,h,id,facing){
     this.x = x;
@@ -358,6 +360,8 @@ function playerMovement(){
 }
 // Creates a box in front of the player which can destroy enemies (only enemies)
 function playerAttack(){
+    attack.x = player.x;
+    attack.y = player.y;
     let box = document.createElement('div');
     let target = document.getElementById("map");
     let dir = player.facing;
@@ -366,8 +370,7 @@ function playerAttack(){
     box.setAttribute("class","attack");
     box.setAttribute("id","attack");
     target.appendChild(box);
-    attack.x = player.x;
-    attack.y = player.y;
+    box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
     
     let interval = setInterval(function(){
         count = count + 1;
@@ -1166,7 +1169,7 @@ function restart(){
 //Screen if player loses all health or time runs out
 function gameOver(){
     let pscrn = document.getElementById("screen gameOver");
-    pscrn.innerHTML = "<h1>Game Over</h1>";
+    pscrn.innerHTML = "<br>GAME OVER";
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;
@@ -1180,7 +1183,7 @@ function gameOver(){
 //Congratulation screen after completing the final level
 function gameWin(){
     let pscrn = document.getElementById("screen gameWin");
-    pscrn.innerHTML = "<h1>Congratulations</h1>";
+    pscrn.innerHTML = "<BR> CONGRATULATIONS";
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;
