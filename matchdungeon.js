@@ -363,6 +363,7 @@ function playerMovement(){
 }
 // Creates a box in front of the player which can destroy enemies (only enemies)
 function playerAttack(){
+    if ( pause === false){
     attack.x = player.x;
     attack.y = player.y;
     let box = document.createElement('div');
@@ -374,7 +375,6 @@ function playerAttack(){
     box.setAttribute("id","attack");
     target.appendChild(box);
     box.style.transform = `translate3d( ${attack.x}px, ${attack.y}px , 0 )`;
-    
     let interval = setInterval(function(){
         count = count + 1;
         if(dir === "down"){
@@ -394,10 +394,11 @@ function playerAttack(){
         player.move = true;
         }
     },40);
-    
+    }
 }
 //Called to enable player blocking
 function playerBlock(){
+    if (pause === false){
     let temp = document.getElementById("player");
     if (player.block === false){
         temp.setAttribute("block","true");
@@ -407,11 +408,8 @@ function playerBlock(){
         temp.setAttribute("block","false")
         player.move = true;
         player.block = false;
-
     }
-    //setTimeout(function(){
-        
-   //},500);
+}
 }
 //Make player invincible to damage (does not include holes) for a duration in milliseconds and causes player to blink
 function playerIFrames(dur){
