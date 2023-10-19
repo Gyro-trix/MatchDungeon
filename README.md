@@ -32,9 +32,9 @@ A progress display on the puzzle completion
 
 ## Left to Add
 
+Actual level complete screens with proper event handlers.
 
-
-Create sprites and graphics
+More sprites and graphics
 
 Maybe sounds (will be pretty simple)
 

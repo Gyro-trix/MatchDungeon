@@ -7,6 +7,8 @@ let offset = 8;
 let pdisable = false;
 let idisable = false;
 let hdisable = false;
+//First dialogue then any key works
+let first = true;
 let score = 0;
 let prevscore = 0;
 let pause = false;
@@ -187,10 +189,10 @@ function levelPopulate(){
         break;
         //Intro/tutorial Level, one of each mechanic with on screen popups, not meant to be difficult
         case 1:
-            let triggerone =    "<p>Welcome to the tutorial level! To move use either the arrow keys on the keyboard or the arrows to the left. This and following dialogue popups can be closed by pressing any button or clicking the X in the upper right of the popup.</p>";
+            let triggerone =    "<p>Welcome to the tutorial level! To move use either the arrow keys on the keyboard or the arrows to the left. This dialogue popup can be closed by pressing any key. Following ones can be closed by clicking the X in the upper right of the popup.</p>";
             let triggertwo =    "<p>See the closed exit to the left, that is your goal. Be careful, as to the left(shaded area) are holes that cause you to lose health and be put back to start if you move into it. When health reaches zero the level restarts.</p>"
             let triggerthree =  "<p>Attack using the A button to the right or pressing CRTL on the keyboard. Touching the patrolling red square above will cause you to lose one health and gain one second of invincibilty.</p>"
-            let triggerfour =   "<p>See those small yellow squares, getting hit will cause you to lose a health. The B button or SHIFT on the keyboard makes you block, which prevents the health lose.</p>"
+            let triggerfour =   "<p>See those yellow tipped arrows, getting hit will cause you to lose a health. The B button or SHIFT on the keyboard makes you block, which prevents the health lose.</p>"
             let triggerfive =   "<p>See the purple block, it will chase you down and hit you, the yellow area to the left scares the purple block off. Getting hit by the purple block causes you to lose a health and the ghost goes back to where it started.</p>"
             let triggersix =    "<p>Notice the exit says it is closed, you need to collect symbols in the right order to open the door. The hint button to the right can help with that. However these are lined up nicely for you. Grab them and head to the exit.</p>"
             document.getElementById("level").innerHTML = level;
@@ -1169,11 +1171,12 @@ function dialoguePanel(str){
         timer();
         dscrn.innerHTML = "";});
     document.addEventListener("keydown",(e) => {
-        if (!e.repeat && pause === true){
+        if (!e.repeat && pause === true && first === true){
             pdisable = false;
             hdisable = false;
             idisable = false;
             pause = false;
+            first = false;
             dscrn.style.visibility = "hidden";
             timer();
             dscrn.innerHTML = "";
