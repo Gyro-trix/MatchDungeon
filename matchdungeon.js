@@ -1092,6 +1092,7 @@ function levelComplete(){
 function toPause(){
     let pscrn = document.getElementById("screen pause");
     let tempInterval;
+    pscrn.innerHTML = "<BR> PAUSE";
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;

@@ -199,7 +199,6 @@ body{
     width: 50px;
     border-radius: 25%;
     background-color: rgb(31, 31, 31);
-    
 }
 .pauseText{
     margin-left: 23px;
@@ -219,7 +218,6 @@ body{
 .container{
     background-color: rgb(129, 129, 129);
     display: flex;
-    
     width: 1000px;
     height: 450px;
 }
@@ -249,18 +247,25 @@ body{
 }
 
 .screen.pause{
-    background-color: rgb(0, 2, 146);
-    height: 400px;
-    background-size: cover;
-    background-position: center;
-    background-repeat:no-repeat;
+    background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    display:inline;
     text-align: center;
+    font-family: 'Copperplate', monospace;
+    font-size: 75px;
+    color: aliceblue;
     position: absolute;
     margin:auto;
     z-index: 5;
 }
 .screen.score{
-    background:rgb(123, 229, 255);
+    background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
     text-align: center;
     position: absolute;
     margin:auto;
@@ -270,28 +275,44 @@ body{
     z-index: 5;
 }
 .screen.info{
-    background:rgb(170, 125, 0);
+    background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
     color:black;
     position: absolute;
     margin:auto;
     z-index: 5;
 }
 .screen.gameOver{
-    background:rgb(141, 0, 0);
+    background-image: linear-gradient(rgb(218, 0, 11), rgb(78, 0, 0));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
     text-align: center;
     position: absolute;
     margin:auto;
     z-index: 5;
 }
 .screen.gameWin{
-    background:rgb(24, 141, 0);
+    background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
     text-align: center;
     position: absolute;
     margin:auto;
     z-index: 5;
 }
 .screen.hint{
-    background:rgb(0, 2, 146);
+    background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
     color: azure;
     text-align: center;
     position: absolute;
@@ -302,7 +323,12 @@ body{
     z-index: 5;
 }
 .screen.dialogue{
-    background:rgb(0, 2, 146);
+    background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
+    font-size: 14px;
     display: inline;
     color: azure;
     text-align: left;
