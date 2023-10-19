@@ -4,7 +4,9 @@ let starty = 300;
 //Offset for player collision, may allow for difficulty options
 let offset = 8;
 //Prevents inputs from certain event handlers
-let inputDisable = false;
+let pdisable = false;
+let idisable = false;
+let hdisable = false;
 let score = 0;
 let prevscore = 0;
 let pause = false;
@@ -167,7 +169,8 @@ function init(){
     let a = document.getElementById("A");
     a.addEventListener("click", playerAttack);
     let b = document.getElementById("B");
-    b.addEventListener("click", playerBlock);
+    b.addEventListener("mousedown", playerBlock);
+    b.addEventListener("mouseup", playerBlock);
     let res = document.getElementById("reset");
     res.addEventListener("click", restart);
     let info = document.getElementById("info");
@@ -392,6 +395,23 @@ function playerAttack(){
         }
     },40);
     
+}
+//Called to enable player blocking
+function playerBlock(){
+    let temp = document.getElementById("player");
+    if (player.block === false){
+        temp.setAttribute("block","true");
+        player.block = true;
+        player.move = false;
+    } else if (player.block === true){
+        temp.setAttribute("block","false")
+        player.move = true;
+        player.block = false;
+
+    }
+    //setTimeout(function(){
+        
+   //},500);
 }
 //Make player invincible to damage (does not include holes) for a duration in milliseconds and causes player to blink
 function playerIFrames(dur){
@@ -891,23 +911,6 @@ function attackEnemyCheck(obj,index){
             box.style.visibility = "hidden";
         }
 }
-//Called to enable player blocking
-function playerBlock(){
-    let temp = document.getElementById("player");
-    if (player.block === false){
-        temp.setAttribute("block","true");
-        player.block = true;
-        player.move = false;
-    } else if (player.block === true){
-        temp.setAttribute("block","false")
-        player.move = true;
-        player.block = false;
-
-    }
-    //setTimeout(function(){
-        
-   //},500);
-}
 //Applies player and symbol collision check to all symbols
 function collideSymbol(){
     levelSymbols.forEach(collideSymbolCheck);
@@ -957,22 +960,16 @@ function scoreScreen(){
     scoreChange(exitbonus+timebonus);
     tempscr.setAttribute("class","screen score");
     tempscr.setAttribute("id","screen score");
-
     let scrnexit = document.createElement('div');
     scrnexit.setAttribute("class","scrnexit");
     scrnexit.setAttribute("id","scrnexit");
     scrnexit.innerHTML = "X";
-
-    
-
     tempscr.innerHTML = "Level Complete <br>";
     tempscr.innerHTML += "Time Bonus : "+ timebonus + "<br>";
     tempscr.innerHTML += "Exit Bonus : "+ exitbonus + "<br>";
     tempscr.innerHTML += "Score Total: "+ score + "<br>";
-
     target.appendChild(tempscr);
     tempscr.appendChild(scrnexit);
-
     let xbtn = document.getElementById("scrnexit");
     xbtn.addEventListener("click", function(){ pause = false;
         tempscr.style.visibility = "hidden";
@@ -1050,12 +1047,16 @@ function infoChange(state){
 //used to display the info panel    
 function infoPanel(){    
     let iscrn = document.getElementById("screen info");
-    if(pause === true){
+    if(pause === true && idisable === false){
         iscrn.style.visibility = "hidden";
+        pdisable = false;
+        hdisable = false;
         pause = false;
         timer();
-    } else if (pause === false){
+    } else if (pause === false && idisable === false){
         iscrn.style.visibility = "visible";
+        pdisable = true;
+        hdisable = true;
         pause = true;
         timer();
     }
@@ -1097,13 +1098,15 @@ function toPause(){
     let pscrn = document.getElementById("screen pause");
     let tempInterval;
     pscrn.innerHTML = "<BR> PAUSE";
-    if(pause === true){
+    if(pause === true && pdisable === false){
         pscrn.style.visibility = "hidden";
+        hdisable = false;
+        idisable = false;
         pause = false;
         timer();
         elapsed = 0;
         clearInterval(tempInterval);
-    } else if (pause === false){
+    } else if (pause === false && pdisable === false){
         tempInterval = setInterval(function(){
             if (elasped < 999){
                 elapsed++;
@@ -1112,6 +1115,8 @@ function toPause(){
             }
             },1);
         pscrn.style.visibility = "visible";
+        hdisable = true;
+        idisable = true;
         pause = true;
         timer();
     }
@@ -1120,18 +1125,25 @@ function toPause(){
 function hintPanel(){
 let hscrn = document.getElementById("screen hint");
     hscrn.innerHTML = symbolSet[4];
-    if(pause === true){
+    if(pause === true && hdisable === false){
         hscrn.style.visibility = "hidden";
+        pdisable = false;
+        idisable = false;
         pause = false;
         timer();
-    } else if (pause === false){
+    } else if (pause === false && hdisable === false){
         hscrn.style.visibility = "visible";
+        pdisable = true;
+        idisable = true;
         pause = true;
         timer();
     }
 }
 //Creates dialogue that can be triggered to inform the player during gameplay, takes str as a string 
 function dialoguePanel(str){
+    pdisable = true;
+    hdisable = true;
+    idisable = true;
     let portrait = document.createElement('div');
     portrait.setAttribute("class","portrait");
     portrait.setAttribute("id","portrait");
@@ -1150,16 +1162,24 @@ function dialoguePanel(str){
     pause = true;
     timer();
     let xbtn = document.getElementById("scrnexit");
-    xbtn.addEventListener("click", function(){ pause = false;
+    xbtn.addEventListener("click", function(){ 
+        pdisable = false;
+        hdisable = false;
+        idisable = false;
+        pause = false;
         dscrn.style.visibility = "hidden";
         timer();
         dscrn.innerHTML = "";});
     document.addEventListener("keydown",(e) => {
         if (!e.repeat && pause === true){
+            pdisable = false;
+            hdisable = false;
+            idisable = false;
             pause = false;
-        dscrn.style.visibility = "hidden";
-        timer();
-        dscrn.innerHTML = "";}
+            dscrn.style.visibility = "hidden";
+            timer();
+            dscrn.innerHTML = "";
+        }
     });
     dscrn.style.visibility = "visible";
 }
