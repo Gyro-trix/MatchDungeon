@@ -6,6 +6,8 @@ Match Dungeon is a pattern recognition game that requires the player to move a c
 The desired pattern is displayed somewhere on the "level" in the form of a visual hint.
 Hints can be also obtained from a button on screen, producing a text hint.
 
+![](https://github.com/Gyro-trix/MatchDungeon/blob/main/AlphaVersionScreenShotOctober192023.jpg)
+
 ## Mechanics
 
 Arrow buttons on screen and on the keyboard to move the player character
@@ -30,11 +32,7 @@ A progress display on the puzzle completion
 
 ## Left to Add
 
-Add a timer that can be paused, and means game over when at zero (A timer with mins and secs)
 
-Create level completion requirements
-
-Level End and cleanup before starting new level.
 
 Create sprites and graphics
 
@@ -43,8 +41,6 @@ Maybe sounds (will be pretty simple)
 ## For later
 
 Make a boss
-
-Arrow trap obstacle
 
 refine code to use only on object instead of multiple that use x, y, and width
 
