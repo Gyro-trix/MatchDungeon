@@ -311,10 +311,10 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
     if(direction && collideWall() && player.move != false){
-        if(direction === playerDirections.right) {player.x += speed; plyr.innerHTML = ">"}
-        if(direction === playerDirections.left){player.x-= speed; plyr.innerHTML = "<"}
-        if(direction === playerDirections.down){player.y += speed; plyr.innerHTML = "."}
-        if(direction === playerDirections.up){player.y -= speed; plyr.innerHTML = "^"}
+        if(direction === playerDirections.right) {player.x += speed; plyr.innerHTML = "&#129082;"}
+        if(direction === playerDirections.left){player.x-= speed; plyr.innerHTML = "&#129080;"}
+        if(direction === playerDirections.down){player.y += speed; plyr.innerHTML = "&#129083;"}
+        if(direction === playerDirections.up){player.y -= speed; plyr.innerHTML = "&#129081;"}
         plyr.setAttribute("facing", direction);
         player.facing = direction;
     } else if (player.move === true){
@@ -606,15 +606,19 @@ function moveEnemy(obj,index){
     let enmy = document.getElementById("enemy "+ index);;
     if(obj.axis === "x" && obj.x < obj.dest){
         obj.x += 2;
+        enmy.innerHTML = "&#129082;";
     }
     else if(obj.axis === "x" && obj.x > obj.dest){
         obj.x -= 2;
+        enmy.innerHTML = "&#129080;";
     }
     else if(obj.axis === "y" && obj.y < obj.dest){
         obj.y += 2;
+        enmy.innerHTML = "&#129083;";
     } 
     else if((obj.axis === "y" && obj.y > obj.dest)){
         obj.y -= 2;
+        enmy.innerHTML = "&#129081;";
     }
     if (obj.axis === "x" && obj.x === obj.dest){
         obj.x = dest;

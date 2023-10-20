@@ -94,6 +94,9 @@
 .enemy{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);
+    text-align: center;
+    color:azure;
+    font-size: 30px;
     position: absolute;
     overflow: hidden;
     background-color: rgb(54, 0, 0);
