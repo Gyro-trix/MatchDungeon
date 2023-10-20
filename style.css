@@ -287,7 +287,7 @@ body{
     border-style: groove;
     border-radius: 3px;
     font-family: 'Copperplate', monospace;
-    color:black;
+    color:aliceblue;
     position: absolute;
     margin:auto;
     z-index: 5;
@@ -395,21 +395,26 @@ body{
     background: transparent;
 }
 .label{
-    background-color: #666666b2;
-    margin-top: 10px;
+    background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
+    color:aliceblue;
+    margin-top: 4px;
     margin-left: 10px;
     margin-right: 10px;
-    color: rgb(255, 255, 255);
     height: 30px;
 }
 .level, .score, .health, .timer{
-    text-indent: 10px;
-    border: #000000;
-    border-radius: 1px;
-    background-color: #666666b2;
-    color: rgb(255, 255, 255);
+    background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
+    color:aliceblue;
     display:flex;
-    margin-top: 10px;
+    margin-top: 4px;
     margin-left: 10px;
     margin-right: 10px;
     height: 30px;
