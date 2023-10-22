@@ -349,7 +349,7 @@ function playerMovement(){
         player.safe = false;
     }
     if(player.health === 0){
-        levelComplete();
+        gameOver();
     }
     plyr.setAttribute("walking", direction ? "true" : "false");
     // Sets the boundaries to prevent the player from moving outside the play space
@@ -1194,8 +1194,24 @@ function restart(){
 }
 //Screen if player loses all health or time runs out
 function gameOver(){
-    let pscrn = document.getElementById("screen gameOver");
-    pscrn.innerHTML = "<br>GAME OVER";
+    let pscrn = document.createElement('div');
+    let target = document.getElementById("screen");
+    pscrn.setAttribute("class","screen gameOver");
+    pscrn.setAttribute("id","screen gameOver");
+    pscrn.innerHTML = "<br>GAME OVER<br>";
+    target.appendChild(pscrn);
+    let levelre = document.createElement('div');
+    levelre.setAttribute("class","levelrestart");
+    levelre.setAttribute("id","levelrestart");
+    levelre.innerHTML = "LEVEL RESTART";
+    pscrn.appendChild(levelre);
+    let gamere = document.createElement('div');
+    gamere.setAttribute("class","gamerestart");
+    gamere.setAttribute("id","gamerestart");
+    gamere.innerHTML = "RESTART GAME";
+    pscrn.appendChild(gamere);
+    let lrebut = addEventListener("mousedown",function(){levelComplete();});
+    let grebut = addEventListener("mousedown",function(){restart();});
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;

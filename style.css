@@ -303,6 +303,30 @@ body{
     margin:auto;
     z-index: 5;
 }
+.levelrestart{
+    background-image: linear-gradient(rgb(218, 0, 11), rgb(78, 0, 0));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
+    color: black;
+    font-size: 25px;
+    height: 25px;
+    width: 400px;
+    margin-top: 100px;
+}
+.gamerestart{
+    background-image: linear-gradient(rgb(218, 0, 11), rgb(78, 0, 0));
+    border-color: aliceblue;
+    border-style: groove;
+    border-radius: 3px;
+    font-family: 'Copperplate', monospace;
+    color: black;
+    font-size: 25px;
+    height: 25px;
+    width: 250px;
+    margin-top: 200px;
+}
 .screen.gameWin{
     background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
     border-color: aliceblue;
