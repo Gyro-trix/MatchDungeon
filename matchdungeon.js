@@ -49,8 +49,8 @@ let symbolSet = ["line","cross","asterik1","asterik2","Counting up, just with li
                 "tri","square","penta","hexa","All about the sides."];
 //Contents of the Info Panel
 let infocontents = [];
-infocontents[0] ="<h2>Controls:</h2> <p>Use the on screen arrows or the arrow keys on the keyboard.</p><p>The A button or Crtl on the keyboard attacks.</p><p>The B button or Shift on the keyboard blocks.</p>";
-infocontents[1] ="<h2>Obstacles:</h2> <p>Note, only for the test version</p><p>Small yellow boxes represent arrows, they can be blocked.</p><p>Moving red boxes are enemies that can be attacked, touching them sends you back to the start and looses a health.</p> <p>Darker floor areas are holes, which move you back to start and loose a health.</p>";
+infocontents[0] ="<h2>Controls:</h2> <p>Use the on screen arrows or the arrow keys on the keyboard.</p><p>The A button or Crtl on the keyboard attacks, sending out a box in teh direction you are facing.</p><p>The B button or Shift on the keyboard blocks.</p>";
+infocontents[1] ="<h2>Obstacles:</h2> <p>Note, only for the test version</p><p>Arrows can be blocked with B/SHIFT.</p><p>Moving red boxes are enemies that can be attacked, touching them causes health lose and a small span of invulnerability.</p> <p>Darker floor areas are holes, which move you back to start and loose health.</p><p>Purple boxes move when you are not inside a yellow area, hitting one causes health lose and the purple box to blink back to it's starting location.</p>";
 infocontents[2] ="<h2>Objectives:</h2> <p>Before the timer reaches zero or you go to zero health (no hearts left) collect all symbols in the right order.</p><p>The hint button can provide help with the symbol order.</p><p>Once the symbols are collected head to the open exit to go to the next level</p>";
 let exit = new Object(0,0,0,0);
 let attack = new Attack(-64,-64,32);
