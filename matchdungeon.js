@@ -995,10 +995,6 @@ function infoCreate(){
     let pbutton = document.createElement('Button');
     let nbutton = document.createElement('Button');
     let target = document.getElementById("map");
-    let ptext = document.createTextNode("<");
-    let ntext = document.createTextNode(">");
-    
-
     box.setAttribute("class","screen info");
     box.setAttribute("id","screen info");
     content.setAttribute("class","content");
@@ -1008,8 +1004,8 @@ function infoCreate(){
     nbutton.setAttribute("class","nbutton");
     nbutton.setAttribute("id","nbutton");
     target.appendChild(box);
-    pbutton.appendChild(ptext);
-    nbutton.appendChild(ntext);
+    pbutton.innerHTML = "&#11164;";
+    nbutton.innerHTML = "&#11166;";
     box.appendChild(pbutton);
     box.appendChild(content);
     content.innerHTML = infocontents[infoindex];
