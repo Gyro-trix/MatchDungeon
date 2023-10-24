@@ -1224,8 +1224,12 @@ function gameOver(){
 }
 //Congratulation screen after completing the final level
 function gameWin(){
-    let pscrn = document.getElementById("screen gameWin");
-    pscrn.innerHTML = "<BR> CONGRATULATIONS <br>";
+    let pscrn = document.createElement('div');
+    let target = document.getElementById("screen");
+    pscrn.setAttribute("class","screen gameWin");
+    pscrn.setAttribute("id","screen gameOver");
+    pscrn.innerHTML = "<br>Congratulations!<br>";
+    target.appendChild(pscrn);
     if(pause === true){
         pscrn.style.visibility = "hidden";
         pause = false;
