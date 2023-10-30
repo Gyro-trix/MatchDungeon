@@ -513,24 +513,26 @@ function createSymbol(x,y,w){
     box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".png)";
 }
 // Shuffles and visually creates symbols, currently disabled
-function symbolShuffle(array){
-    
-    /*for(let i = array.length -1; i>0;i--){
-        let j = Math.floor(Math.random()*(i+1));
-        let t = array[i];
-        array[i] = array[j];
-        array[j] = t;
+function arrayCoordShuffle(array){
+    let coordinates = [];
+    //Create an array of just the coordinates of symbols
+    for(let i = 0; i < array.length ; i++){
+        let temp = new GameObject(array[i].x,array[i].y);
+        coordinates.push(temp);
+    }
+    //Randomize the corrdinates
+    for(let v = coordinates.length - 1; v>0;v--){
+        let j = Math.floor(Math.random()*(v+1));
+        let t = coordinates[v];
+        coordinates[v] = coordinates[j];
+        coordinates[j] = t;
     }
     for(let r = array.length -1; r >= 0; r--){
-        let box = document.createElement('div');
-        let target = document.getElementById("map");
-        let obj = array[r];
-        box.setAttribute("class","symbol");
-        box.setAttribute("id","symbol " + r);
-        box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".jpg)";
-        target.appendChild(box);
-        box.style.transform = `translate3d( ${obj.x}px, ${obj.y}px , 0 )`;
-    }*/
+        let box = document.getElementById("symbol " + r);
+        array[r].x = coordinates[r].x;
+        array[r].y = coordinates[r].y;
+        box.style.transform = `translate3d( ${array[r].x}px, ${array[r].y}px , 0 )`;
+    }
 }
 //Creates the exit point for the level
 function createExit(x,y,h,w){
