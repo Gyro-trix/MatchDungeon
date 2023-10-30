@@ -512,7 +512,7 @@ function createSymbol(x,y,w){
     let r = levelSymbols.length - 1;
     box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".png)";
 }
-// Shuffles and visually creates symbols, currently disabled
+//Shuffles the visual placement of the symbols, not the required order to be acquired
 function arrayCoordShuffle(array){
     let coordinates = [];
     //Create an array of just the coordinates of symbols
@@ -527,6 +527,7 @@ function arrayCoordShuffle(array){
         coordinates[v] = coordinates[j];
         coordinates[j] = t;
     }
+    //Places symbols based on new coordinates
     for(let r = array.length -1; r >= 0; r--){
         let box = document.getElementById("symbol " + r);
         array[r].x = coordinates[r].x;
