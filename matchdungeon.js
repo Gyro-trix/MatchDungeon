@@ -1126,20 +1126,32 @@ function toPause(){
 }
 //Brings up hint dialogue for symbol order
 function hintPanel(){
-let hscrn = document.getElementById("screen hint");
-    hscrn.innerHTML = symbolSet[4];
+    
+    let hscrn = document.getElementById("screen hint");
+    let portrait = document.createElement('div');
+    portrait.setAttribute("class","portrait");
+    portrait.setAttribute("id","portrait");
+    hscrn.appendChild(portrait);
+    let temp = document.createElement('div');
+    temp.setAttribute("class","dtext");
+    temp.setAttribute("id","dtext");
+    hscrn.appendChild(temp);
+    temp.innerHTML = symbolSet[symbolOffSet + 4];
     if(pause === true && hdisable === false){
         hscrn.style.visibility = "hidden";
         pdisable = false;
         idisable = false;
         pause = false;
         timer();
+        hscrn.innerHTML = "";
+        console.log("Not");
     } else if (pause === false && hdisable === false){
         hscrn.style.visibility = "visible";
         pdisable = true;
         idisable = true;
         pause = true;
         timer();
+        console.log("See");
     }
 }
 //Creates dialogue that can be triggered to inform the player during gameplay, takes str as a string 
