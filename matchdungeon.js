@@ -126,6 +126,7 @@ const keys = {
     ArrowRight: playerDirections.right,
     ArrowDown: playerDirections.down,
 }
+//Randomizes the off set array for choosing a different image set for symbols
 function symbolOffSetRandomizer(){
     for(let v = symbolOffSet.length - 1; v>0;v--){
         let j = Math.floor(Math.random()*(v+1));
@@ -1157,14 +1158,12 @@ function hintPanel(){
         pause = false;
         timer();
         hscrn.innerHTML = "";
-        console.log("Not");
     } else if (pause === false && hdisable === false){
         hscrn.style.visibility = "visible";
         pdisable = true;
         idisable = true;
         pause = true;
         timer();
-        console.log("See");
     }
 }
 //Creates dialogue that can be triggered to inform the player during gameplay, takes str as a string 
