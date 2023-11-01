@@ -83,6 +83,7 @@
     background-color: rgb(43, 43, 43);
 }
 .symbol{
+    image-rendering: pixelated;
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);
     image-rendering: pixelated;

@@ -12,7 +12,10 @@ let first = true;
 let score = 0;
 let prevscore = 0;
 let pause = false;
+//Starting Level
 let level = 1;
+//Max levels, used for randomizing symbols
+let maxlevel = 3;
 //Player speed
 let speed = 6;
 //Player is invincible or not, for iFrames
@@ -40,7 +43,7 @@ let levelSafeZones = [];
 let levelTriggers = [];
 let arrowIntervals = [];
 //Symbol possibilities with corresponding hint for correct order
-let symbolOffSet = 0;
+let symbolOffSet = [0,5,10];
 let symbolSet = ["line","cross","asterik1","asterik2","Counting up, just with lines",
                 "roman1","roman2","roman3","roman4","Increase in value, just not your everyday numbers.",
                 "one","two", "three","four","Lucky, just count up.",
@@ -123,6 +126,14 @@ const keys = {
     ArrowRight: playerDirections.right,
     ArrowDown: playerDirections.down,
 }
+function symbolOffSetRandomizer(){
+    for(let v = symbolOffSet.length - 1; v>0;v--){
+        let j = Math.floor(Math.random()*(v+1));
+        let t = symbolOffSet[v];
+        symbolOffSet[v] = symbolOffSet[j];
+        symbolOffSet[j] = t;
+    }
+}
 //Creates and places the player
 function displayPlayer(){
     let box = document.createElement('div');
@@ -140,6 +151,7 @@ function init(){
     while(player.health < 3){
         healthUp();
     }
+    symbolOffSetRandomizer();
     sec = 999;
     timer();
     elapsed = 0;
@@ -223,6 +235,7 @@ function levelPopulate(){
             createSymbol(32,160,32);
             createSymbol(32,96,32);
             createSymbol(32,32,32);
+            arrayCoordShuffle(levelSymbols);
             createExit(0,0,32,96);
             displayPlayer();
             arrowBarrage();
@@ -510,7 +523,7 @@ function createSymbol(x,y,w){
     let temp = new Symbol(x,y,w);
     levelSymbols.push(temp);
     let r = levelSymbols.length - 1;
-    box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet]+".png)";
+    box.style.backgroundImage = "url(sprites/"+ symbolSet[r+symbolOffSet[level-1]]+".png)";
 }
 //Shuffles the visual placement of the symbols, not the required order to be acquired
 function arrayCoordShuffle(array){
@@ -1136,7 +1149,7 @@ function hintPanel(){
     temp.setAttribute("class","dtext");
     temp.setAttribute("id","dtext");
     hscrn.appendChild(temp);
-    temp.innerHTML = symbolSet[symbolOffSet + 4];
+    temp.innerHTML = symbolSet[symbolOffSet[level-1] + 4];
     if(pause === true && hdisable === false){
         hscrn.style.visibility = "hidden";
         pdisable = false;
