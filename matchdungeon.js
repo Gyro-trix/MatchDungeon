@@ -42,9 +42,9 @@ let arrowIntervals = [];
 //Symbol possibilities with corresponding hint for correct order
 let symbolOffSet = 0;
 let symbolSet = ["line","cross","asterik1","asterik2","Counting up, just with lines",
-                "roman1","roman2","roman3","roman4","Same as 1,2,3 then 4. Just not with numbers.",
+                "roman1","roman2","roman3","roman4","Increase in value, just not your everyday numbers.",
                 "one","two", "three","four","Lucky, just count up.",
-                "tip","blade","guard","hilt","A sword for thee.",
+                "point","blade","guard","pommel","From point to pommel.",
                 "O","P","E","N", "What you want the exit to do.",
                 "tri","square","penta","hexa","All about the sides."];
 //Contents of the Info Panel
