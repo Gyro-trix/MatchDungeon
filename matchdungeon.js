@@ -43,7 +43,7 @@ let levelSafeZones = [];
 let levelTriggers = [];
 let arrowIntervals = [];
 //Symbol possibilities with corresponding hint for correct order
-let symbolOffSet = [0,5,10];
+let symbolOffSet = [0,5,10,15];
 let symbolSet = ["line","cross","asterik1","asterik2","Counting up, just with lines",
                 "roman1","roman2","roman3","roman4","Increase in value, just not your everyday numbers.",
                 "one","two", "three","four","Lucky, just count up.",
