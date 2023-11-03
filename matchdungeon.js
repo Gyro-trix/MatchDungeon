@@ -1290,7 +1290,7 @@ if(!e.repeat && player.move === true){
     } else if (e.key === "Shift"){
         playerBlock();
     } else if (e.key === "z"){
-        //Testing purposes only
+        //Testing purposes only!!!
         //levelComplete();
         scoreScreen();
     }
