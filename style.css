@@ -156,9 +156,9 @@ body{
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     display:block;
-    width: 1000px;
+    width: 970px;
     text-align: right;
-    height: 40px;
+    height: 35px;
 }
 .name{
     float: left;
@@ -168,12 +168,19 @@ body{
     height: 40px;
 }
 .reset, .info{
-    float: right;
+    position:absolute;
     display:flex;
     background-color: rgb(99, 99, 99);        
     border-width: 4px;
-    width: 105px;
+    width: 125px;
     height: 35px;
+}
+.info{
+    border-top-left-radius: 15px;
+}
+.reset{
+    border-top-right-radius: 15px;
+    margin-left: 845px;
 }
 .inbtntext , .rstbtntext{
     font-size: 18px;
@@ -226,8 +233,8 @@ body{
     border-bottom-left-radius: 20%;
     border-bottom-right-radius: 20%;
     display: flex;
-    width: 1000px;
-    height: 525px;
+    width: 970px;
+    height: 485px;
 }
 
 .screen{
@@ -236,7 +243,7 @@ body{
     background-repeat: repeat;
     display: flex;
     position: relative;
-    margin-left: 25px;
+    margin-left: 15px;
     margin-bottom: 25px;
     width: 608px;
     height: 400px;
@@ -397,8 +404,8 @@ body{
     width: 80px;
     height:80px;
 }
-.dtext{
-    display: inline;
+.dtext, .stext{
+    
     color: azure;
     text-align: left;
     position: absolute;
@@ -407,10 +414,13 @@ body{
     width: 475px;
     height:80px;
 }
+.stext{
+    margin-top:100px;
+}
 .scrnexit{
     width: 15px;
     height: 15px;
-    display: inline;
+    font-size: 12px;
     color: azure;
     text-align: center;
     position: absolute;
@@ -445,7 +455,7 @@ body{
     margin-right: 10px;
     height: 30px;
 }
-.level, .score, .health, .timer{
+.level, .scre, .health, .timer{
     background-image: linear-gradient(rgb(0, 22, 219), rgb(20, 0, 133));
     border-color: aliceblue;
     border-style: groove;
@@ -468,7 +478,7 @@ body{
 }
 .buttons{
     background-color: rgb(48, 48, 48);
-    margin-left: 25px;
+    margin-left: 10px;
     margin-top: 50px;
     width: 150px;
     height: 200px;
@@ -477,7 +487,7 @@ body{
     align-content: center;
     display: block;
     background-color: rgb(48, 48, 48);
-    margin-left: 25px;
+    margin-left: 10px;
     margin-top: 50px;
     width: 150px;
     height: 150px;
@@ -537,7 +547,7 @@ body{
 .footer{
     background-color: rgba(129, 129, 129, 0);
     position:absolute;
-    margin-top: 450px;
+    margin-top: 410px;
     margin-left:200px;
     width: 600px;
     height: 75px;

@@ -44,12 +44,12 @@ let levelTriggers = [];
 let arrowIntervals = [];
 //Symbol possibilities with corresponding hint for correct order
 let symbolOffSet = [0,5,10,15];
-let symbolSet = ["line","cross","asterik1","asterik2","Counting up, just with lines",
-                "roman1","roman2","roman3","roman4","Increase in value, just not your everyday numbers.",
-                "one","two", "three","four","Lucky, just count up.",
-                "point","blade","guard","pommel","From point to pommel.",
-                "O","P","E","N", "What you want the exit to do.",
-                "tri","square","penta","hexa","All about the sides."];
+let symbolSet = ["line","cross","asterik1","asterik2","<p>Counting up, just with lines</p>",
+                "roman1","roman2","roman3","roman4","<p>Increase in value, just not your everyday numbers.</p>",
+                "one","two", "three","four","<p>Lucky, just count up.</p>",
+                "point","blade","guard","pommel","<p>From point to pommel.</p>",
+                "O","P","E","N", "<p>What you want the exit to do.</p>",
+                "tri","square","penta","hexa","<p>All about the sides.</p>"];
 //Contents of the Info Panel
 let infocontents = [];
 infocontents[0] ="<h2>Controls:</h2> <p>Use the on screen arrows or the arrow keys on the keyboard.</p><p>The A button or Crtl on the keyboard attacks, sending out a box in teh direction you are facing.</p><p>The B button or Shift on the keyboard blocks.</p>";
@@ -156,7 +156,7 @@ function init(){
     sec = 999;
     timer();
     elapsed = 0;
-    document.getElementById("score").innerHTML = score;
+    document.getElementById("scre").innerHTML = score;
     document.getElementById("level").innerHTML = level;
     let scrn = document.getElementById("screen");
     //Create pause div and hide it
@@ -307,7 +307,7 @@ function levelPopulate(){
             
         break;
         
-        //Not yet implemented
+        //Not yet implemented, still working on more level layouts
         case 4:
             document.getElementById("level").innerHTML = level;
             sec = 91;
@@ -795,14 +795,14 @@ function gameLoop(){
 // adds to the score by an amount, num
 function scoreChange(num){
     score = score + num;
-    document.getElementById("score").innerHTML = "";
-    document.getElementById("score").innerHTML = score;
+    document.getElementById("scre").innerHTML = "";
+    document.getElementById("scre").innerHTML = score;
 }
 // changes level by an amount, num
 function levelChange(num){
     level = level + num;
     document.getElementById("level").innerHTML = "";
-    document.getElementById("level").innerHTML = score;
+    document.getElementById("level").innerHTML = level;
 }
 //Increases health by one
 function healthUp(){
@@ -981,16 +981,20 @@ function scoreScreen(){
     scoreChange(exitbonus+timebonus);
     tempscr.setAttribute("class","screen score");
     tempscr.setAttribute("id","screen score");
+    let stext = document.createElement('div');
+    stext.setAttribute("class","stext");
+    stext.setAttribute("id","stext"); 
     let scrnexit = document.createElement('div');
     scrnexit.setAttribute("class","scrnexit");
     scrnexit.setAttribute("id","scrnexit");
     scrnexit.innerHTML = "X";
-    tempscr.innerHTML = "Level Complete <br>";
-    tempscr.innerHTML += "Time Bonus : "+ timebonus + "<br>";
-    tempscr.innerHTML += "Exit Bonus : "+ exitbonus + "<br>";
-    tempscr.innerHTML += "Score Total: "+ score + "<br>";
+    stext.innerHTML = "Level Complete <br>";
+    stext.innerHTML += "Time Bonus : "+ timebonus + "<br>";
+    stext.innerHTML += "Exit Bonus : "+ exitbonus + "<br>";
+    stext.innerHTML += "Score Total: "+ score + "<br>";
     target.appendChild(tempscr);
     tempscr.appendChild(scrnexit);
+    tempscr.appendChild(stext);
     let xbtn = document.getElementById("scrnexit");
     xbtn.addEventListener("click", function(){ pause = false;
         tempscr.style.visibility = "hidden";
@@ -1140,7 +1144,6 @@ function toPause(){
 }
 //Brings up hint dialogue for symbol order
 function hintPanel(){
-    
     let hscrn = document.getElementById("screen hint");
     let portrait = document.createElement('div');
     portrait.setAttribute("class","portrait");
@@ -1287,7 +1290,9 @@ if(!e.repeat && player.move === true){
     } else if (e.key === "Shift"){
         playerBlock();
     } else if (e.key === "z"){
-        toPause();
+        //Testing purposes only
+        //levelComplete();
+        scoreScreen();
     }
 }
 })
