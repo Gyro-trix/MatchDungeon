@@ -128,12 +128,12 @@ const keys = {
 }
 function spriteAnimate(id,intv,offset,frame){
     let temp = document.getElementById(id);
-    let off = offset;
-    let curframe = 0;
+    let off = -offset;
+    let curframe = 1;
     setInterval(function(){
         if (curframe != frame){
             temp.style.backgroundPosition = off+"px 0";
-            off += offset;
+            off -= offset;
             curframe++;
         } else if (curframe === frame){
             return;
