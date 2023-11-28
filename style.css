@@ -108,7 +108,7 @@
     position: absolute;
     overflow: hidden;
     background-color: rgba(35, 0, 46, 0.678);
-    z-index: 10;
+    z-index: 4;
 }
 .trap{
     width: calc(var(--grid-cell)*2);

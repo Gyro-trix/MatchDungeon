@@ -333,8 +333,6 @@ function levelPopulate(){
             player.x = startx;
             player.y = starty;
             displayPlayer();
-            spriteAnimate("exit",300,108,8);
-
         break;
     }
 }
@@ -361,10 +359,9 @@ function playerMovement(){
     collideArrows();
     collideGhost();
     collideTriggers();
-    if (cursym === levelSymbols.length){
+    if (cursym === levelSymbols.length && exit.state === "closed"){
         exit.state = "open";
-        let temp = document.getElementById("exit");
-        temp.innerHTML = "Open Exit";
+        spriteAnimate("exit",300,108,8); 
         cursym = 0;
     }
     if(collideEnemy() === false && inv === false){
@@ -577,7 +574,6 @@ function createExit(x,y,h,w){
     exit.state = "closed";
     let box = document.createElement('div');
     let target = document.getElementById("map");
-    box.innerHTML = "Closed Exit";
     box.setAttribute("class","exit");
     box.setAttribute("id","exit");
     box.style.width = ''+w+'px';
@@ -837,6 +833,7 @@ function healthDown(){
     player.health -= 1;
     con.removeChild(con.children[0]);
 }
+//------------------------------------------------------------Collision Checkes Start Here---------------------------------------------------------
 //Check for collisions of wall objects with the player
 function collideWall(){  
     return levelWalls.every(collideWallCheck);
