@@ -126,6 +126,21 @@ const keys = {
     ArrowRight: playerDirections.right,
     ArrowDown: playerDirections.down,
 }
+function spriteAnimate(id,intv,offset,frame){
+    let temp = document.getElementById(id);
+    let off = offset;
+    let curframe = 0;
+    setInterval(function(){
+        if (curframe != frame){
+            temp.style.backgroundPosition = off+"px 0";
+            off += offset;
+            curframe++;
+        } else if (curframe === frame){
+            return;
+        }
+    },intv);
+}
+
 //Randomizes the off set array for choosing a different image set for symbols
 function symbolOffSetRandomizer(){
     for(let v = symbolOffSet.length - 1; v>0;v--){
@@ -194,6 +209,7 @@ function init(){
     hint.addEventListener("click", hintPanel);
 }
 //Populates each level, each case is a different level/layout
+//To create a new level, add a new case, the level is populated with the various create functions
 function levelPopulate(){
     switch (level){
         //Title Screen, not yet implemented
@@ -201,7 +217,7 @@ function levelPopulate(){
 
         break;
         //Intro/tutorial Level, one of each mechanic with on screen popups, not meant to be difficult
-        case 1:
+        case 4:
             let triggerone =    "<p>Welcome to the tutorial level! To move use either the arrow keys on the keyboard or the arrows to the left. This dialogue popup can be closed by pressing any key. Following ones can be closed by clicking the X in the upper right of the popup.</p>";
             let triggertwo =    "<p>See the closed exit to the left, that is your goal. Be careful, as to the left(shaded area) are holes that cause you to lose health and be put back to start if you move into it. When health reaches zero the level restarts.</p>"
             let triggerthree =  "<p>Attack using the A button to the right or pressing CRTL on the keyboard. Touching the patrolling red square above will cause you to lose one health and gain one second of invincibilty.</p>"
@@ -308,13 +324,16 @@ function levelPopulate(){
         break;
         
         //Not yet implemented, still working on more level layouts
-        case 4:
+        case 1:
             document.getElementById("level").innerHTML = level;
             sec = 91;
-            createExit(246,0,32,108);
+            createExit(512,320,32,108);
+            startx = 0;
+            starty = 0;
             player.x = startx;
             player.y = starty;
             displayPlayer();
+            spriteAnimate("exit",300,108,8);
 
         break;
     }
