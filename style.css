@@ -31,23 +31,20 @@
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);
     text-align: center;
-    color:azure;
-    font-size: 30px;
     position: absolute;
-    overflow: hidden;
-    background-color: rgb(0, 17, 255);
+    background: url(sprites/MatchDungeonMainChar.png) 0 0;
 }
 .player[facing = up]{
-    background-color: rgb(66, 36, 175);
+    background: url(sprites/MatchDungeonMainChar.png) 0 -64;
 }
 .player[facing = down]{
-    background-color: rgb(175, 36, 36);
+    background: url(sprites/MatchDungeonMainChar.png) 0 0;
 }
 .player[facing = left]{
-    background-color: rgb(36, 175, 36);
+    background: url(sprites/MatchDungeonMainChar.png) 0 -96px;
 }
 .player[facing = right]{
-    background-color: rgb(149, 175, 36);
+    background: url(sprites/MatchDungeonMainChar.png) 0 -32px;
 }
 .player[block = true]{
     background-color: rgb(49, 25, 2);
