@@ -35,7 +35,7 @@
     background: url(sprites/MatchDungeonMainChar.png) 0 0;
 }
 .player[facing = up]{
-    background: url(sprites/MatchDungeonMainChar.png) 0 -64;
+    background: url(sprites/MatchDungeonMainChar.png) 0 -64px;
 }
 .player[facing = down]{
     background: url(sprites/MatchDungeonMainChar.png) 0 0;
