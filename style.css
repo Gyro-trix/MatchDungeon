@@ -16,6 +16,17 @@
     float: left;
     top: 48px;
 }
+.map::before{
+        content: " ";
+        z-index: 0;
+        display: block;
+        position: absolute;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(129, 75, 173, 0.5);
+}
 .player{
     width: calc(var(--grid-cell)*2);
     height: calc(var(--grid-cell)*2);
