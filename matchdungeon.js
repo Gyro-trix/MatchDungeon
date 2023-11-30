@@ -131,7 +131,7 @@ function spriteAnimate(id,intv,offsetx,offsety,frame,loop){
     let offx = -offsetx;
     let offy = -offsety;
     let curframe = 1;
-    setInterval(function(){
+    let anim = setInterval(function(){
         if (curframe != frame){
             temp.style.backgroundPosition = offx+"px "+offy+"px";
             if(curframe != frame){offx -= offsetx;} else {offx = offsetx;}
@@ -139,10 +139,13 @@ function spriteAnimate(id,intv,offsetx,offsety,frame,loop){
         } else if (curframe === frame){
             return;
         }
-        document.addEventListener("keyup", (e) => {
-            return;
-        })
+        
     },intv);
+    if(id === "player"){
+    document.addEventListener("keyup", (e) => {
+            clearInterval(anim);
+        })
+    }    
 }
 
 //Randomizes the off set array for choosing a different image set for symbols
