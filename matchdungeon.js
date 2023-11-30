@@ -139,6 +139,9 @@ function spriteAnimate(id,intv,offsetx,offsety,frame,loop){
         } else if (curframe === frame){
             return;
         }
+        document.addEventListener("keyup", (e) => {
+            return;
+        })
     },intv);
 }
 
@@ -1314,12 +1317,9 @@ if(!e.repeat && player.move === true){
 }
 })
 document.addEventListener("keyup", (e) => {
-    
     if (e.key === "Shift" && player.move === false){
             playerBlock();
-        } 
-        
-    
+        }     
 })
 /* D-pad functionality*/
 const removePressedAll = () => {
