@@ -343,10 +343,10 @@ function playerMovement(){
     const direction = directions[0];
     let plyr = document.getElementById("player");
     if(direction && collideWall() && player.move != false){
-        if(direction === playerDirections.right) {player.x += speed; plyr.innerHTML = "&#129082;"}
-        if(direction === playerDirections.left){player.x-= speed; plyr.innerHTML = "&#129080;"}
-        if(direction === playerDirections.down){player.y += speed; plyr.innerHTML = "&#129083;"}
-        if(direction === playerDirections.up){player.y -= speed; plyr.innerHTML = "&#129081;"}
+        if(direction === playerDirections.right) {player.x += speed; spriteAnimate("player",300,32,32,4,true);}
+        if(direction === playerDirections.left){player.x-= speed; spriteAnimate("player",300,32,96,4,true);}
+        if(direction === playerDirections.down){player.y += speed; spriteAnimate("player",300,32,0,4,true);}
+        if(direction === playerDirections.up){player.y -= speed; spriteAnimate("player",300,32,64,4,true);}
         plyr.setAttribute("facing", direction);
         player.facing = direction;
     } else if (player.move === true){
