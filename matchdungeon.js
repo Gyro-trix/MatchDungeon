@@ -126,15 +126,16 @@ const keys = {
     ArrowRight: playerDirections.right,
     ArrowDown: playerDirections.down,
 }
-function spriteAnimate(id,intv,offset,frame){
+function spriteAnimate(id,intv,offsetx,offsety,frame,loop){
     let temp = document.getElementById(id);
-    let off = -offset;
+    let offx = -offsetx;
+    let offy = -offsety;
     let curframe = 1;
     setInterval(function(){
         if (curframe != frame){
-            temp.style.backgroundPosition = off+"px 0";
-            off -= offset;
-            curframe++;
+            temp.style.backgroundPosition = offx+"px "+offy+"px";
+            if(curframe != frame){offx -= offsetx;} else {offx = offsetx;}
+            if(loop === false){curframe++;} else {curframe = 1;}
         } else if (curframe === frame){
             return;
         }
@@ -361,7 +362,7 @@ function playerMovement(){
     collideTriggers();
     if (cursym === levelSymbols.length && exit.state === "closed"){
         exit.state = "open";
-        spriteAnimate("exit",300,108,8); 
+        spriteAnimate("exit",300,108,0,8,false); 
         cursym = 0;
     }
     if(collideEnemy() === false && inv === false){
